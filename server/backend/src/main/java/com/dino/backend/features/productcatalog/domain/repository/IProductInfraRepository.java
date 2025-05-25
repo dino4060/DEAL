@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.lang.NonNull;
-import org.springframework.lang.NonNullApi;
 
 import java.util.Optional;
 
@@ -17,7 +16,7 @@ public interface IProductInfraRepository extends JpaRepository<Product, String>,
 
     Page<ProductProjection> findAllProjectedBy(Pageable pageable);
 
-    @EntityGraph(attributePaths = {"category", "skus", "skus.inventory", "shop"})
+    @EntityGraph(attributePaths = { "category", "skus", "skus.inventory", "shop" })
     Optional<Product> findEagerById(@NonNull String id);
 
 }

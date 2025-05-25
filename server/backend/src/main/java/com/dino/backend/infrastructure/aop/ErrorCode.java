@@ -28,11 +28,15 @@ public enum ErrorCode {
     SECURITY__GEN_TOKEN_FAILED(1013, "Tạo token thất bại", HttpStatus.INTERNAL_SERVER_ERROR),
     // OAUTH2 //
     OAUTH2__GET_GOOGLE_TOKEN_FAILED(1020, "Lấy access token của Google thất bại.", HttpStatus.INTERNAL_SERVER_ERROR),
-    OAUTH2__GET_GOOGLE_USER_FAILED(1021, "Lấy thông tin người dùng của Google thất bại.", HttpStatus.INTERNAL_SERVER_ERROR),
+    OAUTH2__GET_GOOGLE_USER_FAILED(1021, "Lấy thông tin người dùng của Google thất bại.",
+            HttpStatus.INTERNAL_SERVER_ERROR),
     // FILES //
-    FILE__FILE_OUT_EXTENSIONS(1030, "File extensions should be pdf, jpg, jpeg, png, doc or docx.", HttpStatus.BAD_REQUEST),
-    FILE__FILE_CREATE_DIRECTORY(1031, "An error occurred while creating a media directory.", HttpStatus.INTERNAL_SERVER_ERROR),
-    FILE__FILE_CREATE_FOLDER(1032, "An error occurred while creating a media folder.", HttpStatus.INTERNAL_SERVER_ERROR),
+    FILE__FILE_OUT_EXTENSIONS(1030, "File extensions should be pdf, jpg, jpeg, png, doc or docx.",
+            HttpStatus.BAD_REQUEST),
+    FILE__FILE_CREATE_DIRECTORY(1031, "An error occurred while creating a media directory.",
+            HttpStatus.INTERNAL_SERVER_ERROR),
+    FILE__FILE_CREATE_FOLDER(1032, "An error occurred while creating a media folder.",
+            HttpStatus.INTERNAL_SERVER_ERROR),
     FILE__FILE_CREATE_PATH(1033, "An error occurred while creating a file path.", HttpStatus.INTERNAL_SERVER_ERROR),
     FILE__FILE_STREAM(1034, "An error occurred while stream the file.", HttpStatus.INTERNAL_SERVER_ERROR),
     FILE__FILE_EMPTY(1035, "File is empty. Please upload a file.", HttpStatus.BAD_REQUEST),
@@ -50,7 +54,8 @@ public enum ErrorCode {
     AUTH__PASSWORD_INVALID(1123, "Password không hợp lệ.", HttpStatus.BAD_REQUEST),
     AUTH__PASSWORD_MIN(1124, "Password nên có ít nhất 6 kí tự.", HttpStatus.BAD_REQUEST),
     AUTH__EMAIL_NOT_MATCHED(1125, "Email nên đúng định dạng.", HttpStatus.BAD_REQUEST),
-    // AUTH__REFRESH_TOKEN_INVALID(1217, "Refresh token thì rỗng, trái phép, hoặc bị đánh cấp.", HttpStatus.BAD_REQUEST),
+    // AUTH__REFRESH_TOKEN_INVALID(1217, "Refresh token thì rỗng, trái phép, hoặc bị
+    // đánh cấp.", HttpStatus.BAD_REQUEST),
 
     // PRODUCT CATALOG 1200+ //
     // PRODUCT //
@@ -60,8 +65,11 @@ public enum ErrorCode {
 
     // USER PROFILE 1300+ //
     // ADDRESS //
-    ADDRESS__NOT_FOUND(1300, "Không tìm thấy địa chỉ.", HttpStatus.BAD_REQUEST);
+    ADDRESS__NOT_FOUND(1300, "Không tìm thấy địa chỉ.", HttpStatus.BAD_REQUEST),
 
+    // PROMOTION CONTEXT 1400+ //
+    // DISCOUNTED PRODUCT //
+    DISCOUNTED_PRODUCT__NOT_FOUND(1400, "Không tìm thấy sản phẩm được giảm giá.", HttpStatus.BAD_REQUEST);
 
     int code;
     String message;

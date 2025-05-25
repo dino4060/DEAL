@@ -1,19 +1,43 @@
 package com.dino.backend.features.promotion.domain;
 
-import com.dino.backend.features.promotion.domain.model.DiscountPricingType;
-import com.dino.backend.features.promotion.domain.model.DiscountStatusType;
-import com.dino.backend.features.promotion.domain.model.DiscountType;
-import com.dino.backend.features.promotion.domain.model.PriceType;
-import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-import lombok.experimental.SuperBuilder;
+import java.util.List;
+
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
-import java.util.List;
+import com.dino.backend.features.promotion.domain.model.DiscountStatusType;
+import com.dino.backend.features.shop.domain.Shop;
+import com.dino.backend.infrastructure.aop.AppException;
+import com.dino.backend.infrastructure.aop.ErrorCode;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.annotation.Nonnull;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -37,14 +61,27 @@ public abstract class Discount extends Promotion {
     String id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status_type", nullable = false)
+    @Column(name = "status_type")
     DiscountStatusType statusType;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "pricing_type", nullable = false)
-    DiscountPricingType pricingType;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seller_id", updatable = false, nullable = false)
+    @JsonIgnore
+    Shop shop;
 
     @OneToMany(mappedBy = "discount", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    List<DiscountedProductPrice> discountedProductPrices;
+    List<DiscountedProduct> discountedProducts;
+
+    // getPriority //
+    public static int getPriority(@Nonnull Discount discount) {
+        if (discount instanceof FlashSaleDiscount)
+            return 0;
+        if (discount instanceof NewArrivalDiscount)
+            return 1;
+        if (discount instanceof ProductDiscount)
+            return 2;
+
+        throw new AppException(ErrorCode.SYSTEM__KEY_UNSUPPORTED);
+    }
 
 }

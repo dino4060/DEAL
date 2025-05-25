@@ -1,12 +1,12 @@
 package com.dino.backend.infrastructure.common;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 // NOTE: Lombok Constructors
 // @RequiredArgsConstructor: create a constructor excluding @NonFinal and @Nullable fields
@@ -18,7 +18,7 @@ public class Env {
     // JWT //
     @Value("${jwt.access.secret-key}")
     String ACCESS_SECRET_KEY;
-    
+
     @Value("${jwt.access.ttl-min}")
     Long ACCESS_TTL_MIN;
 

@@ -1,5 +1,7 @@
 package com.dino.backend.infrastructure.security.impl;
 
+import org.springframework.stereotype.Service;
+
 import com.dino.backend.infrastructure.aop.AppException;
 import com.dino.backend.infrastructure.aop.ErrorCode;
 import com.dino.backend.infrastructure.common.Env;
@@ -9,13 +11,11 @@ import com.dino.backend.infrastructure.security.httpclient.GoogleUserClient;
 import com.dino.backend.infrastructure.security.model.GoogleTokenRequest;
 import com.dino.backend.infrastructure.security.model.GoogleTokenResponse;
 import com.dino.backend.infrastructure.security.model.GoogleUserResponse;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +31,7 @@ public class Oauth2InfraProviderImpl implements IOauth2InfraProvider {
 
     /**
      * // getGoogleToken //
+     * 
      * @des To exchange authorizationCode for authorizationCode with GOOGLE
      * @param authorizationCode: String
      * @return accessToken,...: GoogleTokenResponse
@@ -57,6 +58,7 @@ public class Oauth2InfraProviderImpl implements IOauth2InfraProvider {
 
     /**
      * // getGoogleUser //
+     * 
      * @des To get information of user of GOOGLE
      * @param accessToken: String
      * @return user: GoogleUserResponse
@@ -66,7 +68,7 @@ public class Oauth2InfraProviderImpl implements IOauth2InfraProvider {
         try {
             GoogleUserResponse googleUserResponse = this.googleUserClient.getUser("json", accessToken);
 
-            return  googleUserResponse;
+            return googleUserResponse;
 
         } catch (Exception e) {
             log.error(">>> INTERNAL: getGoogleUser: {}", e.getMessage());

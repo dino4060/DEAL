@@ -1,18 +1,19 @@
 package com.dino.backend.infrastructure.web.impl;
 
-import com.dino.backend.infrastructure.security.model.JwtType;
-import com.dino.backend.infrastructure.web.ICookieProvider;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
+import java.time.Duration;
+
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
+import com.dino.backend.infrastructure.security.model.JwtType;
+import com.dino.backend.infrastructure.web.ICookieProvider;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @AllArgsConstructor

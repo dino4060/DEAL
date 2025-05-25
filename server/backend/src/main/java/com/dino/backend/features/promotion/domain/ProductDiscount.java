@@ -1,7 +1,10 @@
 package com.dino.backend.features.promotion.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -9,6 +12,8 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
+
+import com.dino.backend.features.promotion.domain.model.DiscountPricingType;
 
 @Entity
 @DiscriminatorValue("PRODUCT")
@@ -21,6 +26,10 @@ import org.hibernate.annotations.SQLRestriction;
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductDiscount extends Discount {
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "pricing_type")
+    DiscountPricingType pricingType;
 
     // max 1 year
 }

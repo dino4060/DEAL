@@ -1,11 +1,13 @@
 package com.dino.backend.features.identity.application;
 
-import com.dino.backend.features.identity.application.model.*;
-import com.dino.backend.features.identity.domain.User;
-import com.dino.backend.infrastructure.web.model.CurrentUser;
 import org.springframework.http.HttpHeaders;
 
-import java.util.Optional;
+import com.dino.backend.features.identity.application.model.AuthResponse;
+import com.dino.backend.features.identity.application.model.CurrentUserResponse;
+import com.dino.backend.features.identity.application.model.GoogleOauth2Request;
+import com.dino.backend.features.identity.application.model.LookupIdentifierResponse;
+import com.dino.backend.features.identity.application.model.PasswordLoginRequest;
+import com.dino.backend.infrastructure.web.model.CurrentUser;
 
 public interface IAuthAppService {
 

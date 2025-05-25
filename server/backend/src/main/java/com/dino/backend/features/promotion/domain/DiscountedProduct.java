@@ -16,10 +16,10 @@ import org.hibernate.annotations.SQLRestriction;
 import java.util.List;
 
 @Entity
-@Table(name = "discounted_product_prices")
+@Table(name = "discounted_products")
 @DynamicInsert
 @DynamicUpdate
-@SQLDelete(sql = "UPDATE discounted_product_prices SET is_deleted = true WHERE discounted_product_price_id=?")
+@SQLDelete(sql = "UPDATE discounted_products SET is_deleted = true WHERE discounted_product_id=?")
 @SQLRestriction("is_deleted = false")
 @Getter
 @Setter
@@ -27,11 +27,11 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class DiscountedProductPrice extends BaseEntity {
+public class DiscountedProduct extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "discounted_product_price_id", updatable = false, nullable = false)
+    @Column(name = "discounted_product_id", updatable = false, nullable = false)
     String id;
 
     Integer discountPercent;
@@ -60,6 +60,6 @@ public class DiscountedProductPrice extends BaseEntity {
     @JsonIgnore
     Discount discount;
 
-    @OneToMany(mappedBy = "discountedProductPrice", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    List<DiscountedSkuPrice> discountedSkuPrices;
+    @OneToMany(mappedBy = "discountedProduct", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    List<DiscountedSku> discountedSkus;
 }

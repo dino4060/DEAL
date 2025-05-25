@@ -25,7 +25,7 @@ import org.hibernate.annotations.SQLRestriction;
 public class FlashSaleDiscount extends Discount {
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "channel_type", nullable = false)
+    @Column(name = "channel_type")
     DiscountChannelType channelType;
 
     // max 3 days

@@ -30,14 +30,17 @@ public final class SecurityUtils {
         return Optional.of(authentication);
     }
 
-    /** // extractPrincipal //
+    /**
+     * // extractPrincipal //
+     * 
      * @des extract the subject, a claim of jwt payload, from jwt principal
      * @param authentication: Authentication
      * @return String
      */
     private static Optional<String> extractPrincipal(Authentication authentication) {
-        //Code: authentication.getPrincipal() instanceof Jwt jwt
-        //Mean: if authentication.getPrincipal() has the Jwt type, assign it to the jwt variable
+        // Code: authentication.getPrincipal() instanceof Jwt jwt
+        // Mean: if authentication.getPrincipal() has the Jwt type, assign it to the jwt
+        // variable
         String subject = null;
 
         if (authentication.getPrincipal() instanceof UserDetails springSecurityUser) {
@@ -76,15 +79,13 @@ public final class SecurityUtils {
                 .orElse(null);
     }
 
-    /** // getCurrentUser //
+    /**
+     * // getCurrentUser //
+     *
      * @des Get the current user from the jwt payload
      * @return the current user.
      */
     public static CurrentUser getCurrentUser() {
-        return CurrentUser.builder()
-                .id(getCurrentUserId())
-                .roles(getCurrentUserRoles())
-                .build();
+        return new CurrentUser(getCurrentUserId(), getCurrentUserRoles());
     }
 }
-

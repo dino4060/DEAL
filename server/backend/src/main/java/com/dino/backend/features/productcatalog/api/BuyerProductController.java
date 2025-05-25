@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ProductBuyerController {
+public class BuyerProductController {
 
-    // PublicProductBuyerController //
+    // BuyerPublicProductController //
     @RestController
     @RequestMapping("/api/v1/public/products")
     @AllArgsConstructor
     @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-    public static class PublicProductBuyerController {
+    public static class BuyerPublicProductController {
 
         IProductAppService productAppService;
 
@@ -33,8 +33,7 @@ public class ProductBuyerController {
         // list //
         @GetMapping("/list")
         public ResponseEntity<PageRes<ProductProjection>> list(
-                @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable
-        ) {
+                @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
             return ResponseEntity.ok(this.productAppService.list(pageable));
         }
 
