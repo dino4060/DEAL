@@ -1,4 +1,4 @@
-package com.dino.backend.shared.test;
+package com.dino.backend.shared.test.lazy;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

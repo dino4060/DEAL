@@ -1,4 +1,4 @@
-package com.dino.backend.shared.test;
+package com.dino.backend.shared.test.lazy;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/public/test")
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class testApi {
+public class TestLazyApi {
 
-    aaRepo aaRepo;
-    abRepo abRepo;
-    acRepo acRepo;
+    AaRepo aaRepo;
+    AbRepo abRepo;
+    AcRepo acRepo;
 
     @GetMapping("/lazy/find")
     @SuppressWarnings("unused")
