@@ -51,12 +51,12 @@ public class PageRes<T> {
                 .build();
     }
 
-    public static <T> PageRes<T> from(Page<?> pageJpa, List<T> items) {
+    public static <T> PageRes<T> from(Page<?> page, List<T> items) {
         Pagination pagination = Pagination.builder()
-                .totalPages(pageJpa.getTotalPages())
-                .totalElements(pageJpa.getTotalElements())
-                .page(pageJpa.getNumber() + 1) // Page of client starts 1. But PageNumber of Jpa starts from 0
-                .size(pageJpa.getSize())
+                .totalPages(page.getTotalPages())
+                .totalElements(page.getTotalElements())
+                .page(page.getNumber() + 1) // Page of client starts 1. But PageNumber of Jpa starts from 0
+                .size(page.getSize())
                 .build();
 
         return PageRes.<T>builder()

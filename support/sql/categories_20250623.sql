@@ -1,0 +1,96 @@
+INSERT INTO public.categories (category_id,created_at,is_deleted,updated_at,description,"level","name",photo,"position",slug,parent_category_id) VALUES
+	 (11,'2025-04-22 11:19:55.508178+07',false,'2025-04-22 11:19:55.508178+07','Thiết bị và dụng cụ thể thao',1,'Thể thao',NULL,11,'the-thao',NULL),
+	 (13,'2025-04-22 11:19:55.508178+07',false,'2025-04-22 11:19:55.508178+07','Phụ kiện như mũ, kính, thắt lưng...',1,'Phụ kiện thời trang',NULL,13,'phu-kien-thoi-trang',NULL),
+	 (17,'2025-04-22 11:19:55.508178+07',false,'2025-04-22 11:19:55.508178+07','Đồ chơi cho trẻ em và người lớn',1,'Đồ chơi',NULL,17,'do-choi',NULL),
+	 (18,'2025-04-22 11:19:55.508178+07',false,'2025-04-22 11:19:55.508178+07','Sách, vở và dụng cụ học tập',1,'Nhà sách',NULL,18,'nha-sach',NULL),
+	 (7,'2025-06-23 12:22:25.43079+07',false,'2025-06-23 12:22:25.43079+07','Vật dụng và nội thất cho gia đình',1,'Nhà cửa',NULL,7,'nha-cua',NULL),
+	 (71,'2025-06-23 12:22:42.412829+07',false,'2025-06-23 12:22:42.412829+07','Các đồ dùng phổ biến trong không gian sống',2,'Đồ dùng trong nhà',NULL,1,'do-dung-trong-nha',7),
+	 (72,'2025-06-23 12:22:42.412829+07',false,'2025-06-23 12:22:42.412829+07','Sản phẩm sử dụng trong phòng tắm',2,'Đồ dùng phòng tắm',NULL,2,'do-dung-phong-tam',7),
+	 (73,'2025-06-23 12:22:42.412829+07',false,'2025-06-23 12:22:42.412829+07','Vật dụng phục vụ vệ sinh không gian sống.',2,'Đồ dùng vệ sinh',NULL,3,'do-dung-ve-sinh',7),
+	 (74,'2025-06-23 12:22:42.412829+07',false,'2025-06-23 12:22:42.412829+07','Dụng cụ, thiết bị hỗ trợ giặt là',2,'Đồ dùng giặt là',NULL,4,'do-dung-giat-la',7),
+	 (14,'2025-04-22 11:19:55.508178+07',false,'2025-04-22 11:19:55.508178+07','Giày dép thời trang nam nữ',1,'Giày dép',NULL,14,'giay-dep',NULL);
+INSERT INTO public.categories (category_id,created_at,is_deleted,updated_at,description,"level","name",photo,"position",slug,parent_category_id) VALUES
+	 (4,'2025-04-22 11:19:55.508178+07',true,'2025-04-22 11:19:55.508178+07','Sản phẩm chăm sóc bản thân và cơ thể',1,'Chăm sóc cá nhân',NULL,4,'cham-soc-ca-nhan',NULL),
+	 (141,'2025-06-23 12:37:08.74561+07',false,'2025-06-23 12:37:08.74561+07','Giày dép thời trang và thể thao dành cho nam.',2,'Giày dép nam',NULL,1,'giay-dep-nam',14),
+	 (142,'2025-06-23 12:37:08.74561+07',false,'2025-06-23 12:37:08.74561+07','Giày dép phong cách dành cho nữ.',2,'Giày dép nữ',NULL,2,'giay-dep-nu',14),
+	 (143,'2025-06-23 12:37:08.74561+07',false,'2025-06-23 12:37:08.74561+07','Phụ kiện kèm theo giày như lót giày, dây giày...',2,'Phụ kiện giày',NULL,3,'phu-kien-giay',14),
+	 (3,'2025-04-22 11:19:55.508178+07',false,'2025-04-22 11:19:55.508178+07','Sản phẩm làm đẹp và chăm sóc bản thân',1,'Làm đẹp & Chăm sóc cá nhân',NULL,3,'my-pham',NULL),
+	 (31,'2025-06-23 12:39:29.838938+07',false,'2025-06-23 12:39:29.838938+07','Sản phẩm trang điểm cho mặt, môi, mắt...',2,'Trang điểm',NULL,1,'trang-diem',3),
+	 (32,'2025-06-23 12:39:29.838938+07',false,'2025-06-23 12:39:29.838938+07','Sản phẩm dưỡng và bảo vệ da hàng ngày.',2,'Chăm sóc da',NULL,2,'cham-soc-da',3),
+	 (33,'2025-06-23 12:39:29.838938+07',false,'2025-06-23 12:39:29.838938+07','Dầu gội, dầu xả và sản phẩm dưỡng tóc.',2,'Chăm sóc tóc',NULL,3,'cham-soc-toc',3),
+	 (8,'2025-04-22 11:19:55.508178+07',false,'2025-04-22 11:19:55.508178+07','Dụng cụ và đồ gia dụng nhà bếp',1,'Nhà bếp',NULL,8,'nha-bep',NULL),
+	 (81,'2025-06-23 11:33:06.704576+07',false,'2025-06-23 11:33:06.704576+07','Bộ nồi, chảo và dụng cụ nấu bếp thiết yếu.',2,'Bộ đồ nấu',NULL,1,'bo-do-nau',8);
+INSERT INTO public.categories (category_id,created_at,is_deleted,updated_at,description,"level","name",photo,"position",slug,parent_category_id) VALUES
+	 (82,'2025-06-23 11:33:06.704576+07',false,'2025-06-23 11:33:06.704576+07','Bộ ly, bình, và phụ kiện dùng để uống nước, trà.',2,'Bộ đồ uống',NULL,2,'bo-do-uong',8),
+	 (83,'2025-06-23 11:33:06.704576+07',false,'2025-06-23 11:33:06.704576+07','Bộ bát đĩa và dao kéo dùng trong bữa ăn.',2,'Bộ đồ ăn & Dao kéo',NULL,3,'bo-do-an-dao-keo',8),
+	 (6,'2025-04-22 11:19:55.508178+07',false,'2025-04-22 11:19:55.508178+07','Chăm sóc mẹ bầu và em bé',1,'Mẹ và bé',NULL,6,'me-va-be',NULL),
+	 (10,'2025-04-22 11:19:55.508178+07',false,'2025-04-22 11:19:55.508178+07','Thiết bị hỗ trợ sinh hoạt hàng ngày',1,'Thiết bị gia dụng',NULL,10,'thiet-bi-gia-dung',NULL),
+	 (101,'2025-06-23 11:46:50.46971+07',false,'2025-06-23 11:46:50.46971+07','Thiết bị phục vụ cho quá trình nấu nướng hàng ngày.',2,'Thiết bị nấu',NULL,1,'thiet-bi-nau',10),
+	 (102,'2025-06-23 11:46:50.46971+07',false,'2025-06-23 11:46:50.46971+07','Thiết bị hỗ trợ công việc vệ sinh trong gia đình.',2,'Thiết bị vệ sinh',NULL,2,'thiet-bi-ve-sinh',10),
+	 (103,'2025-06-23 11:46:50.46971+07',false,'2025-06-23 11:46:50.46971+07','Thiết bị tạo và điều chỉnh nhiệt độ như bếp, lò.',2,'Thiết bị nhiệt',NULL,3,'thiet-bi-nhiet',10),
+	 (9,'2025-04-22 11:19:55.508178+07',false,'2025-04-22 11:19:55.508178+07','Chăm sóc thú cưng',1,'Thú cưng',NULL,9,'thu-cung',NULL),
+	 (2,'2025-04-22 11:19:55.508178+07',false,'2025-04-22 11:19:55.508178+07','Thời trang nữ đẹp, đa dạng phong cách',1,'Quần áo nữ',NULL,2,'quan-ao-nu',NULL),
+	 (21,'2025-06-23 11:58:00.535244+07',false,'2025-06-23 11:58:00.535244+07','Các loại áo thời trang dành cho nữ.',2,'Áo nữ',NULL,1,'ao-nu',2);
+INSERT INTO public.categories (category_id,created_at,is_deleted,updated_at,description,"level","name",photo,"position",slug,parent_category_id) VALUES
+	 (22,'2025-06-23 11:58:00.535244+07',false,'2025-06-23 11:58:00.535244+07','Quần nữ đa dạng kiểu dáng và chất liệu.',2,'Quần nữ',NULL,2,'quan-nu',2),
+	 (23,'2025-06-23 11:58:00.535244+07',false,'2025-06-23 11:58:00.535244+07','Váy nữ thanh lịch, phù hợp nhiều dịp.',2,'Váy nữ',NULL,3,'vay-nu',2),
+	 (24,'2025-06-23 11:58:00.535244+07',false,'2025-06-23 11:58:00.535244+07','Đồ lót nữ thoải mái, chất lượng cao.',2,'Đồ lót nữ',NULL,4,'do-lot-nu',2),
+	 (12,'2025-04-22 11:19:55.508178+07',true,'2025-04-22 11:19:55.508178+07','Sản phẩm phục vụ thể thao và du lịch',1,'Thể thao, du lịch',NULL,12,'the-thao-du-lich',NULL),
+	 (15,'2025-04-22 11:19:55.508178+07',true,'2025-04-22 11:19:55.508178+07','Các loại balo, túi xách tiện dụng',1,'Balo, túi',NULL,15,'balo-tui',NULL),
+	 (16,'2025-04-22 11:19:55.508178+07',false,'2025-04-22 11:19:55.508178+07','Phụ kiện và thiết bị cho phương tiện cá nhân',1,'Ô tô & Xe',NULL,16,'o-to-xe-may-xe-dap',NULL),
+	 (20,'2025-04-22 11:19:55.508178+07',true,'2025-04-22 11:19:55.508178+07','Sản phẩm hỗ trợ và chăm sóc sức khoẻ',1,'Sức khỏe',NULL,20,'suc-khoe',NULL),
+	 (25,'2025-06-23 11:58:00.535244+07',false,'2025-06-23 11:58:00.535244+07','Trang phục nữ mặc hàng ngày tiện lợi.',2,'Mặc hằng ngày cho nữ',NULL,5,'mac-hang-ngay-cho-nu',2),
+	 (26,'2025-06-23 11:58:00.535244+07',false,'2025-06-23 11:58:00.535244+07','Trang phục nữ cho các dịp đặc biệt.',2,'Mặc đặc biệt cho nữ',NULL,6,'mac-dac-biet-cho-nu',2),
+	 (19,'2025-04-22 11:19:55.508178+07',false,'2025-04-22 11:19:55.508178+07','Đồ ăn, đồ uống, chế biến sẵn, thực phẩm sức khỏe',1,'Thực phẩm',NULL,19,'thuc-pham',NULL);
+INSERT INTO public.categories (category_id,created_at,is_deleted,updated_at,description,"level","name",photo,"position",slug,parent_category_id) VALUES
+	 (1,'2025-04-22 11:19:55.508178+07',false,'2025-04-22 11:19:55.508178+07','Danh mục thời trang dành cho nam giới',1,'Quần áo nam',NULL,1,'quan-ao-nam',NULL),
+	 (1001,'2025-06-23 12:18:01.742895+07',false,'2025-06-23 12:18:01.742895+07','Các loại áo thời trang dành cho nam.',2,'Áo nam',NULL,1,'ao-nam',1),
+	 (1002,'2025-06-23 12:18:01.742895+07',false,'2025-06-23 12:18:01.742895+07','Quần nam với nhiều kiểu dáng và chất liệu.',2,'Quần nam',NULL,2,'quan-nam',1),
+	 (1003,'2025-06-23 12:18:01.742895+07',false,'2025-06-23 12:18:01.742895+07','Đồ lót nam mang lại sự thoải mái hàng ngày.',2,'Đồ lót nam',NULL,3,'do-lot-nam',1),
+	 (1004,'2025-06-23 12:18:01.742895+07',false,'2025-06-23 12:18:01.742895+07','Trang phục nam mặc hàng ngày tiện lợi.',2,'Mặc hằng ngày cho nam',NULL,4,'mac-hang-ngay-cho-nam',1),
+	 (1005,'2025-06-23 12:18:01.742895+07',false,'2025-06-23 12:18:01.742895+07','Trang phục nam cho các dịp đặc biệt.',2,'Mặc đặc biệt cho nam',NULL,5,'mac-dac-biet-cho-nam',1),
+	 (34,'2025-06-23 12:39:29.838938+07',false,'2025-06-23 12:39:29.838938+07','Sản phẩm vệ sinh và bảo vệ tai, mũi, miệng, mắt.',2,'Mắc, tai, mũi, miệng',NULL,4,'mac-tai-mui-mieng',3),
+	 (35,'2025-06-23 12:39:29.838938+07',false,'2025-06-23 12:39:29.838938+07','Sản phẩm chăm sóc cá nhân dành riêng cho nữ.',2,'Chăm sóc cho nữ',NULL,5,'cham-soc-cho-nu',3),
+	 (36,'2025-06-23 12:39:29.838938+07',false,'2025-06-23 12:39:29.838938+07','Nước hoa và các sản phẩm tạo mùi hương.',2,'Mùi hương',NULL,6,'mui-huong',3),
+	 (5,'2025-04-22 11:19:55.508178+07',false,'2025-04-22 11:19:55.508178+07','Thiết bị điện tử hiện đại, tiện ích',1,'Đồ điện tử',NULL,5,'thiet-bi-dien-tu',NULL);
+INSERT INTO public.categories (category_id,created_at,is_deleted,updated_at,description,"level","name",photo,"position",slug,parent_category_id) VALUES
+	 (51,'2025-06-23 12:45:55.920865+07',false,'2025-06-23 12:45:55.920865+07','Các thiết bị thông minh hỗ trợ cuộc sống hiện đại.',2,'Đồ thông minh',NULL,1,'do-thong-minh',5),
+	 (52,'2025-06-23 12:45:55.920865+07',false,'2025-06-23 12:45:55.920865+07','Thiết bị âm thanh như tai nghe, loa, micro...',2,'Âm thanh',NULL,2,'am-thanh',5),
+	 (53,'2025-06-23 12:45:55.920865+07',false,'2025-06-23 12:45:55.920865+07','Camera giám sát, hành trình, và các loại khác.',2,'Camera',NULL,3,'camera',5),
+	 (54,'2025-06-23 12:45:55.920865+07',false,'2025-06-23 12:45:55.920865+07','Phụ kiện hỗ trợ các thiết bị điện tử.',2,'Phụ kiện điện tử',NULL,4,'phu-kien-dien-tu',5),
+	 (61,'2025-06-23 12:50:13.810966+07',false,'2025-06-23 12:50:13.810966+07','Quần áo cho mẹ bầu, bé sơ sinh và trẻ nhỏ.',2,'Quần áo mẹ & bé',NULL,1,'quan-ao-me-be',6),
+	 (62,'2025-06-23 12:50:13.810966+07',false,'2025-06-23 12:50:13.810966+07','Sản phẩm chăm sóc sức khỏe cho mẹ và bé.',2,'Sức khỏe mẹ & bé',NULL,2,'suc-khoe-me-be',6),
+	 (63,'2025-06-23 12:50:13.810966+07',false,'2025-06-23 12:50:13.810966+07','Dụng cụ cho ăn, bình sữa và đồ dùng cho bú.',2,'Cho bú & cho ăn',NULL,3,'cho-bu-cho-an',6),
+	 (64,'2025-06-23 12:50:13.810966+07',false,'2025-06-23 12:50:13.810966+07','Đồ chơi giáo dục và giải trí cho trẻ nhỏ.',2,'Đồ chơi trẻ em',NULL,4,'do-choi-tre-em',6),
+	 (91,'2025-06-23 12:57:37.886333+07',false,'2025-06-23 12:57:37.886333+07','Thức ăn và chăm sóc sức khỏe thú cưng.',2,'Ăn uống & Sức khỏe thú cưng',NULL,1,'an-uong-suc-khoe-thu-cung',9),
+	 (92,'2025-06-23 12:57:37.886333+07',false,'2025-06-23 12:57:37.886333+07','Đồ dùng sinh hoạt và vệ sinh thú cưng.',2,'Đồ dùng & Vệ sinh thú cưng',NULL,2,'do-dung-ve-sinh-thu-cung',9);
+INSERT INTO public.categories (category_id,created_at,is_deleted,updated_at,description,"level","name",photo,"position",slug,parent_category_id) VALUES
+	 (111,'2025-06-23 13:03:42.034679+07',false,'2025-06-23 13:03:42.034679+07','Thiết bị và phụ kiện hỗ trợ tập thể hình.',2,'Thể hình',NULL,1,'the-hinh',11),
+	 (112,'2025-06-23 13:03:42.034679+07',false,'2025-06-23 13:03:42.034679+07','Dụng cụ và trang phục cho các môn bóng.',2,'Môn chơi bóng',NULL,2,'mon-choi-bong',11),
+	 (113,'2025-06-23 13:03:42.034679+07',false,'2025-06-23 13:03:42.034679+07','Dụng cụ và đồ bơi cho các môn dưới nước.',2,'Môn dưới nước',NULL,3,'mon-duoi-nuoc',11),
+	 (114,'2025-06-23 13:03:42.034679+07',false,'2025-06-23 13:03:42.034679+07','Trang bị và phụ kiện cho hoạt động ngoài trời.',2,'Môn ngoài trời',NULL,4,'mon-ngoai-troi',11),
+	 (131,'2025-06-23 13:09:24.090306+07',false,'2025-06-23 13:09:24.090306+07','Phụ kiện phối cùng trang phục như thắt lưng, mũ nón...',2,'Đi kèm quần áo',NULL,1,'di-kem-quan-ao',13),
+	 (132,'2025-06-23 13:09:24.090306+07',false,'2025-06-23 13:09:24.090306+07','Các loại túi xách, balo và hành lý tiện dụng.',2,'Túi & Hành lý',NULL,2,'tui-hanh-ly',13),
+	 (133,'2025-06-23 13:09:24.090306+07',false,'2025-06-23 13:09:24.090306+07','Trang sức thời trang như vòng tay, dây chuyền, nhẫn...',2,'Trang sức',NULL,3,'trang-suc',13),
+	 (134,'2025-06-23 13:09:24.090306+07',false,'2025-06-23 13:09:24.090306+07','Các loại kính thời trang và kính bảo vệ mắt.',2,'Kính',NULL,4,'kinh',13),
+	 (135,'2025-06-23 13:09:24.090306+07',false,'2025-06-23 13:09:24.090306+07','Đồng hồ thời trang và đồng hồ thông minh.',2,'Đồng hồ',NULL,5,'dong-ho',13),
+	 (161,'2025-06-23 13:14:54.966306+07',false,'2025-06-23 13:14:54.966306+07','Phụ kiện và tiện ích sử dụng bên trong khoang xe.',2,'Bên trong ô tô',NULL,1,'ben-trong-o-to',16);
+INSERT INTO public.categories (category_id,created_at,is_deleted,updated_at,description,"level","name",photo,"position",slug,parent_category_id) VALUES
+	 (162,'2025-06-23 13:14:54.966306+07',false,'2025-06-23 13:14:54.966306+07','Trang bị và bảo vệ cho phần bên ngoài ô tô.',2,'Bên ngoài ô tô',NULL,2,'ben-ngoai-o-to',16),
+	 (163,'2025-06-23 13:14:54.966306+07',false,'2025-06-23 13:14:54.966306+07','Các loại linh kiện thay thế và nâng cấp xe.',2,'Linh kiện ô tô',NULL,3,'linh-kien-o-to',16),
+	 (164,'2025-06-23 13:14:54.966306+07',false,'2025-06-23 13:14:54.966306+07','Sản phẩm và dụng cụ chăm sóc, bảo trì ô tô.',2,'Bảo dưỡng ô tô',NULL,4,'bao-duong-o-to',16),
+	 (171,'2025-06-23 13:18:27.41786+07',false,'2025-06-23 13:18:27.41786+07','Thú nhồi bông, búp bê đáng yêu cho trẻ em.',2,'Gấu bông & Búp bê',NULL,1,'gau-bong-bup-be',17),
+	 (172,'2025-06-23 13:18:27.41786+07',false,'2025-06-23 13:18:27.41786+07','Xe, robot và đồ chơi điều khiển từ xa.',2,'Điều khiển từ xa',NULL,2,'dieu-khien-tu-xa',17),
+	 (173,'2025-06-23 13:18:27.41786+07',false,'2025-06-23 13:18:27.41786+07','Đồ chơi kích thích tư duy và phát triển trí tuệ.',2,'Đồ chơi trí tuệ',NULL,3,'do-choi-tri-tue',17),
+	 (174,'2025-06-23 13:18:27.41786+07',false,'2025-06-23 13:18:27.41786+07','Nhạc cụ mini giúp bé làm quen với âm nhạc.',2,'Nhạc cụ',NULL,4,'nhac-cu',17),
+	 (181,'2025-06-23 13:21:06.649799+07',false,'2025-06-23 13:21:06.649799+07','Sách về văn học, thơ, truyện và nghệ thuật sáng tạo.',2,'Văn học & Nghệ thuật',NULL,1,'van-hoc-nghe-thuat',18),
+	 (182,'2025-06-23 13:21:06.649799+07',false,'2025-06-23 13:21:06.649799+07','Sách khoa học tự nhiên, công nghệ và khám phá.',2,'Khoa học & Công nghệ',NULL,2,'khoa-hoc-cong-nghe',18),
+	 (183,'2025-06-23 13:21:06.649799+07',false,'2025-06-23 13:21:06.649799+07','Sách kinh tế, tài chính, quản lý và khởi nghiệp.',2,'Kinh tế & Quản lý',NULL,3,'kinh-te-quan-ly',18);
+INSERT INTO public.categories (category_id,created_at,is_deleted,updated_at,description,"level","name",photo,"position",slug,parent_category_id) VALUES
+	 (184,'2025-06-23 13:21:06.649799+07',false,'2025-06-23 13:21:06.649799+07','Giáo trình, sách tham khảo và tài liệu học tập.',2,'Trường học & Giáo dục',NULL,4,'truong-hoc-giao-duc',18),
+	 (185,'2025-06-23 13:21:06.649799+07',false,'2025-06-23 13:21:06.649799+07','Sách phát triển bản thân, sức khỏe và đời sống.',2,'Phong cách sống',NULL,5,'phong-cach-song',18),
+	 (191,'2025-06-23 13:25:53.382001+07',false,'2025-06-23 13:25:53.382001+07','Đồ ăn vặt ngon miệng như bánh, kẹo, snack...',2,'Ăn vặt',NULL,1,'an-vat',19),
+	 (192,'2025-06-23 13:25:53.382001+07',false,'2025-06-23 13:25:53.382001+07','Món ăn tiện lợi có thể dùng ngay, dễ bảo quản.',2,'Ăn liền',NULL,2,'an-lien',19),
+	 (193,'2025-06-23 13:25:53.382001+07',false,'2025-06-23 13:25:53.382001+07','Các loại bia, rượu và thức uống có cồn.',2,'Bia rượu',NULL,3,'bia-ruou',19),
+	 (194,'2025-06-23 13:25:53.382001+07',false,'2025-06-23 13:25:53.382001+07','Sữa và các sản phẩm từ sữa cho mọi lứa tuổi.',2,'Sữa',NULL,4,'sua',19),
+	 (195,'2025-06-23 13:25:53.382001+07',false,'2025-06-23 13:25:53.382001+07','Thực phẩm chức năng hỗ trợ sức khỏe và dinh dưỡng.',2,'Thực phẩm bổ sung',NULL,5,'thuc-pham-bo-sung',19);

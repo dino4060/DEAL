@@ -1,6 +1,7 @@
 package com.dino.backend.infrastructure.cache.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -10,14 +11,15 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
 @Configuration
+@EnableCaching
 public class CacheConfig {
 
     @Bean
     public RedisCacheManager cacheManager(
             RedisConnectionFactory redisConnectionFactory,
-            ObjectMapper redisJsonMapper
+            ObjectMapper objectMapper
     ) {
-        var jacksonSerializer = new Jackson2JsonRedisSerializer<>(redisJsonMapper, Object.class);
+        var jacksonSerializer = new Jackson2JsonRedisSerializer<>(objectMapper, Object.class);
 
         RedisCacheConfiguration config = RedisCacheConfiguration
                 .defaultCacheConfig()

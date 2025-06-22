@@ -5,7 +5,7 @@ import com.dino.backend.features.productcatalog.domain.model.ProductMeta;
 import com.dino.backend.features.productcatalog.domain.model.ProductSpecification;
 import com.dino.backend.features.productcatalog.domain.model.ProductStatus;
 import com.dino.backend.features.productcatalog.domain.model.ProductTierVariation;
-import com.dino.backend.features.pricing.domain.ProductDiscount;
+import com.dino.backend.features.promotion.domain.ProductDiscount;
 import com.dino.backend.features.shop.domain.Shop;
 import com.dino.backend.shared.domain.model.BaseEntity;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
@@ -79,11 +79,11 @@ public class Product extends BaseEntity {
     Shop shop;
 
     @OneToOne(mappedBy = "product")
-    ProductPrice productPrice;
+    ProductPrice price;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     List<Sku> skus;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    List<ProductDiscount> productDiscounts;
+    List<ProductDiscount> discounts;
 }

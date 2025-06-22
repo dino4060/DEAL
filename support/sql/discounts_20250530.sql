@@ -1,2 +1,0 @@
-INSERT INTO public.discounts (discount_id,created_at,is_deleted,updated_at,deal_price,max_deal_price,min_deal_price,level_type,discount_program_id,product_id,used_buyer_ids,used_count,buyer_limit,total_limit,discount_percent,max_discount_percent,min_discount_percent) VALUES
-	 (1,'2025-05-25 10:26:48.859305+07',false,'2025-05-25 10:26:48.859305+07',160000,160000,160000,'PRODUCT',1,1,NULL,NULL,NULL,NULL,20,20,20);

@@ -2,6 +2,7 @@ package com.dino.backend.features.productcatalog.domain;
 
 import com.dino.backend.shared.domain.model.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -25,6 +26,7 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@JsonIgnoreProperties(value = {"createdAt", "updatedAt", "isDeleted"}, allowSetters = true)
 public class Category extends BaseEntity {
 
     @Id
@@ -35,25 +37,26 @@ public class Category extends BaseEntity {
     @Column(length = 40, nullable = false, unique = true)
     String name;
 
+    @JsonIgnore
     @Column(length = 40, nullable = false, unique = true)
     String slug;
 
     String photo;
 
+    @JsonIgnore
     String description;
 
     Integer position;
 
-    @Column(nullable = false)
-    Integer level;
+    @JsonIgnore
+    int level;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_category_id")
     @JsonIgnore
     Category parentCategory;
 
-    @OneToMany(mappedBy = "parentCategory", fetch = FetchType.LAZY)
-    @JsonIgnore
+    @OneToMany(mappedBy = "parentCategory", fetch = FetchType.EAGER)
     List<Category> childCategories;
 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)

@@ -1,11 +1,8 @@
 package com.dino.backend.features.productcatalog.application;
 
-import com.dino.backend.features.productcatalog.domain.model.CategoryProjection;
 import com.dino.backend.features.productcatalog.application.service.ICategoryService;
 import com.dino.backend.features.productcatalog.domain.Category;
-import com.dino.backend.shared.application.utils.Id;
-import com.dino.backend.shared.domain.exception.AppException;
-import com.dino.backend.shared.domain.exception.ErrorCode;
+import com.dino.backend.features.productcatalog.domain.model.CategoryProjection;
 import com.dino.backend.features.productcatalog.domain.repository.ICategoryRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -13,7 +10,9 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -26,21 +25,30 @@ public class CategoryServiceImpl implements ICategoryService {
 
     // READ //
     @Override
-    public List<CategoryProjection> getTree() {
+    public List<CategoryProjection> getList() {
         List<CategoryProjection> categories = this.categoryRepository.findAllProjectedBy(
                 Sort.by(Sort.Direction.ASC, "position"),
                 CategoryProjection.class);
         return categories;
     }
 
-    // HELP //
     @Override
-    public Category findOrErrorById(String categoryId) {
-        Id id = Id.from(categoryId)
-                .orElseThrow(() -> new AppException(ErrorCode.CATEGORY__NOT_FOUND));
-        Category category = this.categoryRepository.findById(id.value())
-                .orElseThrow(() -> new AppException(ErrorCode.CATEGORY__NOT_FOUND));
-        return category;
+    public List<Category> getTree() {
+        List<Category> categories = this.categoryRepository.findWithChildrenByLevel(1);
+
+        sortChildrenRecursively(categories);
+
+        return categories;
     }
 
+    private void sortChildrenRecursively(List<Category> categories) {
+        if (CollectionUtils.isEmpty(categories))
+            return;
+
+        categories.sort(Comparator.comparingInt(c ->
+                c.getPosition() == null ? Integer.MAX_VALUE : c.getPosition()));
+
+        for (Category category : categories)
+            sortChildrenRecursively(category.getChildCategories());
+    }
 }

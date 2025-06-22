@@ -5,6 +5,7 @@ import com.dino.backend.features.productcatalog.domain.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.lang.NonNull;
@@ -24,6 +25,9 @@ public interface ICategoryRepository extends JpaRepository<Category, Long>, JpaS
     List<CategoryProjection> findAllProjectedBy(Sort sort); // #1
 
     List<CategoryProjection> findAllProjectedByOrderByPositionAsc(); // #1
+
+//    @EntityGraph(attributePaths = {"childCategories.childCategories"})
+    List<Category> findWithChildrenByLevel(int level);
 
     Optional<Category> findFirstByName(@NonNull String name);
 

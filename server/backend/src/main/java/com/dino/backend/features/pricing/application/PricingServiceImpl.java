@@ -3,12 +3,12 @@ package com.dino.backend.features.pricing.application;
 import com.dino.backend.features.ordering.domain.CartItem;
 import com.dino.backend.features.ordering.domain.OrderItem;
 import com.dino.backend.features.ordering.domain.model.CheckoutSnapshot;
-import com.dino.backend.features.pricing.domain.ProductDiscount;
+import com.dino.backend.features.promotion.domain.ProductDiscount;
 import com.dino.backend.features.productcatalog.domain.Sku;
-import com.dino.backend.features.pricing.application.model.SkuPrice;
-import com.dino.backend.features.pricing.application.service.IDiscountService;
+import com.dino.backend.features.pricing.application.model.SkuPriceRes;
+import com.dino.backend.features.promotion.application.service.IDiscountService;
 import com.dino.backend.features.pricing.application.service.IPricingService;
-import com.dino.backend.features.pricing.domain.SkuDiscount;
+import com.dino.backend.features.promotion.domain.SkuDiscount;
 import com.dino.backend.shared.api.model.CurrentUser;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -31,14 +31,14 @@ public class PricingServiceImpl implements IPricingService {
     // SKU PRICE //
 
     @Override
-    public SkuPrice calculateRetail(Sku sku) {
+    public SkuPriceRes calculateRetail(Sku sku) {
         // TODO: main price is sku.getRetailPrice()
-        return new SkuPrice(0, 0, 0);
+        return new SkuPriceRes(sku.getId(), 0, 0, 0);
     }
 
     // calculatePrice Sku //
     @Override
-    public SkuPrice calculateDiscount(Sku sku, ProductDiscount discount) {
+    public SkuPriceRes calculateDiscount(Sku sku, ProductDiscount discount) {
         // TODO: main price is sku.getRetailPrice()
         Integer retailPrice = 0;
         // dealPrice = dealPrice | calculateDealPrice by discountPercent | null
@@ -51,11 +51,11 @@ public class PricingServiceImpl implements IPricingService {
                 ? discount.getDiscountPercent()
                 : SkuDiscount.createDiscountPercent(0, discount.getDealPrice()); // sku.getRetailPrice()
 
-        return new SkuPrice(dealPrice, retailPrice, discountPercent);
+        return new SkuPriceRes(sku.getId(), dealPrice, retailPrice, discountPercent);
     }
 
     @Override
-    public SkuPrice calculatePrice(Sku sku, CurrentUser currentUser) {
+    public SkuPriceRes calculatePrice(Sku sku, CurrentUser currentUser) {
         return this.discountService.canDiscount(sku, currentUser)
                 .map(discount -> this.calculateDiscount(sku, discount))
                 .orElseGet(() -> calculateRetail(sku));

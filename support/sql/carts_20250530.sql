@@ -1,4 +1,4 @@
-INSERT INTO public.carts (cart_id,buyer_id,created_at,updated_at,count,is_deleted) values
+INSERT INTO public.carts (cart_id,buyer_id,created_at,updated_at,total,is_deleted) values
 	 (1,1,'2025-04-25 17:06:33.497876+07','2025-05-30 08:13:18.266991+07',2,false),
 	 (2,2,'2025-04-25 17:06:52.240129+07','2025-04-25 17:06:52.240129+07',0,false),
 	 (3,3,'2025-04-25 17:06:57.635234+07','2025-04-25 17:06:57.635234+07',0,false),

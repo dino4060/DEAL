@@ -16,10 +16,6 @@ public class ProductItemView {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-//    static {
-//        objectMapper.registerModule(new JavaTimeModule()); // static initializer block
-//    }
-
     Long id;
     String status;
     Instant updatedAt;
@@ -28,8 +24,7 @@ public class ProductItemView {
     Integer retailPrice;
     ProductMeta meta;
     Float rank;
-
-
+    
     /**
      * Constructor được sử dụng bởi @ConstructorResult trong @SqlResultSetMapping.
      */

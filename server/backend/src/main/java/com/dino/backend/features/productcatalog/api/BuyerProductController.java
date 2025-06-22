@@ -2,6 +2,9 @@ package com.dino.backend.features.productcatalog.api;
 
 import com.dino.backend.features.productcatalog.application.model.ProductSearchParams;
 import com.dino.backend.features.productcatalog.application.reader.IProductReader;
+import com.dino.backend.shared.application.utils.Id;
+import com.dino.backend.shared.domain.exception.AppException;
+import com.dino.backend.shared.domain.exception.ErrorCode;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -45,11 +48,17 @@ public class BuyerProductController {
             return ResponseEntity.ok(this.productReader.searchProduct(params));
         }
 
+//        @GetMapping("/id")
+//        public ResponseEntity<Object> getProduct() {
+//            return ResponseEntity.ok("oke");
+//        }
+
         // getProduct //
         @GetMapping("/{id}")
-        public ResponseEntity<Object> getProduct(@PathVariable String id, @AuthUser CurrentUser currentUser) {
+        public ResponseEntity<Object> getProduct(@PathVariable String id) {
+            Id idObject = Id.from(id).orElseThrow(() -> new AppException(ErrorCode.SYSTEM__ID_INVALID));
 
-            return ResponseEntity.ok(this.productService.getProduct(id, currentUser));
+            return ResponseEntity.ok(this.productService.getProduct(idObject));
         }
 
     }

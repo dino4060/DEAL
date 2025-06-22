@@ -16,7 +16,12 @@ public interface IProductRepository extends JpaRepository<Product, Long>, JpaSpe
 
     Page<ProductProjection> findAllProjectedBy(@NonNull Pageable pageable);
 
-    @EntityGraph(attributePaths = { "skus", "skus.inventory", "category", "shop" })
-    Optional<Product> findEagerById(@NonNull Long id);
+    @EntityGraph(attributePaths = {
+            "price",
+            "skus", "skus.price", "skus.inventory",
+            "categoryBranch", "categoryBranch.level1Category", "categoryBranch.level2Category",
+            "categoryBranch.level3Category",
+            "shop" })
+    Optional<Product> findWithSkusById(@NonNull Long id);
 
 }
