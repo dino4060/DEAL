@@ -8,7 +8,7 @@ import com.dino.backend.features.ordering.domain.Order;
 import com.dino.backend.features.ordering.domain.OrderItem;
 import com.dino.backend.features.ordering.domain.model.*;
 import com.dino.backend.features.ordering.domain.repository.IOrderRepository;
-import com.dino.backend.features.promotion.application.service.IPricingService;
+import com.dino.backend.features.pricing.application.service.IPricingService;
 import com.dino.backend.features.shop.domain.Shop;
 import com.dino.backend.features.userprofile.application.service.IAddressService;
 import com.dino.backend.shared.api.model.CurrentUser;

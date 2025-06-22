@@ -1,6 +1,6 @@
-package com.dino.backend.features.promotion.domain;
+package com.dino.backend.features.pricing.domain;
 
-import com.dino.backend.features.promotion.domain.model.ChannelType;
+import com.dino.backend.features.pricing.domain.model.ChannelType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -22,7 +22,7 @@ import org.hibernate.annotations.SQLRestriction;
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class FlashSaleProgram extends DiscountProgram {
+public class FlashSaleProgram extends ProductDiscountProgram {
     // max 3 days
 
     @Enumerated(EnumType.STRING)

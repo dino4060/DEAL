@@ -10,7 +10,7 @@ import org.hibernate.annotations.SQLRestriction;
 import com.dino.backend.features.identity.domain.User;
 import com.dino.backend.features.ordering.domain.Order;
 import com.dino.backend.features.productcatalog.domain.Product;
-import com.dino.backend.features.promotion.domain.DiscountProgram;
+import com.dino.backend.features.pricing.domain.ProductDiscountProgram;
 import com.dino.backend.shared.domain.model.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -82,7 +82,7 @@ public class Shop extends BaseEntity {
 
     @OneToMany(mappedBy = "shop", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    List<DiscountProgram> discountPrograms;
+    List<ProductDiscountProgram> discountPrograms;
 
     @OneToMany(mappedBy = "shop", fetch = FetchType.LAZY)
     @JsonIgnore

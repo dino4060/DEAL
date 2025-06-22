@@ -1,4 +1,4 @@
-package com.dino.backend.features.promotion.domain;
+package com.dino.backend.features.pricing.domain;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.CollectionUtils;
 
 import com.dino.backend.features.productcatalog.domain.Product;
-import com.dino.backend.features.promotion.domain.model.LevelType;
+import com.dino.backend.features.pricing.domain.model.LevelType;
 import com.dino.backend.shared.api.model.CurrentUser;
 import com.dino.backend.shared.domain.model.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -45,10 +45,10 @@ import lombok.experimental.SuperBuilder;
  * - totalLimit, buyerLimit == NULL is unlimited.
  */
 @Entity
-@Table(name = "discounts")
+@Table(name = "product_discounts")
 @DynamicInsert
 @DynamicUpdate
-@SQLDelete(sql = "UPDATE discounts SET is_deleted = true WHERE discount_id=?")
+@SQLDelete(sql = "UPDATE product_discounts SET is_deleted = true WHERE product_discount_id=?")
 @SQLRestriction("is_deleted = false")
 @Getter
 @Setter
@@ -56,24 +56,18 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Discount extends BaseEntity {
+public class ProductDiscount extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "discount_id")
+    @Column(name = "product_discount_id")
     Long id;
+
+    Boolean isEffective;
 
     Integer dealPrice;
 
-    Integer minDealPrice;
-
-    Integer maxDealPrice;
-
     Integer discountPercent;
-
-    Integer minDiscountPercent;
-
-    Integer maxDiscountPercent;
 
     Integer totalLimit;
 
@@ -88,16 +82,16 @@ public class Discount extends BaseEntity {
     LevelType levelType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "discount_program_id", updatable = false, nullable = false)
-    @JsonIgnore
-    DiscountProgram discountProgram;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", updatable = false, nullable = false)
     @JsonIgnore
     Product product;
 
-    @OneToMany(mappedBy = "discount", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_discount_program_id", updatable = false, nullable = false)
+    @JsonIgnore
+    ProductDiscountProgram productDiscountProgram;
+
+    @OneToMany(mappedBy = "productDiscount", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     List<SkuDiscount> skuDiscounts;
 
     // INSTANCE METHODS //
@@ -129,6 +123,6 @@ public class Discount extends BaseEntity {
         if (currentUser != null && !this.isWithinBuyerLimit(currentUser))
             return false;
 
-        return this.discountProgram.isActive();
+        return this.productDiscountProgram.isActive();
     }
 }

@@ -2,12 +2,12 @@ package com.dino.backend.features.productcatalog.application.model;
 
 import java.util.List;
 
+import com.dino.backend.features.pricing.domain.ProductDiscount;
 import com.dino.backend.features.productcatalog.domain.Category;
 import com.dino.backend.features.productcatalog.domain.Sku;
 import com.dino.backend.features.productcatalog.domain.model.ProductMeta;
 import com.dino.backend.features.productcatalog.domain.model.ProductSpecification;
 import com.dino.backend.features.productcatalog.domain.model.ProductTierVariation;
-import com.dino.backend.features.promotion.domain.Discount;
 import com.dino.backend.features.shop.domain.Shop;
 
 import lombok.AccessLevel;
@@ -45,7 +45,7 @@ public class ProductRes {
 
     List<Sku> skus;
 
-    Discount discount;
+    ProductDiscount discount;
     Category category;
     Shop shop;
 }

@@ -1,14 +1,15 @@
-package com.dino.backend.features.promotion.domain;
+package com.dino.backend.features.pricing.domain;
 
 import java.util.List;
 
+import com.dino.backend.features.pricing.domain.model.ProgramStatusType;
+import com.dino.backend.shared.domain.model.Promotion;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
-import com.dino.backend.features.promotion.domain.model.PricingType;
-import com.dino.backend.features.promotion.domain.model.ProgramStatusType;
+import com.dino.backend.features.pricing.domain.model.PricingType;
 import com.dino.backend.features.shop.domain.Shop;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -38,12 +39,12 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
 @Entity
+@Table(name = "product_discount_programs")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "program_type", discriminatorType = DiscriminatorType.STRING)
-@Table(name = "discount_programs")
 @DynamicInsert
 @DynamicUpdate
-@SQLDelete(sql = "UPDATE discount_programs SET is_deleted = true WHERE discount_program_id=?")
+@SQLDelete(sql = "UPDATE product_discount_programs SET is_deleted = true WHERE product_discount_program_id=?")
 @SQLRestriction("is_deleted = false")
 @Getter
 @Setter
@@ -51,11 +52,11 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public abstract class DiscountProgram extends Promotion {
+public abstract class ProductDiscountProgram extends Promotion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "discount_program_id")
+    @Column(name = "product_discount_program_id")
     Long id;
 
     @Enumerated(EnumType.STRING)
@@ -71,8 +72,8 @@ public abstract class DiscountProgram extends Promotion {
     @JsonIgnore
     Shop shop;
 
-    @OneToMany(mappedBy = "discountProgram", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Discount> discounts;
+    @OneToMany(mappedBy = "productDiscountProgram", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    List<ProductDiscount> productDiscounts;
 
     // getPriority //
     // - Open-closed principle in SOLID //

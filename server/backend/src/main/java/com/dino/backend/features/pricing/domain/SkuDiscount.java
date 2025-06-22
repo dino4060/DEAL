@@ -1,4 +1,4 @@
-package com.dino.backend.features.promotion.domain;
+package com.dino.backend.features.pricing.domain;
 
 import com.dino.backend.features.productcatalog.domain.Sku;
 import com.dino.backend.shared.domain.model.BaseEntity;
@@ -40,14 +40,16 @@ public class SkuDiscount extends BaseEntity {
     Integer buyerLimit;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "discount_id", updatable = false, nullable = false)
-    @JsonIgnore
-    Discount discount;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sku_id", updatable = false, nullable = false)
     @JsonIgnore
     Sku sku;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_discount_id", updatable = false, nullable = false)
+    @JsonIgnore
+    ProductDiscount productDiscount;
+
+    // FACTORY METHODS //
 
     public static Integer createDiscountPercent(Integer retailPrice, Integer dealPrice) {
         if (dealPrice == null)

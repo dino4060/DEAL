@@ -7,7 +7,7 @@ import com.dino.backend.features.productcatalog.application.reader.IProductReade
 import com.dino.backend.features.productcatalog.domain.Product;
 import com.dino.backend.features.productcatalog.domain.model.ProductItemView;
 import com.dino.backend.features.productcatalog.domain.query.IProductQuery;
-import com.dino.backend.features.promotion.application.service.IDiscountService;
+import com.dino.backend.features.pricing.application.service.IDiscountService;
 import com.dino.backend.shared.application.utils.PageRes;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -39,9 +39,9 @@ public class ProductReaderImpl implements IProductReader {
                     var discount = this.discountService.canDiscount(Product.builder().id(p.getId()).build());
                     discount.ifPresent(d -> {
                         product.setDealPrice(
-                                d.getDealPrice() != null ? d.getDealPrice() : d.getMinDealPrice());
+                                d.getDealPrice() != null ? d.getDealPrice() : 0); // TODO: legacy code is d.getMinDealPrice()
                         product.setDiscountPercent(
-                                d.getDiscountPercent() != null ? d.getDiscountPercent() : d.getMinDiscountPercent());
+                                d.getDiscountPercent() != null ? d.getDiscountPercent() : 0); // TODO: legacy code is d.getMinDiscountPercent()
                     });
                     return product;
                 })

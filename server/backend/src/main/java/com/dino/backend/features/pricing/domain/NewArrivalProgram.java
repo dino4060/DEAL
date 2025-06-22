@@ -1,4 +1,4 @@
-package com.dino.backend.features.promotion.domain;
+package com.dino.backend.features.pricing.domain;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -24,7 +24,7 @@ import org.hibernate.annotations.SQLRestriction;
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class NewArrivalProgram extends DiscountProgram {
+public class NewArrivalProgram extends ProductDiscountProgram {
     // max 3 months
     // buyerLimit 1
     // no discounted sku price

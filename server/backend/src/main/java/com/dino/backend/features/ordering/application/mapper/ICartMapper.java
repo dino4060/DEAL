@@ -5,7 +5,7 @@ import com.dino.backend.features.ordering.application.model.CartItemRes;
 import com.dino.backend.features.ordering.application.model.CartRes;
 import com.dino.backend.features.ordering.domain.Cart;
 import com.dino.backend.features.ordering.domain.CartItem;
-import com.dino.backend.features.promotion.application.model.SkuPrice;
+import com.dino.backend.features.pricing.application.model.SkuPrice;
 import com.dino.backend.features.shop.domain.Shop;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

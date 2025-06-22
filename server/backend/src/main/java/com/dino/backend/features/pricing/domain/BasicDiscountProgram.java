@@ -1,4 +1,4 @@
-package com.dino.backend.features.promotion.domain;
+package com.dino.backend.features.pricing.domain;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BasicDiscountProgram extends DiscountProgram {
+public class BasicDiscountProgram extends ProductDiscountProgram {
     // max 1 year
 
     @Override

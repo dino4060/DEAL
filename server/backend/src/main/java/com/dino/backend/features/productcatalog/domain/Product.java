@@ -1,10 +1,11 @@
 package com.dino.backend.features.productcatalog.domain;
 
+import com.dino.backend.features.pricing.domain.ProductPrice;
 import com.dino.backend.features.productcatalog.domain.model.ProductMeta;
 import com.dino.backend.features.productcatalog.domain.model.ProductSpecification;
 import com.dino.backend.features.productcatalog.domain.model.ProductStatus;
 import com.dino.backend.features.productcatalog.domain.model.ProductTierVariation;
-import com.dino.backend.features.promotion.domain.Discount;
+import com.dino.backend.features.pricing.domain.ProductDiscount;
 import com.dino.backend.features.shop.domain.Shop;
 import com.dino.backend.shared.domain.model.BaseEntity;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
@@ -37,9 +38,8 @@ public class Product extends BaseEntity {
     @Column(name = "product_id")
     Long id;
 
-//    @Enumerated(EnumType.STRING)
-//    ProductStatus status;
-    String status;
+    @Enumerated(EnumType.STRING)
+    ProductStatus status;
 
     @Column(nullable = false)
     String name;
@@ -54,12 +54,6 @@ public class Product extends BaseEntity {
     String sizeGuidePhoto;
 
     String video;
-
-    Integer retailPrice;
-
-    Integer minRetailPrice;
-
-    Integer maxRetailPrice;
 
     @Column(columnDefinition = "text")
     String description;
@@ -76,18 +70,20 @@ public class Product extends BaseEntity {
     @Column(columnDefinition = "jsonb")
     ProductMeta meta;
 
-    // NOTE: orphanRemoval: xóa các children mồ coi
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Sku> skus;
-
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Discount> discounts;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id", nullable = false)
-    Category category;
+    @JoinColumn(name = "category_branch_id")
+    CategoryBranch categoryBranch;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shop_id", updatable = false, nullable = false)
     Shop shop;
+
+    @OneToOne(mappedBy = "product")
+    ProductPrice productPrice;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Sku> skus;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    List<ProductDiscount> productDiscounts;
 }

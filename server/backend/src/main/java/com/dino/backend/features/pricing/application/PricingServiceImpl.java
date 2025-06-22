@@ -1,14 +1,14 @@
-package com.dino.backend.features.promotion.application;
+package com.dino.backend.features.pricing.application;
 
 import com.dino.backend.features.ordering.domain.CartItem;
 import com.dino.backend.features.ordering.domain.OrderItem;
 import com.dino.backend.features.ordering.domain.model.CheckoutSnapshot;
+import com.dino.backend.features.pricing.domain.ProductDiscount;
 import com.dino.backend.features.productcatalog.domain.Sku;
-import com.dino.backend.features.promotion.application.model.SkuPrice;
-import com.dino.backend.features.promotion.application.service.IDiscountService;
-import com.dino.backend.features.promotion.application.service.IPricingService;
-import com.dino.backend.features.promotion.domain.Discount;
-import com.dino.backend.features.promotion.domain.SkuDiscount;
+import com.dino.backend.features.pricing.application.model.SkuPrice;
+import com.dino.backend.features.pricing.application.service.IDiscountService;
+import com.dino.backend.features.pricing.application.service.IPricingService;
+import com.dino.backend.features.pricing.domain.SkuDiscount;
 import com.dino.backend.shared.api.model.CurrentUser;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -32,22 +32,24 @@ public class PricingServiceImpl implements IPricingService {
 
     @Override
     public SkuPrice calculateRetail(Sku sku) {
-        return new SkuPrice(sku.getRetailPrice(), 0, 0);
+        // TODO: main price is sku.getRetailPrice()
+        return new SkuPrice(0, 0, 0);
     }
 
     // calculatePrice Sku //
     @Override
-    public SkuPrice calculateDiscount(Sku sku, Discount discount) {
-        Integer retailPrice = sku.getRetailPrice();
+    public SkuPrice calculateDiscount(Sku sku, ProductDiscount discount) {
+        // TODO: main price is sku.getRetailPrice()
+        Integer retailPrice = 0;
         // dealPrice = dealPrice | calculateDealPrice by discountPercent | null
         Integer dealPrice = discount.getDealPrice() != null
                 ? discount.getDealPrice()
-                : SkuDiscount.createDealPrice(sku.getRetailPrice(), discount.getDiscountPercent());
+                : SkuDiscount.createDealPrice(0, discount.getDiscountPercent());  // TODO: main price is sku.getRetailPrice()
         // discountPercent = discountPercent | calculateDiscountPercent by dealPrice | null
         Integer discountPercent = discount.getDiscountPercent() != null
                 // Discount ko có discountPercent => có dealPrice
                 ? discount.getDiscountPercent()
-                : SkuDiscount.createDiscountPercent(sku.getRetailPrice(), discount.getDealPrice());
+                : SkuDiscount.createDiscountPercent(0, discount.getDealPrice()); // sku.getRetailPrice()
 
         return new SkuPrice(dealPrice, retailPrice, discountPercent);
     }

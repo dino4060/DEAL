@@ -2,7 +2,7 @@ package com.dino.backend.features.ordering.application.model;
 
 import com.dino.backend.features.productcatalog.application.model.ProductLean;
 import com.dino.backend.features.productcatalog.application.model.SkuLean;
-import com.dino.backend.features.promotion.application.model.SkuPrice;
+import com.dino.backend.features.pricing.application.model.SkuPrice;
 
 public record CartItemRes(
         Long id,

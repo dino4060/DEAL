@@ -1,5 +1,4 @@
 package com.dino.backend.features.productcatalog.domain;
-
 import com.dino.backend.shared.domain.model.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -14,10 +13,10 @@ import org.hibernate.annotations.SQLRestriction;
 import java.util.List;
 
 @Entity
-@Table(name = "categories")
+@Table(name = "category_branches")
 @DynamicInsert
 @DynamicUpdate
-@SQLDelete(sql = "UPDATE categories SET is_deleted = true WHERE category_id = ?")
+@SQLDelete(sql = "UPDATE category_branches SET is_deleted = true WHERE category_branch_id = ?")
 @SQLRestriction("is_deleted = false")
 @Getter
 @Setter
@@ -25,38 +24,25 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Category extends BaseEntity {
+public class CategoryBranch extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "category_id")
+    @Column(name = "category_branch_id")
     Long id;
 
-    @Column(length = 40, nullable = false, unique = true)
-    String name;
-
-    @Column(length = 40, nullable = false, unique = true)
-    String slug;
-
-    String photo;
-
-    String description;
-
-    Integer position;
-
-    @Column(nullable = false)
-    Integer level;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "level1_category_id")
+    Category level1Category;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_category_id")
-    @JsonIgnore
-    Category parentCategory;
+    @JoinColumn(name = "level2_category_id")
+    Category level2Category;
 
-    @OneToMany(mappedBy = "parentCategory", fetch = FetchType.LAZY)
-    @JsonIgnore
-    List<Category> childCategories;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "level3_category_id")
+    Category level3Category;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
-    @JsonIgnore
-    List<Specification> specifications;
+    @OneToMany(mappedBy = "categoryBranch", fetch = FetchType.LAZY)
+    List<Product> products;
 }

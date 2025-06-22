@@ -3,8 +3,10 @@ package com.dino.backend.features.productcatalog.domain;
 import com.dino.backend.features.inventory.domain.Inventory;
 import com.dino.backend.features.ordering.domain.CartItem;
 import com.dino.backend.features.ordering.domain.OrderItem;
+import com.dino.backend.features.pricing.domain.SkuPrice;
 import com.dino.backend.features.productcatalog.domain.model.ProductTierVariation;
-import com.dino.backend.features.promotion.domain.SkuDiscount;
+import com.dino.backend.features.pricing.domain.SkuDiscount;
+import com.dino.backend.features.productcatalog.domain.model.SkuStatus;
 import com.dino.backend.shared.domain.exception.AppException;
 import com.dino.backend.shared.domain.exception.ErrorCode;
 import com.dino.backend.shared.domain.model.BaseEntity;
@@ -40,7 +42,8 @@ public class Sku extends BaseEntity {
     @Column(name = "sku_id")
     Long id;
 
-    String status;
+    @Enumerated(EnumType.STRING)
+    SkuStatus status;
 
     @Column(nullable = false)
     String code;
@@ -50,17 +53,18 @@ public class Sku extends BaseEntity {
 
     String tierOptionValue;
 
-    Integer retailPrice;
-
     Integer productionCost;
-
-    @OneToOne(mappedBy = "sku", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    Inventory inventory;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", updatable = false, nullable = false)
     @JsonIgnore
     Product product;
+
+    @OneToOne(mappedBy = "sku", cascade = CascadeType.ALL, orphanRemoval = true)
+    Inventory inventory;
+
+    @OneToOne(mappedBy = "sku", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    SkuPrice skuPrice;
 
     @OneToMany(mappedBy = "sku", fetch = FetchType.LAZY)
     List<SkuDiscount> skuDiscounts;
@@ -73,9 +77,8 @@ public class Sku extends BaseEntity {
     @JsonIgnore
     List<OrderItem> orderItems;
 
-    // carts => sku metrics;
-
     // FACTORY METHOD //
+
     public static List<Integer> createTierOptionIndexes(
             List<Integer> tierOptionIndexes, List<ProductTierVariation> tierVariations) {
         if (tierOptionIndexes.size() != tierVariations.size())

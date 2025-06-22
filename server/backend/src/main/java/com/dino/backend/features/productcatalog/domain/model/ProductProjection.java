@@ -3,7 +3,7 @@ package com.dino.backend.features.productcatalog.domain.model;
 import java.time.Instant;
 import java.util.List;
 
-import com.dino.backend.features.promotion.domain.Discount;
+import com.dino.backend.features.pricing.domain.ProductDiscount;
 
 public interface ProductProjection {
     Long getId();
@@ -20,5 +20,5 @@ public interface ProductProjection {
 
     ProductMeta getMeta();
 
-    List<Discount> getDiscounts();
+    List<ProductDiscount> getDiscounts();
 }

@@ -6,7 +6,7 @@ import com.dino.backend.features.productcatalog.application.model.ProductItemRes
 import com.dino.backend.features.productcatalog.application.model.ProductRes;
 import com.dino.backend.features.productcatalog.domain.Product;
 import com.dino.backend.features.productcatalog.domain.repository.IProductRepository;
-import com.dino.backend.features.promotion.application.service.IDiscountService;
+import com.dino.backend.features.pricing.application.service.IDiscountService;
 import com.dino.backend.shared.api.model.CurrentUser;
 import com.dino.backend.shared.application.utils.Id;
 import com.dino.backend.shared.application.utils.PageRes;
@@ -44,9 +44,9 @@ public class ProductServiceImpl implements IProductService {
                     var discount = this.discountService.canDiscount(Product.builder().id(p.getId()).build());
                     discount.ifPresent(d -> {
                         product.setDealPrice(
-                                d.getDealPrice() != null ? d.getDealPrice() : d.getMinDealPrice());
+                                d.getDealPrice() != null ? d.getDealPrice() : 0); // TODO: legacy is d.getMinDealPrice()
                         product.setDiscountPercent(
-                                d.getDiscountPercent() != null ? d.getDiscountPercent() : d.getMinDiscountPercent());
+                                d.getDiscountPercent() != null ? d.getDiscountPercent() : 0); // TODO: legacy is d.getMinDiscountPercent()
                     });
                     return product;
                 })

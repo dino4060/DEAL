@@ -1,10 +1,10 @@
-package com.dino.backend.features.promotion.application;
+package com.dino.backend.features.pricing.application;
 
+import com.dino.backend.features.pricing.domain.ProductDiscount;
 import com.dino.backend.features.productcatalog.domain.Product;
 import com.dino.backend.features.productcatalog.domain.Sku;
-import com.dino.backend.features.promotion.application.service.IDiscountService;
-import com.dino.backend.features.promotion.domain.Discount;
-import com.dino.backend.features.promotion.domain.repository.IDiscountRepository;
+import com.dino.backend.features.pricing.application.service.IDiscountService;
+import com.dino.backend.features.pricing.domain.repository.IProductDiscountRepository;
 import com.dino.backend.shared.api.model.CurrentUser;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -23,12 +23,12 @@ import java.util.Optional;
 @Slf4j
 public class DiscountServiceImpl implements IDiscountService {
 
-    IDiscountRepository discountRepository;
+    IProductDiscountRepository discountRepository;
 
     // QUERY //
 
     // canApply by discounts //
-    private Optional<Discount> canApply(List<Discount> discounts, @Nullable CurrentUser currentUser) {
+    private Optional<ProductDiscount> canApply(List<ProductDiscount> discounts, @Nullable CurrentUser currentUser) {
         var discountsCanApply = discounts.stream()
                 .filter(dp -> dp.canApply(currentUser))
                 .toList();
@@ -40,11 +40,11 @@ public class DiscountServiceImpl implements IDiscountService {
             return Optional.of(discountsCanApply.getFirst());
 
         return discountsCanApply.stream()
-                .min(Comparator.comparingInt(dp -> dp.getDiscountProgram().getPriority()));
+                .min(Comparator.comparingInt(dp -> dp.getProductDiscountProgram().getPriority()));
     }
 
     @Override
-    public Optional<Discount> canDiscount(Product product) {
+    public Optional<ProductDiscount> canDiscount(Product product) {
         var discounts = this.discountRepository.findByProductId(product.getId());
 
         return this.canApply(discounts, null);
@@ -52,7 +52,7 @@ public class DiscountServiceImpl implements IDiscountService {
 
     // canApply to product //
     @Override
-    public Optional<Discount> canDiscount(Product product, CurrentUser currentUser) {
+    public Optional<ProductDiscount> canDiscount(Product product, CurrentUser currentUser) {
         var discounts = this.discountRepository.findByProductId(product.getId());
 
         return this.canApply(discounts, currentUser);
@@ -60,7 +60,7 @@ public class DiscountServiceImpl implements IDiscountService {
 
     // canApply to Sku //
     @Override
-    public Optional<Discount> canDiscount(Sku sku, CurrentUser currentUser) {
+    public Optional<ProductDiscount> canDiscount(Sku sku, CurrentUser currentUser) {
         return this.canDiscount(sku.getProduct(), currentUser);
     }
 }
