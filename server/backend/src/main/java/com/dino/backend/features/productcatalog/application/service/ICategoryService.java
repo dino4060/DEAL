@@ -7,8 +7,7 @@ import java.util.List;
 
 public interface ICategoryService {
     // READ //
-    List<CategoryProjection> getTree();
+    List<CategoryProjection> getList();
 
-    // HELP //
-    Category findOrErrorById(String categoryId);
+    List<Category> getTree();
 }

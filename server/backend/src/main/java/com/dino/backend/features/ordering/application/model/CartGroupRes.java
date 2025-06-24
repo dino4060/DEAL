@@ -1,11 +1,11 @@
 package com.dino.backend.features.ordering.application.model;
 
-import com.dino.backend.features.shop.application.model.ShopLean;
+import com.dino.backend.features.shop.application.model.ShopLeanRes;
 
 import java.util.List;
 
 public record CartGroupRes(
         Long id,
-        ShopLean shop,
+        ShopLeanRes shop,
         List<CartItemRes> cartItems) {
 }

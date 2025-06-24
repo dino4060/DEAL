@@ -37,29 +37,20 @@ public class ProductPrice extends BaseEntity {
 
     int mainPrice;
 
+    int discountPercent;
+
     Integer sidePrice;
-
-    Integer discountPercent;
-
-    Integer minRetailPrice;
 
     Integer maxRetailPrice;
 
-    Integer minMainPrice;
-
     Integer maxMainPrice;
-
-    Integer minSidePrice;
-
-    Integer maxSidePrice;
-
-    Integer minDiscountPercent;
 
     Integer maxDiscountPercent;
 
+    Integer maxSidePrice;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false, updatable = false)
-    @JsonIgnore
     Product product;
 
     @OneToMany(mappedBy = "productPrice", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

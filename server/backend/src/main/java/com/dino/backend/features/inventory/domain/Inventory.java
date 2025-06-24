@@ -4,7 +4,6 @@ import com.dino.backend.features.productcatalog.domain.Sku;
 import com.dino.backend.shared.domain.exception.AppException;
 import com.dino.backend.shared.domain.exception.ErrorCode;
 import com.dino.backend.shared.domain.model.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -33,15 +32,14 @@ public class Inventory extends BaseEntity {
     @Column(name = "inventory_id")
     Long id;
 
-    Integer stocks;
+    int stocks;
 
-    Integer sales;
+    int sales;
 
-    Integer total;
+    int total;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sku_id", nullable = false, updatable = false)
-    @JsonIgnore
     Sku sku;
 
     // SETTERS //

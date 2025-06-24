@@ -5,12 +5,11 @@ import com.dino.backend.features.ordering.domain.CartItem;
 import com.dino.backend.features.ordering.domain.OrderItem;
 import com.dino.backend.features.pricing.domain.SkuPrice;
 import com.dino.backend.features.productcatalog.domain.model.ProductTierVariation;
-import com.dino.backend.features.pricing.domain.SkuDiscount;
+import com.dino.backend.features.promotion.domain.SkuDiscount;
 import com.dino.backend.features.productcatalog.domain.model.SkuStatus;
 import com.dino.backend.shared.domain.exception.AppException;
 import com.dino.backend.shared.domain.exception.ErrorCode;
 import com.dino.backend.shared.domain.model.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -57,24 +56,21 @@ public class Sku extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", updatable = false, nullable = false)
-    @JsonIgnore
     Product product;
 
     @OneToOne(mappedBy = "sku", cascade = CascadeType.ALL, orphanRemoval = true)
     Inventory inventory;
 
     @OneToOne(mappedBy = "sku", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    SkuPrice skuPrice;
+    SkuPrice price;
 
     @OneToMany(mappedBy = "sku", fetch = FetchType.LAZY)
-    List<SkuDiscount> skuDiscounts;
+    List<SkuDiscount> discounts;
 
     @OneToMany(mappedBy = "sku", fetch = FetchType.LAZY)
-    @JsonIgnore
     List<CartItem> cartItems;
 
     @OneToMany(mappedBy = "sku", fetch = FetchType.LAZY)
-    @JsonIgnore
     List<OrderItem> orderItems;
 
     // FACTORY METHOD //

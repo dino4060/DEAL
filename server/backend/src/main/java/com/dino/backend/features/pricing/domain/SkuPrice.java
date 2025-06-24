@@ -1,7 +1,7 @@
 package com.dino.backend.features.pricing.domain;
 
 import com.dino.backend.features.productcatalog.domain.Sku;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.dino.backend.shared.domain.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -23,7 +23,7 @@ import org.hibernate.annotations.SQLRestriction;
 @NoArgsConstructor
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class SkuPrice {
+public class SkuPrice extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -34,18 +34,16 @@ public class SkuPrice {
 
     int mainPrice;
 
-    Integer sidePrice;
+    int discountPercent;
 
-    Integer discountPercent;
+    Integer sidePrice;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sku_id", updatable = false, nullable = false)
-    @JsonIgnore
     Sku sku;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_price_id", updatable = false, nullable = false)
-    @JsonIgnore
     ProductPrice productPrice;
 
 }

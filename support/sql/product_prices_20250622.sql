@@ -1,0 +1,2 @@
+INSERT INTO public.product_prices (product_price_id,created_at,is_deleted,updated_at,discount_percent,main_price,max_discount_percent,max_main_price,max_retail_price,max_side_price,min_discount_percent,min_main_price,min_retail_price,min_side_price,retail_price,side_price,product_id) VALUES
+	 (1,'2025-05-25 10:26:48.859+07',false,'2025-05-25 10:26:48.859+07',20,160000,20,160000,200000,200000,20,160000,200000,200000,200000,200000,1);

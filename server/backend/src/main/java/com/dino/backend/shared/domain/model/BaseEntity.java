@@ -23,6 +23,7 @@ public class BaseEntity {
     @CreationTimestamp
     Instant createdAt;
 
+
     @UpdateTimestamp
     Instant updatedAt;
 
@@ -36,4 +37,19 @@ public class BaseEntity {
     @PreUpdate
     public void beforeUpdate() {
     }
+
+//    @JsonIgnore
+//    public Instant getCreatedAt() {
+//        return createdAt;
+//    }
+//
+//    @JsonIgnore
+//    public Instant getUpdatedAt() {
+//        return updatedAt;
+//    }
+//
+//    @JsonIgnore
+//    public Boolean getDeleted() {
+//        return isDeleted;
+//    }
 }

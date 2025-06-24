@@ -1,14 +1,14 @@
 package com.dino.backend.features.ordering.application.model;
 
 import com.dino.backend.features.ordering.domain.model.*;
-import com.dino.backend.features.shop.application.model.ShopLean;
+import com.dino.backend.features.shop.application.model.ShopLeanRes;
 
 import java.util.List;
 
 public record DraftOrderRes(
         Long id,
         OrderStatus status,
-        ShopLean shop,
+        ShopLeanRes shop,
         String note,
         CheckoutSnapshot checkoutSnapshot,
         ShippingDetail shippingDetail,

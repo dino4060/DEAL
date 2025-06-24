@@ -1,0 +1,2 @@
+INSERT INTO public.product_discount_programs (program_type,product_discount_program_id,created_at,is_deleted,updated_at,end_date,"name",start_date,pricing_type,status_type,channel_type,shop_id) VALUES
+	 ('BASIC_DISCOUNT',1,'2025-05-25 10:16:15.358886+07',false,'2025-05-25 10:16:15.358886+07','2026-05-25 10:16:15.358886+07','Product discount 2025-05-25 10:16:15 AM','2025-05-25 10:16:15.358886+07','PERCENTAGE','ONGOING',NULL,1);
