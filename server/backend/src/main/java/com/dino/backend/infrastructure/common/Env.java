@@ -6,14 +6,13 @@ import org.springframework.stereotype.Component;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
 
 // NOTE: Lombok Constructors
 // @RequiredArgsConstructor: create a constructor excluding @NonFinal and @Nullable fields
+// @ConfigurationProperties(prefix = "jwt.access"): detach env util
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PUBLIC)
-@Slf4j
 public class Env {
     // JWT //
 

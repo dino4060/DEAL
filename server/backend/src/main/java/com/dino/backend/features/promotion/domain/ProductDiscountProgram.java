@@ -3,7 +3,7 @@ package com.dino.backend.features.promotion.domain;
 import java.util.List;
 
 import com.dino.backend.features.promotion.domain.model.ProgramStatusType;
-import com.dino.backend.shared.domain.model.Promotion;
+import com.dino.backend.features.promotion.domain.repository.Promotion;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;

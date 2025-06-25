@@ -12,13 +12,7 @@ import java.util.List;
 
 public interface IPricingService {
 
-    SkuPriceRes calculateRetail(Sku sku);
-
-    SkuPriceRes calculateDiscount(Sku sku, ProductDiscount discount);
-
-    SkuPriceRes calculatePrice(Sku sku, CurrentUser currentUser);
-
     CheckoutSnapshot checkoutOrder(List<OrderItem> orderItems);
 
-    CheckoutSnapshot checkoutCartGroup(List<CartItem> cartItems, CurrentUser currentUser);
+    CheckoutSnapshot checkoutCartGroup(List<CartItem> cartItems);
 }

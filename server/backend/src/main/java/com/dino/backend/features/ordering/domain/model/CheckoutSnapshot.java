@@ -70,7 +70,7 @@ public class CheckoutSnapshot {
 
     // FACTORY METHODS //
 
-    public static CheckoutSnapshot empty() {
+    public static CheckoutSnapshot createEmpty() {
         return CheckoutSnapshot.builder()
                 .summary(new Summary())
                 .discountVoucher(new DiscountVoucher())

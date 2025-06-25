@@ -24,43 +24,6 @@ import java.util.List;
 @Slf4j
 public class PricingServiceImpl implements IPricingService {
 
-    IDiscountService discountService;
-
-    // QUERY //
-
-    // SKU PRICE //
-
-    @Override
-    public SkuPriceRes calculateRetail(Sku sku) {
-        // TODO: main price is sku.getRetailPrice()
-        return new SkuPriceRes(sku.getId(), 0, 0, 0);
-    }
-
-    // calculatePrice Sku //
-    @Override
-    public SkuPriceRes calculateDiscount(Sku sku, ProductDiscount discount) {
-        // TODO: main price is sku.getRetailPrice()
-        Integer retailPrice = 0;
-        // dealPrice = dealPrice | calculateDealPrice by discountPercent | null
-        Integer dealPrice = discount.getDealPrice() != null
-                ? discount.getDealPrice()
-                : SkuDiscount.createDealPrice(0, discount.getDiscountPercent());  // TODO: main price is sku.getRetailPrice()
-        // discountPercent = discountPercent | calculateDiscountPercent by dealPrice | null
-        Integer discountPercent = discount.getDiscountPercent() != null
-                // Discount ko có discountPercent => có dealPrice
-                ? discount.getDiscountPercent()
-                : SkuDiscount.createDiscountPercent(0, discount.getDealPrice()); // sku.getRetailPrice()
-
-        return new SkuPriceRes(sku.getId(), dealPrice, retailPrice, discountPercent);
-    }
-
-    @Override
-    public SkuPriceRes calculatePrice(Sku sku, CurrentUser currentUser) {
-        return this.discountService.canDiscount(sku, currentUser)
-                .map(discount -> this.calculateDiscount(sku, discount))
-                .orElseGet(() -> calculateRetail(sku));
-    }
-
     // CHECKOUT //
 
     @Override
@@ -73,12 +36,9 @@ public class PricingServiceImpl implements IPricingService {
     }
 
     @Override
-    public CheckoutSnapshot checkoutCartGroup(List<CartItem> cartItems, CurrentUser currentUser) {
+    public CheckoutSnapshot checkoutCartGroup(List<CartItem> cartItems) {
         int totalMainPrice = cartItems.stream()
-                .mapToInt(item -> {
-                    var skuPrice = this.calculatePrice(item.getSku(), currentUser);
-                    return skuPrice.mainPrice() * item.getQuantity();
-                })
+                .mapToInt(item -> item.getSku().getPrice().getMainPrice() * item.getQuantity())
                 .sum();
 
         return CheckoutSnapshot.createSnapshot(totalMainPrice);

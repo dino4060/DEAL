@@ -1,4 +1,4 @@
-package com.dino.backend.infrastructure.security.httpclient;
+package com.dino.backend.infrastructure.htttpclient.oauth2;
 
 import com.dino.backend.infrastructure.security.model.GoogleTokenRequest;
 import com.dino.backend.infrastructure.security.model.GoogleTokenResponse;

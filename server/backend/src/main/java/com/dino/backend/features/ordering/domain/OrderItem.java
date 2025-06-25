@@ -83,12 +83,12 @@ public class OrderItem extends BaseEntity {
 
     // FACTORY //
 
-    public static OrderItem createOrderItem(Sku sku, int quantity, int mainPrice, int sidePrice) {
+    public static OrderItem createOrderItem(Sku sku, int quantity) {
         var item = new OrderItem();
 
         item.setQuantity(quantity);
-        item.setMainPrice(mainPrice);
-        item.setSidePrice(sidePrice);
+        item.setMainPrice(sku.getPrice().getMainPrice());
+        item.setSidePrice(sku.getPrice().getSidePrice());
         item.setSku(sku);
 
         return item;

@@ -55,10 +55,11 @@ public class CheckoutServiceImpl implements ICheckoutService {
                 .orElseThrow(() -> new AppException(ErrorCode.CART__NOT_FOUND));
 
         // 2. checkout each group, then total checkout
-        var totalCheckoutSnapshot = CheckoutSnapshot.empty();
+        var totalCheckoutSnapshot = CheckoutSnapshot.createEmpty();
         for (var entry : itemsGroupedByShop.entrySet()) {
             List<CartItem> cartItems = entry.getValue();
-            CheckoutSnapshot checkoutSnapshot = this.pricingService.checkoutCartGroup(cartItems, currentUser);
+
+            var checkoutSnapshot = this.pricingService.checkoutCartGroup(cartItems);
 
             totalCheckoutSnapshot.accumulateFrom(checkoutSnapshot);
         }
@@ -81,7 +82,7 @@ public class CheckoutServiceImpl implements ICheckoutService {
 
         // 2. create draft Orders
         var ordersRes = new ArrayList<DraftOrderRes>();
-        var totalCheckoutSnapshot = CheckoutSnapshot.empty();
+        var totalCheckoutSnapshot = CheckoutSnapshot.createEmpty();
         for (var entry : itemsGroupedByShop.entrySet()) {
             // create OrderItems
             var shop = entry.getKey();
