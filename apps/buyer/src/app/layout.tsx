@@ -8,44 +8,44 @@ import { AppFooter } from "@/components/layout/AppFooter";
 
 // Set up APP variable
 export const APP = {
-  name: "DEAL",
+    name: "DEAL",
 }
 
 // Set up font variables
 const inter = Inter({
-  variable: "--font-inter-sans",
-  subsets: ["latin"]
+    variable: "--font-inter-sans",
+    subsets: ["latin"]
 });
 
 // Set up metadata for the page
 export const metadata: Metadata = {
-  title: "DEAL | Spend Less, Shop More.",
-  description: "The best shopping experience.",
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-  }
+    title: "DEAL | Spend Less, Shop More.",
+    description: "The best shopping experience.",
+    icons: {
+        icon: "/favicon.ico",
+        shortcut: "/favicon.ico",
+    }
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body className={`${inter.className}
+    return (
+        <html lang="en">
+            <body className={`${inter.className}
         antialiased bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100`
-      }>
-        <AppProvider>
-          <main>
-            <AppHeader />
-            {children}
-            <AppFooter />
-          </main>
-          <Toaster closeButton richColors />
-        </AppProvider>
-      </body>
-    </html>
-  );
+            }>
+                <AppProvider>
+                    <main>
+                        <AppHeader />
+                        {children}
+                        <AppFooter />
+                    </main>
+                    <Toaster closeButton richColors />
+                </AppProvider>
+            </body>
+        </html>
+    );
 }

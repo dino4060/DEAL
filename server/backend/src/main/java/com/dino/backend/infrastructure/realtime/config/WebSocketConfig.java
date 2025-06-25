@@ -4,22 +4,26 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.*;
 
+import java.util.Arrays;
+
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
-    public void configureMessageBroker(MessageBrokerRegistry config) {
-        // Prefix cho client subscribe (server gửi tin)
-        config.enableSimpleBroker("/topic");
-
-        // Prefix cho client gửi tin (client gửi lên)
-        config.setApplicationDestinationPrefixes("/app");
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
+        // Endpoint for client to connect WebSocket (client & server handshake)
+        registry.addEndpoint("/realtime")
+                .setAllowedOriginPatterns("*")
+                .withSockJS();
     }
 
     @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        // Endpoint kết nối WebSocket (Next.js sẽ kết nối vào đây)
-        registry.addEndpoint("/ws").setAllowedOriginPatterns("*").withSockJS();
+    public void configureMessageBroker(MessageBrokerRegistry config) {
+        // Prefix for client to subscribe (server publish)
+        config.enableSimpleBroker("/topic");
+
+        // Prefix for client to send (client send)
+        config.setApplicationDestinationPrefixes("/app");
     }
 }

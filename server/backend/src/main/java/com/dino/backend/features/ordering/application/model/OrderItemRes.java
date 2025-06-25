@@ -8,7 +8,8 @@ public record OrderItemRes(
         String photo,
         int quantity,
         int mainPrice,
-        int sidePrice,
+        Integer sidePrice,
         ProductLeanRes product,
-        SkuLeanRes sku) {
+        SkuLeanRes sku
+) {
 }

@@ -6,7 +6,10 @@ import com.dino.backend.features.ordering.application.service.IOrderService;
 import com.dino.backend.features.ordering.domain.CartItem;
 import com.dino.backend.features.ordering.domain.Order;
 import com.dino.backend.features.ordering.domain.OrderItem;
-import com.dino.backend.features.ordering.domain.model.*;
+import com.dino.backend.features.ordering.domain.model.OrderAddress;
+import com.dino.backend.features.ordering.domain.model.OrderStatus;
+import com.dino.backend.features.ordering.domain.model.PaymentMethod;
+import com.dino.backend.features.ordering.domain.model.ShippingDetail;
 import com.dino.backend.features.ordering.domain.repository.IOrderRepository;
 import com.dino.backend.features.pricing.application.service.IPricingService;
 import com.dino.backend.features.shop.domain.Shop;
@@ -63,10 +66,8 @@ public class OrderServiceImpl implements IOrderService {
         for (CartItem cartItem : cartItems) {
             inventoryService.checkStock(cartItem.getSku().getId(), cartItem.getQuantity());
 
-            var skuPrice = this.pricingService.calculatePrice(cartItem.getSku(), currentUser);
+            var order = OrderItem.createOrderItem(cartItem.getSku(), cartItem.getQuantity());
 
-            var order = OrderItem.createOrderItem(cartItem.getSku(), cartItem.getQuantity(),
-                    skuPrice.mainPrice(), skuPrice.sidePrice());
             orderItems.add(order);
         }
         return orderItems;

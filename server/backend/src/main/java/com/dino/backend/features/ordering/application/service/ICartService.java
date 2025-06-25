@@ -10,6 +10,7 @@ import com.dino.backend.shared.application.utils.Deleted;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 public interface ICartService {
     // HELPER //
@@ -18,7 +19,7 @@ public interface ICartService {
 
     Cart getCartWithShop(CurrentUser currentUser);
 
-    Optional<Map<Shop, List<CartItem>>> groupCartItemByShop(Cart cart, List<Long> cartItemIdsToFilter);
+    Optional<Map<Shop, List<CartItem>>> groupCartItemByShop(Cart cart, Set<Long> cartItemIdsToFilter);
 
     // QUERY //
 

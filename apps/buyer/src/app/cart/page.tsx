@@ -14,7 +14,6 @@ export default async function CartPage() {
     }
 
     // Fetch dữ liệu cần thiết cho trang giỏ hàng trên server
-    // Đảm bảo các hàm này trả về null nếu có lỗi hoặc không có dữ liệu
     const [cart, defaultAddress] = await Promise.all([
         getCachedUserCart(),
         getDefaultAddress(),

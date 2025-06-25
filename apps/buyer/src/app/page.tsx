@@ -1,13 +1,13 @@
-'use client';
-import CategoryListSection from "@/components/home/CategoryListSection";
 import FlashSaleSection from "@/components/home/FlashSaleSection";
 import HeroImageSection from "@/components/home/HeroImageSection";
-import { ProductGridSection } from "@/components/home/ProductGirdSection";
-import { useState } from "react";
+import TodayProductSection from "@/components/home/TodayProductSection";
+import { api } from "@/lib/api";
+import { serverFetch } from "@/lib/fetch/fetch.server";
 
+const HomePage = async () => {
+  const { success, data } = await serverFetch(api.category.getTree());
 
-const HomePage = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const categories = success ? data : [];
 
   return (
     <div className="py-10 space-y-10">
@@ -15,14 +15,7 @@ const HomePage = () => {
 
       <FlashSaleSection />
 
-      <CategoryListSection
-        selectedCategory={selectedCategory}
-        setSelectCategory={setSelectedCategory}
-      />
-
-      <ProductGridSection
-        selectedCategory={selectedCategory}
-      />
+      <TodayProductSection categories={categories} />
     </div>
   );
 }

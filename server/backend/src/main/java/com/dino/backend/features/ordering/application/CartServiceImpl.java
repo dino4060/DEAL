@@ -8,7 +8,6 @@ import com.dino.backend.features.ordering.domain.Cart;
 import com.dino.backend.features.ordering.domain.CartItem;
 import com.dino.backend.features.ordering.domain.repository.ICartRepository;
 import com.dino.backend.features.productcatalog.application.service.ISkuService;
-import com.dino.backend.features.pricing.application.service.IPricingService;
 import com.dino.backend.features.shop.domain.Shop;
 import com.dino.backend.shared.api.model.CurrentUser;
 import com.dino.backend.shared.application.utils.Deleted;
@@ -32,7 +31,6 @@ public class CartServiceImpl implements ICartService {
 
     IUserService userService;
     ISkuService skuService;
-    IPricingService pricingService;
     ICartRepository cartRepository;
     ICartMapper cartMapper;
 
@@ -74,12 +72,39 @@ public class CartServiceImpl implements ICartService {
      * groupCartItemByShop.
      */
     @Override
-    public Optional<Map<Shop, List<CartItem>>> groupCartItemByShop(Cart cart, List<Long> cartItemIdsToFilter) {
-        Map<Shop, List<CartItem>> itemsGrouped = cart.getCartItems().stream()
+    public Optional<Map<Shop, List<CartItem>>> groupCartItemByShop(Cart cart, Set<Long> cartItemIdsToFilter) {
+        Map<Shop, List<CartItem>> itemsGroupedByShop = cart.getCartItems().stream()
                 .filter(item -> cartItemIdsToFilter.contains(item.getId()))
                 .collect(Collectors.groupingBy(item -> item.getSku().getProduct().getShop()));
 
-        return itemsGrouped.isEmpty() ? Optional.empty() : Optional.of(itemsGrouped);
+        return itemsGroupedByShop.isEmpty() ? Optional.empty() : Optional.of(itemsGroupedByShop);
+    }
+
+    private Optional<Map<Shop, List<CartItem>>> groupCartItemByShop(Cart cart) {
+        Map<Shop, List<CartItem>> itemsGroupedByShop = cart.getCartItems().stream()
+                .collect(Collectors.groupingBy(item -> item.getSku().getProduct().getShop()));
+
+        return itemsGroupedByShop.isEmpty() ? Optional.empty() : Optional.of(itemsGroupedByShop);
+    }
+
+    /**
+     * buildCartGroup.
+     */
+    private Optional<CartGroupRes> buildCartGroupRes(Map.Entry<Shop, List<CartItem>> entry) {
+        Shop shop = entry.getKey();
+        List<CartItem> cartItems = entry.getValue();
+
+        List<CartItemRes> cartItemsRes = cartItems.stream()
+                .map(item -> {
+                    var photo = skuService.getPhoto(item.getSku());
+                    return cartMapper.toCartItemRes(item, photo);
+                })
+                .sorted(Comparator.comparing(CartItemRes::id).reversed())
+                .toList();
+
+        return cartItemsRes.isEmpty()
+                ? Optional.empty()
+                : Optional.of(cartMapper.toCartGroupRes(cartItemsRes.getFirst().id(), shop, cartItemsRes));
     }
 
     /**
@@ -108,39 +133,13 @@ public class CartServiceImpl implements ICartService {
                 .orElseGet(() -> this.createCart(currentUser));
 
         // 1. group CartItems by Shop
-        Map<Shop, List<CartItem>> itemsGroupedByShop = cart.getCartItems().stream()
-                .collect(Collectors.groupingBy(item -> item.getSku().getProduct().getShop()));
+        Map<Shop, List<CartItem>> itemsGroupedByShop = this.groupCartItemByShop(cart)
+                .orElse(Collections.emptyMap());
 
         // 2. build and sort CartGroups
         List<CartGroupRes> cartGroups = itemsGroupedByShop.entrySet().stream()
-                .map(entry -> {
-                    Shop shop = entry.getKey();
-                    List<CartItem> cartItemsInGroup = entry.getValue();
-
-                    // build CartItemsRes
-                    List<CartItemRes> cartItemsRes = cartItemsInGroup.stream()
-                            .map(cartItem -> {
-                                // get photo of CartItem
-                                var cartItemPhoto = this.skuService.getPhoto(
-                                        cartItem.getSku());
-                                // apply Discount to Sku
-                                var skuPrice = this.pricingService.calculatePrice(cartItem.getSku(),
-                                        currentUser);
-                                // display CartItemRes
-                                return this.cartMapper.toCartItemRes(
-                                        cartItem, cartItemPhoto, skuPrice);
-                            })
-                            .sorted(Comparator.comparing(CartItemRes::id).reversed())
-                            .toList();
-                    // get id of CartGroups
-                    Long latestCartItemId = cartItemsRes.stream()
-                            .findFirst()
-                            .map(CartItemRes::id)
-                            .orElse(null);
-
-                    return this.cartMapper.toCartGroupRes(latestCartItemId, shop, cartItemsRes);
-                })
-                .filter(cartGroupRes -> Objects.nonNull(cartGroupRes.id()))
+                .map(entry -> this.buildCartGroupRes(entry).orElse(null))
+                .filter(Objects::nonNull)
                 .sorted(Comparator.comparing(CartGroupRes::id).reversed())
                 .toList();
 

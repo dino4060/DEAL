@@ -35,10 +35,15 @@ import java.util.List;
 public class CheckoutServiceImpl implements ICheckoutService {
 
     IPricingService pricingService;
+
     IInventoryService inventoryService;
+
     ICartService cartService;
+
     IOrderService orderService;
+
     ICheckoutMapper checkoutMapper;
+
     IOrderMapper orderMapper;
 
     // QUERY //
@@ -55,10 +60,12 @@ public class CheckoutServiceImpl implements ICheckoutService {
                 .orElseThrow(() -> new AppException(ErrorCode.CART__NOT_FOUND));
 
         // 2. checkout each group, then total checkout
-        var totalCheckoutSnapshot = CheckoutSnapshot.empty();
+        var totalCheckoutSnapshot = CheckoutSnapshot.createEmpty();
+
         for (var entry : itemsGroupedByShop.entrySet()) {
             List<CartItem> cartItems = entry.getValue();
-            CheckoutSnapshot checkoutSnapshot = this.pricingService.checkoutCartGroup(cartItems, currentUser);
+
+            var checkoutSnapshot = this.pricingService.checkoutCartGroup(cartItems);
 
             totalCheckoutSnapshot.accumulateFrom(checkoutSnapshot);
         }
@@ -81,7 +88,8 @@ public class CheckoutServiceImpl implements ICheckoutService {
 
         // 2. create draft Orders
         var ordersRes = new ArrayList<DraftOrderRes>();
-        var totalCheckoutSnapshot = CheckoutSnapshot.empty();
+        var totalCheckoutSnapshot = CheckoutSnapshot.createEmpty();
+
         for (var entry : itemsGroupedByShop.entrySet()) {
             // create OrderItems
             var shop = entry.getKey();
@@ -93,9 +101,8 @@ public class CheckoutServiceImpl implements ICheckoutService {
             ordersRes.add(this.orderMapper.toDraftOrderRes(createdOrder));
             totalCheckoutSnapshot.accumulateFrom(createdOrder.getCheckoutSnapshot());
         }
-
-        return this.checkoutMapper.toStartCheckoutRes(ordersRes.getFirst().id(), totalCheckoutSnapshot,
-                ordersRes);
+        return this.checkoutMapper.toStartCheckoutRes(
+                ordersRes.getFirst().id(), totalCheckoutSnapshot, ordersRes);
     }
 
     /**
@@ -109,17 +116,18 @@ public class CheckoutServiceImpl implements ICheckoutService {
 
         // 2. update order and inventory
         var updatedOrders = new ArrayList<>();
+
         for (Order order : ordersToConfirm) {
-            // reserveStock for orderItem
-            for (OrderItem orderItem : order.getOrderItems())
+            for (OrderItem orderItem : order.getOrderItems()) {
                 inventoryService.reserveStock(orderItem.getSku().getId(), orderItem.getQuantity());
-            // markAsPending
+            }
             Order updatedOrder = this.orderService.markAsPending(order);
             updatedOrders.add(updatedOrder);
         }
 
         // 3. remove cart items
         var skuIds = new ArrayList<Long>();
+
         for (Order order : ordersToConfirm) {
             for (OrderItem orderItem : order.getOrderItems())
                 skuIds.add(orderItem.getSku().getId());

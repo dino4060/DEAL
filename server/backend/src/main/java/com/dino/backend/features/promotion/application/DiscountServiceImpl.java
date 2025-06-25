@@ -30,7 +30,7 @@ public class DiscountServiceImpl implements IDiscountService {
     // canApply by discounts //
     private Optional<ProductDiscount> canApply(List<ProductDiscount> discounts, @Nullable CurrentUser currentUser) {
         var discountsCanApply = discounts.stream()
-                .filter(dp -> dp.canApply(currentUser))
+                .filter(d -> d.canApply(currentUser))
                 .toList();
 
         if (discountsCanApply.isEmpty())
@@ -40,14 +40,7 @@ public class DiscountServiceImpl implements IDiscountService {
             return Optional.of(discountsCanApply.getFirst());
 
         return discountsCanApply.stream()
-                .min(Comparator.comparingInt(dp -> dp.getProductDiscountProgram().getPriority()));
-    }
-
-    @Override
-    public Optional<ProductDiscount> canDiscount(Product product) {
-        var discounts = this.discountRepository.findByProductId(product.getId());
-
-        return this.canApply(discounts, null);
+                .min(Comparator.comparingInt(d -> d.getProductDiscountProgram().getPriority()));
     }
 
     // canApply to product //

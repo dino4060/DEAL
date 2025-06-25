@@ -38,7 +38,7 @@ public class Category extends BaseEntity {
     String name;
 
     @JsonIgnore
-    @Column(length = 40, nullable = false, unique = true)
+    @Column(length = 40)
     String slug;
 
     String photo;

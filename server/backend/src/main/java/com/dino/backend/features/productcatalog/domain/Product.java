@@ -55,6 +55,8 @@ public class Product extends BaseEntity {
 
     String video;
 
+    int retailPrice;
+
     @Column(columnDefinition = "text")
     String description;
 

@@ -4,18 +4,24 @@ import com.dino.backend.features.productcatalog.application.mapper.IProductMappe
 import com.dino.backend.features.productcatalog.application.model.ProductItemRes;
 import com.dino.backend.features.productcatalog.application.model.ProductSearchParams;
 import com.dino.backend.features.productcatalog.application.reader.IProductReader;
+import com.dino.backend.features.productcatalog.application.service.IProductService;
 import com.dino.backend.features.productcatalog.domain.model.ProductItemView;
 import com.dino.backend.features.productcatalog.domain.query.IProductQuery;
 import com.dino.backend.features.promotion.application.service.IDiscountService;
+import com.dino.backend.shared.application.utils.AppUtils;
 import com.dino.backend.shared.application.utils.PageRes;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -23,35 +29,32 @@ import java.util.List;
 @Slf4j
 public class ProductReaderImpl implements IProductReader {
 
+    IProductService productService;
     IProductQuery productQuery;
     IProductMapper productMapper;
-    IDiscountService discountService;
 
     @Override
-    public PageRes<ProductItemRes> searchProduct(ProductSearchParams searchParams, Pageable pageable) {
+    public List<ProductItemRes> searchProducts(ProductSearchParams searchParams) {
+        if (AppUtils.isBlank(searchParams.keyword()))
+            return this.productService.listProducts(AppUtils.defaultPageable()).getItems();
+
+        var products = this.productQuery.searchByMultiParams(
+                searchParams.keyword(), searchParams.categories(), searchParams.priceRange());
+
+        return products.stream()
+                .map(p -> this.productMapper.toProductItemRes(p))
+                .toList();
+    }
+
+    @Override
+    public PageRes<ProductItemRes> searchProducts(ProductSearchParams searchParams, Pageable pageable) {
         var pageDomain = this.productQuery.searchByMultiParams(
                 searchParams.keyword(), searchParams.categories(), searchParams.priceRange(), pageable);
 
         var productList = pageDomain.getContent().stream()
-                .map(p -> {
-                    var product = this.productMapper.toProductItemRes(p);
-//                    var discount = this.discountService.canDiscount(Product.builder().id(p.getId()).build());
-//                    discount.ifPresent(d -> {
-//                        product.setDealPrice(
-//                                d.getDealPrice() != null ? d.getDealPrice() : 0); // TODO: legacy code is d.getMinDealPrice()
-//                        product.setDiscountPercent(
-//                                d.getDiscountPercent() != null ? d.getDiscountPercent() : 0); // TODO: legacy code is d.getMinDiscountPercent()
-//                    });
-                    return product;
-                })
+                .map(p -> this.productMapper.toProductItemRes(p))
                 .toList();
 
         return PageRes.from(pageDomain, productList);
-    }
-
-    @Override
-    public List<ProductItemView> searchProduct(ProductSearchParams searchParams) {
-        return this.productQuery.searchByMultiParams(
-                searchParams.keyword(), searchParams.categories(), searchParams.priceRange());
     }
 }

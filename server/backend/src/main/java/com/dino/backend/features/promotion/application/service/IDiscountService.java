@@ -10,8 +10,6 @@ import java.util.Optional;
 public interface IDiscountService {
     // QUERY //
 
-    Optional<ProductDiscount> canDiscount(Product product);
-
     Optional<ProductDiscount> canDiscount(Product product, CurrentUser currentUser);
 
     Optional<ProductDiscount> canDiscount(Sku sku, CurrentUser currentUser);

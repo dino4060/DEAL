@@ -1,7 +1,8 @@
-package com.dino.backend.shared.domain.model;
+package com.dino.backend.features.promotion.domain.repository;
 
 import java.time.Instant;
 
+import com.dino.backend.shared.domain.model.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AccessLevel;

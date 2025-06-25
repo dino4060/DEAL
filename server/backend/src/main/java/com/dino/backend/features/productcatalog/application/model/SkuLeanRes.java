@@ -6,5 +6,6 @@ public record SkuLeanRes(
         Long id,
         String code,
         List<Integer> tierOptionIndexes,
-        String tierOptionValue) {
+        String tierOptionValue
+) {
 }

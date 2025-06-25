@@ -20,8 +20,10 @@ public class InventoryServiceImpl implements IInventoryService {
 
     IInventoryRepository inventoryRepository;
 
+    IInventoryLockProvider lockProvider;
+
     /**
-     * checkStock:
+     * checkStock
      */
     @Override
     @Transactional(readOnly = true)
@@ -36,13 +38,32 @@ public class InventoryServiceImpl implements IInventoryService {
     }
 
     /**
+     * reserveStockNormally
+     */
+    @Transactional
+    private void reserveStockNormally(Long skuId, int quantity) {
+        Inventory inventory = this.checkStock(skuId, quantity);
+
+        inventory.reverseStock(quantity);
+        this.inventoryRepository.save(inventory);
+    }
+
+    /**
+     * reserveStockWithLock
+     */
+    @Transactional
+    private void reserveStockWithLock(Long skuId, int quantity) {
+        this.lockProvider.reserveStockWithLock(
+                skuId,
+                () -> this.reserveStockNormally(skuId, quantity));
+    }
+
+    /**
      * reserveStock
      */
     @Override
     @Transactional
     public void reserveStock(Long skuId, int quantity) {
-        Inventory inventory = this.checkStock(skuId, quantity);
-        inventory.reverseStock(quantity);
-        inventoryRepository.save(inventory);
+        this.reserveStockWithLock(skuId, quantity);
     }
 }

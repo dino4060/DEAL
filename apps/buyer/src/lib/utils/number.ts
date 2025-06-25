@@ -1,24 +1,29 @@
-export function formatPrice(value: number | string, withSymbol = true): string {
-    const number = typeof value === 'string' ? parseFloat(value) : value;
-    if (isNaN(number)) return '0₫';
-
-    const formatted = number.toLocaleString('vi-VN');
-    return withSymbol ? `${formatted}₫` : formatted;
-}
-
+// formatPercent //
 export function formatPercent(value: number | string, withMinus = true): string {
-    const number = typeof value === 'string' ? parseFloat(value) : value;
-    if (isNaN(number)) return '-0%';
+  const number = typeof value === 'string' ? parseFloat(value) : value;
 
-    return withMinus ? `-${number}%` : `${number}%`;
+  if (isNaN(number)) return '-0%';
+
+  return withMinus ? `-${number}%` : `${number}%`;
 }
 
-export function formatCurrency(value: number | string | null | undefined, withSymbol = true): string {
-    if (!value) return '0₫';
+// formatCurrency //
+export function formatCurrency(
+  value: number | string | null | undefined,
+  isSinglePrice = true,
+  withSymbol = true
+): string {
+  if (!value) return '0₫';
 
-    const number = typeof value === 'string' ? parseFloat(value) : value;
-    if (isNaN(number)) return '0₫';
+  const number: number = typeof value === 'string' ? parseFloat(value) : value;
 
-    const formatted = number.toLocaleString('vi-VN');
-    return withSymbol ? `₫${formatted}` : formatted;
+  if (isNaN(number)) return '0₫';
+
+  let result: string = number.toLocaleString('vi-VN');
+
+  if (withSymbol) result = `${result}₫`;
+
+  if (!isSinglePrice) result = `từ ${result}`
+
+  return result;
 }

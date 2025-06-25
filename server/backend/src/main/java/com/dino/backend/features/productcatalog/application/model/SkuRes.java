@@ -14,7 +14,6 @@ public record SkuRes(
         String tierOptionValue,
         Integer productionCost,
 
-        SkuPriceRes price,
         InventoryRes inventory
 ) {
 
