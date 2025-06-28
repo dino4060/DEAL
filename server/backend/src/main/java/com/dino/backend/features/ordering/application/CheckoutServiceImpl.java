@@ -118,9 +118,9 @@ public class CheckoutServiceImpl implements ICheckoutService {
         var updatedOrders = new ArrayList<>();
 
         for (Order order : ordersToConfirm) {
-            for (OrderItem orderItem : order.getOrderItems())
-                inventoryService.reserveStockWithLock(orderItem.getSku().getId(), orderItem.getQuantity());
-
+            for (OrderItem orderItem : order.getOrderItems()) {
+                inventoryService.reserveStock(orderItem.getSku().getId(), orderItem.getQuantity());
+            }
             Order updatedOrder = this.orderService.markAsPending(order);
 
             updatedOrders.add(updatedOrder);

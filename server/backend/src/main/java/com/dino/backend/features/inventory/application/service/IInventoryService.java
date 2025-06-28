@@ -7,6 +7,4 @@ public interface IInventoryService {
     Inventory checkStock(Long skuId, int quantity);
 
     void reserveStock(Long skuId, int quantity);
-
-    void reserveStockWithLock(Long skuId, int quantity);
 }
