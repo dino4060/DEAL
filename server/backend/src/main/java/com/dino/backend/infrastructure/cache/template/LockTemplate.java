@@ -1,31 +1,72 @@
 package com.dino.backend.infrastructure.cache.template;
 
+import com.dino.backend.infrastructure.cache.model.Lock;
+import com.dino.backend.infrastructure.cache.model.Retry;
 import com.dino.backend.shared.domain.exception.AppException;
 import com.dino.backend.shared.domain.exception.ErrorCode;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.util.Collections;
 
-@Component
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public abstract class LockTemplate {
 
-    protected abstract boolean tryLock(String key, String value, Duration ttl, int maxRetry, Duration timeout);
+    RedisTemplate<String, String> redisTemplate;
+
+    private String getLock(String key) {
+        return this.redisTemplate.opsForValue().get(key);
+    }
+
+    private Boolean createLock(String key) {
+        var value = "success";
+        var ttl = Duration.ofSeconds(10);
+
+        return redisTemplate.opsForValue().setIfAbsent(key, value, ttl);
+    }
+
+    private void sleep(Duration timeout) {
+        try {
+            Thread.sleep(timeout);
+        } catch (InterruptedException e) {
+            throw new AppException(ErrorCode.SYSTEM__UNHANDLED_EXCEPTION);
+        }
+    }
+
+    protected boolean tryLock(String key) {
+        var retryTimes = Collections.nCopies(10, 1);
+        var sleepTime = Duration.ofMillis(50);
+
+        for (var ignore : retryTimes) {
+            Boolean lockAcquired = this.createLock(key);
+
+            if (Boolean.TRUE.equals(lockAcquired)) {
+                log.info("Lock acquired: {} : {}", key, this.getLock(key));
+                return true;
+            }
+            this.sleep(sleepTime);
+        }
+        return false;
+    }
+
+    protected void releaseLock(String key) {
+        this.redisTemplate.delete(key);
+        log.info("Lock released: {} : {}", key, this.getLock(key));
+    }
 
     protected abstract void doTask();
 
-    protected abstract void releaseLock(String key);
-
     @Transactional
-    public void executeWithLock(String key, String value, Duration ttl, int maxRetry, Duration timeout) {
+    public void executeWithLock(String key) {
         // 1. tryLock
-        boolean lockAcquired = tryLock(key, value, ttl, maxRetry, timeout);
+        boolean lockAcquired = tryLock(key);
 
         if (!lockAcquired)
             throw new AppException(ErrorCode.SYSTEM__UNHANDLED_EXCEPTION);
