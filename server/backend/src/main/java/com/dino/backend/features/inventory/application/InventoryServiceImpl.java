@@ -43,8 +43,9 @@ public class InventoryServiceImpl implements IInventoryService {
     @Transactional
     private void reserveStockNormally(Long skuId, int quantity) {
         Inventory inventory = this.checkStock(skuId, quantity);
+
         inventory.reverseStock(quantity);
-        inventoryRepository.save(inventory);
+        this.inventoryRepository.save(inventory);
     }
 
     /**
@@ -52,7 +53,7 @@ public class InventoryServiceImpl implements IInventoryService {
      */
     @Transactional
     private void reserveStockWithLock(Long skuId, int quantity) {
-        lockProvider.reserveStockWithLock(
+        this.lockProvider.reserveStockWithLock(
                 skuId,
                 () -> this.reserveStockNormally(skuId, quantity));
     }

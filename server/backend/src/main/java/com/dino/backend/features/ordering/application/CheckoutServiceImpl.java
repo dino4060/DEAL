@@ -122,7 +122,6 @@ public class CheckoutServiceImpl implements ICheckoutService {
                 inventoryService.reserveStock(orderItem.getSku().getId(), orderItem.getQuantity());
             }
             Order updatedOrder = this.orderService.markAsPending(order);
-
             updatedOrders.add(updatedOrder);
         }
 

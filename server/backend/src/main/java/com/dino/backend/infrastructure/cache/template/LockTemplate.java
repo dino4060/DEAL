@@ -1,7 +1,5 @@
 package com.dino.backend.infrastructure.cache.template;
 
-import com.dino.backend.infrastructure.cache.model.Lock;
-import com.dino.backend.infrastructure.cache.model.Retry;
 import com.dino.backend.shared.domain.exception.AppException;
 import com.dino.backend.shared.domain.exception.ErrorCode;
 import lombok.AccessLevel;
