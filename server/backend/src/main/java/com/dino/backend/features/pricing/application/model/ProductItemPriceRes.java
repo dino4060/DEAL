@@ -1,8 +1,6 @@
 package com.dino.backend.features.pricing.application.model;
 
-import java.util.List;
-
-public record ProductPriceRes(
+public record ProductItemPriceRes(
         Long id,
         int mainPrice,
         int discountPercent,
@@ -10,8 +8,6 @@ public record ProductPriceRes(
 
         Integer maxMainPrice,
         Integer maxDiscountPercent,
-        Integer maxSidePrice,
-
-        List<SkuPriceRes> skuPrices
+        Integer maxSidePrice
 ) {
 }

@@ -30,8 +30,6 @@ public class SkuPrice extends BaseEntity {
     @Column(name = "sku_price_id")
     Long id;
 
-    int retailPrice;
-
     int mainPrice;
 
     int discountPercent;

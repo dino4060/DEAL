@@ -1,9 +1,9 @@
 package com.dino.backend.features.productcatalog.application.model;
 
-import java.time.Instant;
-
-import com.dino.backend.features.pricing.application.model.ProductPriceRes;
+import com.dino.backend.features.pricing.application.model.ProductItemPriceRes;
 import com.dino.backend.features.productcatalog.domain.model.ProductMeta;
+
+import java.time.Instant;
 
 public record ProductItemRes(
         Long id,
@@ -12,5 +12,6 @@ public record ProductItemRes(
         String name,
         String thumb,
         ProductMeta meta,
-        ProductPriceRes price
-) {}
+        ProductItemPriceRes price
+) {
+}

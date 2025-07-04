@@ -33,15 +33,11 @@ public class ProductPrice extends BaseEntity {
     @Column(name = "product_price_id")
     Long id;
 
-    int retailPrice;
-
     int mainPrice;
 
     int discountPercent;
 
     Integer sidePrice;
-
-    Integer maxRetailPrice;
 
     Integer maxMainPrice;
 

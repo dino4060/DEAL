@@ -1,6 +1,5 @@
-package com.dino.backend.infrastructure.realtime;
+package com.dino.backend.infrastructure.realtime.publisher;
 
-import com.dino.backend.features.pricing.application.provider.IRealtimePriceProvider;
 import com.dino.backend.features.pricing.domain.ProductPrice;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -13,14 +12,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
-public class RealtimeProviderImpl implements IRealtimePriceProvider {
+public class PricePublisher {
 
     SimpMessagingTemplate messagingTemplate;
 
-    @Override
     public void publishPriceUpdate(Long productId, ProductPrice updatedPrice) {
-        // Publish to queue at topic /topic/price/{productId}
         messagingTemplate.convertAndSend("/topic/price/" + productId, updatedPrice);
     }
 }
-

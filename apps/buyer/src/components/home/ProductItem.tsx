@@ -1,7 +1,8 @@
 "use client";
+import { getPriceStrategy } from "@/helpers/product.helper2";
 import { RESOURCES } from "@/lib/constants";
 import { getFileUrl } from "@/lib/files";
-import { formatPrice } from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils";
 import { TProductItem } from "@/types/product.types";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,11 +13,9 @@ type TProductItemProps = {
 };
 
 export const ProductItem = ({ product }: TProductItemProps) => {
-  const { id, name, thumb, meta, retailPrice, dealPrice, discountPercent } =
-    product;
-  const isRetail = !dealPrice && !discountPercent;
-  const mainPrice = isRetail ? retailPrice : dealPrice;
-  const sidePrice = isRetail ? null : retailPrice;
+  const { id, name, thumb, meta, price } = product;
+
+  const { isRetail, isSinglePrice } = getPriceStrategy(price);
 
   return (
     <Link href={`/product/${id}`}>
@@ -38,17 +37,18 @@ export const ProductItem = ({ product }: TProductItemProps) => {
           {/* Product price */}
           <div className="flex items-center space-x-2">
             <span className="text-lg text-red-500 font-semibold ">
-              {formatPrice(mainPrice as number)}
+              {formatCurrency(price.mainPrice, isSinglePrice)}
             </span>
 
             {!isRetail && (
               <Fragment>
                 <span className="text-sm text-gray-500 line-through">
-                  {formatPrice(sidePrice as number)}
+                  {formatCurrency(price.sidePrice)}
                 </span>
+
                 {/* <span className="text-sm text-gray-500 font-semibold">
-                                    {formatPercent(discountPercent as number)}
-                                </span> */}
+                  {formatPercent(price.discountPercent)}
+                </span> */}
               </Fragment>
             )}
           </div>

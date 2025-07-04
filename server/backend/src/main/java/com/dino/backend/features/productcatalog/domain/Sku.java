@@ -52,6 +52,8 @@ public class Sku extends BaseEntity {
 
     String tierOptionValue;
 
+    int retailPrice;
+
     Integer productionCost;
 
     @ManyToOne(fetch = FetchType.LAZY)
