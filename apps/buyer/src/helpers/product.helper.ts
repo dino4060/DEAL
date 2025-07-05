@@ -1,5 +1,5 @@
 // helpers/product.helper.ts
-import { TProductPrice } from "@/types/price.types";
+import { TProductPrice, TSkuPrice } from "@/types/price.types";
 import { TProductSelector } from "@/types/product.types";
 import { isActiveSku } from "./sku.helper";
 
@@ -8,13 +8,22 @@ type TPriceStrategy = {
   isSinglePrice: boolean;
 }
 
-export const getPriceStrategy = (price: TProductPrice): TPriceStrategy => {
-  const { mainPrice, maxMainPrice, discountPercent } = price;
+export const getPriceStrategy = (price: TProductPrice | TSkuPrice): TPriceStrategy => {
+  if ('skuPrices' in price) {
+    const { mainPrice, maxMainPrice, discountPercent } = price;
 
-  const isRetail: boolean = discountPercent === 0;
-  const isSinglePrice: boolean = mainPrice === maxMainPrice;
+    const isRetail: boolean = discountPercent === 0;
+    const isSinglePrice: boolean = mainPrice === maxMainPrice;
 
-  return { isRetail, isSinglePrice };
+    return { isRetail, isSinglePrice };
+  } else {
+    const { discountPercent } = price;
+
+    const isRetail: boolean = discountPercent === 0;
+    const isSinglePrice: boolean = true;
+
+    return { isRetail, isSinglePrice };
+  }
 }
 
 export const getDisabledOptionsMatrix2 = (product: TProductSelector, selectedOptionIdxsInTier: (number | null)[]): boolean[][] => {

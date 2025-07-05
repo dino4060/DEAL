@@ -1,4 +1,5 @@
 import { TInventory } from "./inventory.types";
+import { TSkuPrice } from "./price.types";
 
 // NESTED TYPES //
 
@@ -8,13 +9,13 @@ export type TSkuStatus = 'LIVE' | 'DEACTIVATED' | 'OUT_OF_STOCK';
 
 export type TSku = {
   id: number;
-  inventory: TInventory;
   status: TSkuStatus;
   code: string;
   tierOptionIndexes: number[];
   tierOptionValue: string;
   retailPrice: number;
   productionCost: number | null;
+  inventory: TInventory;
   createdAt: Date;
   updatedAt: Date;
   isDeleted: boolean;

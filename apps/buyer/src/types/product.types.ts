@@ -56,7 +56,10 @@ export type TProductItem = Pick<TProduct,
   'id' | 'name' | 'thumb' | 'meta' | 'price'>;
 
 export type TProductBuyBox = Pick<TProduct,
-  'id' | 'name' | 'shop' | 'skus' | 'tierVariations' | 'price'>;;
+  'id' | 'name' | 'shop' | 'skus' | 'tierVariations' | 'price'>;
+
+export type TProductShortInfo = Pick<TProductBuyBox,
+  'id' | 'name' | 'shop' | 'price'>;
 
 export type TProductSelector = Pick<TProductBuyBox,
   'id' | 'skus' | 'tierVariations'>;
