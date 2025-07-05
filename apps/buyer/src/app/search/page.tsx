@@ -20,10 +20,14 @@ async function searchPage({ searchParams }: TSearchPageProps) {
     <div className="py-10 space-y-10">
       <HomeContainer>
         <h2 className="text-xl font-medium">
-          {query.keyword ? (
-            <Fragment>🔍 Search results for "<span className="text-primary">{query.keyword}</span>"</Fragment>
+          {products.length ? (
+            query.keyword ? (
+              <Fragment>🔍 Kết quả tìm kiếm cho "<span className="text-primary">{query.keyword}</span>"</Fragment>
+            ) : (
+              <Fragment>🔍 Tìm kiếm tất cả</Fragment>
+            )
           ) : (
-            <Fragment>🔍 Search all</Fragment>
+            <Fragment>😭 Rất tiết, không tìm thấy sản phẩm thõa mãn</Fragment>
           )}
         </h2>
       </HomeContainer>

@@ -32,4 +32,6 @@ public interface ICartService {
     CartItemRes updateQuantity(UpdateQuantityReq request, CurrentUser currentUser);
 
     Deleted removeCartItems(RemoveCartItemReq request, CurrentUser currentUser);
+
+    Deleted removeCartItems(List<Long> skuIds, CurrentUser currentUser);
 }

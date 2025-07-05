@@ -11,6 +11,8 @@ import { toast } from "sonner";
 import { clientFetch } from "@/lib/fetch/fetch.client";
 import { api } from "@/lib/api";
 import { TEstimateCheckout } from "@/types/checkout.types";
+import { useDispatch } from "react-redux";
+import { actions } from "@/store";
 
 interface CartHydratorProps {
   initialCart: TCart;
@@ -19,9 +21,14 @@ interface CartHydratorProps {
 
 export function CartHydrator({ initialCart, initialDefaultAddress }: CartHydratorProps) {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [cartData, setCartData] = useState<TCart>(initialCart);
   const [selectedCartItemIds, setSelectedCartItemIds] = useState<Set<number>>(new Set());
   const [estimateData, setEstimateData] = useState<TEstimateCheckout | null>(null);
+
+  useEffect(() => {
+    dispatch(actions.cart.setCart(initialCart));
+  }, []);
 
   // Lấy tất cả các ID của item trong giỏ hàng (dùng useMemo để tối ưu)
   const allCartItemIds = useMemo(() => {
@@ -118,16 +125,15 @@ export function CartHydrator({ initialCart, initialDefaultAddress }: CartHydrato
       return { ...prevCart, cartGroups: newCartGroups };
     });
 
-    // Gọi API để xóa item
+    // Fetch API & handle result
     const result = await clientFetch(api.carts.removeCartItems({ cartItemIds: cartItemIdsToRemove }));
 
-    // Xử lý kết quả từ API
     if (!result.success || !result.data?.isDeleted) {
       toast.error(result.error || "Có lỗi xảy ra khi xóa sản phẩm.");
       setCartData(prevCartData);
       setSelectedCartItemIds(prevSelectedCartItemIds);
     } else {
-      // TODO: revalidate cart
+      dispatch(actions.cart.plusTotal(-1 * result.data.count));
       toast.success(`Đã xóa ${result.data.count} sản phẩm thành công!`);
     }
   }, [cartData, selectedCartItemIds]);

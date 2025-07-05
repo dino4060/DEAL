@@ -11,9 +11,9 @@ export const GlobalDataCleaner = ({ children }: TChildrenComponent) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(actions.auth.clear());
-    dispatch(actions.address.clear());
-    dispatch(actions.cart.clear());
+    dispatch(actions.auth.clean());
+    dispatch(actions.address.clean());
+    dispatch(actions.cart.clean());
   });
 
   return <Fragment>{children}</Fragment>;

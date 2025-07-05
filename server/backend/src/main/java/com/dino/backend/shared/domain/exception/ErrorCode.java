@@ -1,14 +1,13 @@
 package com.dino.backend.shared.domain.exception;
 
-import java.util.Optional;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+
+import java.util.Optional;
 
 @Getter
 @AllArgsConstructor
@@ -29,22 +28,16 @@ public enum ErrorCode {
     SECURITY__UNAUTHENTICATED(1010, "Resources are protected.", HttpStatus.UNAUTHORIZED),
     SECURITY__UNAUTHORIZED(1011, "Resources are forbidden.", HttpStatus.FORBIDDEN),
     SECURITY__GET_CURRENT_USER_FAILED(1012, "Lấy người dùng hiện tại thất bại.", HttpStatus.INTERNAL_SERVER_ERROR),
-    SECURITY__GEN_TOKEN_FAILED(1013, "Tạo token thất bại", HttpStatus.INTERNAL_SERVER_ERROR),
-    // OAUTH2 //
-    OAUTH2__GET_GOOGLE_TOKEN_FAILED(1020, "Lấy access token của Google thất bại.",
-            HttpStatus.INTERNAL_SERVER_ERROR),
-    OAUTH2__GET_GOOGLE_USER_FAILED(1021, "Lấy thông tin người dùng của Google thất bại.",
-            HttpStatus.INTERNAL_SERVER_ERROR),
+    SECURITY__GEN_TOKEN_FAILED(1013, "Tạo token thất bại", HttpStatus.INTERNAL_SERVER_ERROR),    // OAUTH2 //
+    OAUTH2__GET_GOOGLE_TOKEN_FAILED(1020, "Lấy access token của Google thất bại.", HttpStatus.INTERNAL_SERVER_ERROR),
+    OAUTH2__GET_GOOGLE_USER_FAILED(1021, "Lấy thông tin người dùng của Google thất bại.", HttpStatus.INTERNAL_SERVER_ERROR),
     // FILES //
-    FILE__FILE_OUT_EXTENSIONS(1030, "File extensions should be pdf, jpg, jpeg, png, doc or docx.",
-            HttpStatus.BAD_REQUEST),
-    FILE__FILE_CREATE_DIRECTORY(1031, "An error occurred while creating a media directory.",
-            HttpStatus.INTERNAL_SERVER_ERROR),
-    FILE__FILE_CREATE_FOLDER(1032, "An error occurred while creating a media folder.",
-            HttpStatus.INTERNAL_SERVER_ERROR),
-    FILE__FILE_CREATE_PATH(1033, "An error occurred while creating a file path.", HttpStatus.INTERNAL_SERVER_ERROR),
-    FILE__FILE_STREAM(1034, "An error occurred while stream the file.", HttpStatus.INTERNAL_SERVER_ERROR),
-    FILE__FILE_EMPTY(1035, "File is empty. Please upload a file.", HttpStatus.BAD_REQUEST),
+    FILE__OUT_EXTENSIONS(1030, "File extensions should be pdf, jpg, jpeg, png, doc or docx.", HttpStatus.BAD_REQUEST),
+    FILE__CREATE_DIRECTORY(1031, "An error occurred while creating a media directory.", HttpStatus.INTERNAL_SERVER_ERROR),
+    FILE__CREATE_FOLDER(1032, "An error occurred while creating a media folder.", HttpStatus.INTERNAL_SERVER_ERROR),
+    FILE__CREATE_PATH(1033, "An error occurred while creating a file path.", HttpStatus.INTERNAL_SERVER_ERROR),
+    FILE__STREAM(1034, "An error occurred while stream the file.", HttpStatus.INTERNAL_SERVER_ERROR),
+    FILE__EMPTY(1035, "File is empty. Please upload a file.", HttpStatus.BAD_REQUEST),
 
     // IDENTITY 1100+ //
     // USER //
@@ -70,7 +63,6 @@ public enum ErrorCode {
     // SKU //
     SKU__FIND_FAILED(1220, "Lấy SKU thất bại.", HttpStatus.INTERNAL_SERVER_ERROR),
     SKU__TIER_OPTION_INDEXES_INVALID(1221, "tierOptionIndexes không hợp lệ.", HttpStatus.BAD_REQUEST),
-    SKU__INSUFFICIENT_STOCK(1222, "Không đủ tồn kho", HttpStatus.BAD_REQUEST),
 
     // USER PROFILE 1300+ //
     // ADDRESS //
@@ -105,8 +97,13 @@ public enum ErrorCode {
     // INVENTORY 1600+ //
     // INVENTORY //
     INVENTORY__NOT_FOUND(1600, "Không tìm thấy kho hàng", HttpStatus.BAD_REQUEST),
-    INVENTORY__STOCKS_UNDER_MIN(1600, "Số lượng tồn kho nên lớn hơn 0", HttpStatus.BAD_REQUEST),
-    INVENTORY__SALES_UNDER_MIN(1600, "Số lượng đã bán nên lớn hơn 0", HttpStatus.BAD_REQUEST),
+    INVENTORY__STOCKS_UNDER_MIN(1601, "Số lượng tồn kho nên lớn hơn 0", HttpStatus.BAD_REQUEST),
+    INVENTORY__SALES_UNDER_MIN(1602, "Số lượng đã bán nên lớn hơn 0", HttpStatus.BAD_REQUEST),
+    INVENTORY__INSUFFICIENT_STOCK(1603, "Sản phẩm đã hết hàng, sẽ bổ sung sớm", HttpStatus.BAD_REQUEST),
+    // LOCK //
+    LOCK__OUT_OF_TRY(1610, "Yêu cầu đã đợi lâu. Vui lòng thử lại", HttpStatus.BAD_REQUEST),
+    LOCK__REQUEST_FAILED(1611, "Yêu cầu đã thất bại. Vui lòng thử lại", HttpStatus.BAD_REQUEST),
+    LOCK__SLEEP_FAILED(1612, "Đợi thất bại. Vui lòng thử lại", HttpStatus.BAD_REQUEST),
 
     ;
 

@@ -185,8 +185,17 @@ public class CartServiceImpl implements ICartService {
     public Deleted removeCartItems(RemoveCartItemReq request, CurrentUser currentUser) {
         var cart = this.getCartWithSku(currentUser);
 
-        // 1.. removeCartItem
         var removedCartItems = cart.removeCartItems(request.cartItemIds());
+        this.cartRepository.save(cart);
+
+        return Deleted.success(removedCartItems.size());
+    }
+
+    @Override
+    public Deleted removeCartItems(List<Long> skuIds, CurrentUser currentUser) {
+        var cart = this.getCartWithSku(currentUser);
+
+        var removedCartItems = cart.removeCartItemsBySkuIds(skuIds);
         this.cartRepository.save(cart);
 
         return Deleted.success(removedCartItems.size());

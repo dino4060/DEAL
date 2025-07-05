@@ -6,16 +6,18 @@ import { getFileUrl } from '@/lib/files';
 import { TProductSelector } from '@/types/product.types';
 import { TSku } from '@/types/sku.types';
 import Image from 'next/image';
-import { useEffect, useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 
 type TProductSelectorProps = {
-  onChangeSelectedSku: (sku: TSku | undefined) => void;
   onSelectPhoto: (img: string) => void;
+  setSelectedSku: (sku: TSku | undefined) => void;
+  setQuantity: Dispatch<SetStateAction<number>>;
   product: TProductSelector;
+  quantity: number;
 };
 
-export const ProductSelector = ({ onChangeSelectedSku, onSelectPhoto, product }: TProductSelectorProps) => {
-  const [quantity, setQuantity] = useState<number>(1);
+export const ProductSelector = ({ onSelectPhoto, setSelectedSku, setQuantity, product, quantity }: TProductSelectorProps) => {
+
   const [selectedTierOptionIndexes, setSelectedTierOptionIndexes] = useState<(number | null)[]>(
     () => new Array(product.tierVariations.length).fill(null)
   );
@@ -31,8 +33,8 @@ export const ProductSelector = ({ onChangeSelectedSku, onSelectPhoto, product }:
   }, [product.skus, selectedTierOptionIndexes]);
 
   useEffect(() => {
-    onChangeSelectedSku(selectedSku);
-  }, [selectedSku, onChangeSelectedSku]);
+    setSelectedSku(selectedSku);
+  }, [selectedSku, setSelectedSku]);
 
   const onChangeQuantity = (delta: number) => {
     setQuantity(prev => Math.max(1, prev + delta));
@@ -75,12 +77,12 @@ export const ProductSelector = ({ onChangeSelectedSku, onSelectPhoto, product }:
                     }
                   }}
                   className={`
-                                        flex items-center justify-center border-2 rounded-sm
-                                        ${isSelected
+                      flex items-center justify-center border-2 rounded-sm
+                      ${isSelected
                       ? 'border-[var(--dino-red-1)] bg-[var(--dino-red-1)] text-white'
                       : 'border-gray-300'}
-                                        ${isDisabled ? 'opacity-40 cursor-not-allowed' : ''}
-                                    `}
+                      ${isDisabled ? 'opacity-40 cursor-not-allowed' : ''}
+                  `}
                 >
                   {photo && (<div className="w-8 aspect-square relative">
                     <Image

@@ -8,20 +8,21 @@ import { TCart } from "@/types/cart.types";
 import { useEffect } from "react";
 
 type TGlobalDataHydratorProps = {
-    currentUser: TUser; // | null;
-    defaultAddress: TAddress; // | null;
-    cart: TCart | null;
+  currentUser: TUser | null;
+  defaultAddress: TAddress | null;
+  cart: TCart | null;
 }
 
 export const GlobalDataHydrator = ({ currentUser, defaultAddress, cart }: TGlobalDataHydratorProps) => {
-    const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        dispatch(actions.auth.setCurrentUser(currentUser));
-        dispatch(actions.address.setDefaultAddress(defaultAddress));
-        dispatch(actions.cart.setCart(cart));
-        console.log(">>> GlobalDataHydrator: init successfully");
-    }, [currentUser, defaultAddress, cart, dispatch]);
+  useEffect(() => {
+    currentUser && dispatch(actions.auth.setCurrentUser(currentUser));
+    defaultAddress && dispatch(actions.address.setDefaultAddress(defaultAddress));
+    cart && dispatch(actions.cart.setCart(cart));
 
-    return null;
+    console.log(">>> GlobalDataHydrator: init successfully");
+  }, [currentUser, defaultAddress, cart, dispatch]);
+
+  return null;
 };

@@ -86,6 +86,7 @@ networks:
 # Test db-redis:
 # docker exec -it deal-db-redis-1 redis-cli: mở Redis client
 # PING => PONG
+# KEYS *
 # SET user:1 "Dino" => OK
 # GET user:1 => "Dino"
 # SET user:1 "TN" => OK

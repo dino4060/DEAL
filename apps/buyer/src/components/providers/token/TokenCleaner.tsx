@@ -9,7 +9,7 @@ export const TokenCleaner = ({ children }: TChildrenComponent) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(actions.auth.clear());
+    dispatch(actions.auth.clean());
   });
 
   return <Fragment>{children}</Fragment>;

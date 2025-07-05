@@ -5,26 +5,26 @@ import { TAddress } from "@/types/address.types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type TAddressState = {
-    defaultAddress: TAddress | null;
+  defaultAddress: TAddress | null;
 }
 
 const initialState: TAddressState = {
-    defaultAddress: clientLocal.get(DEFAULT_ADDRESS) || null,
+  defaultAddress: clientLocal.get(DEFAULT_ADDRESS) || null,
 };
 
 const addressSlice = createSlice({
-    name: "address",
-    initialState,
-    reducers: {
-        setDefaultAddress: (state, { payload: address }: PayloadAction<TAddress>) => {
-            clientLocal.set(DEFAULT_ADDRESS, address);
-            state.defaultAddress = address;
-        },
-        clear: () => {
-            clientLocal.remove(DEFAULT_ADDRESS);
-            return { defaultAddress: null };
-        },
+  name: "address",
+  initialState,
+  reducers: {
+    setDefaultAddress: (state, { payload: address }: PayloadAction<TAddress>) => {
+      clientLocal.set(DEFAULT_ADDRESS, address);
+      state.defaultAddress = address;
     },
+    clean: () => {
+      clientLocal.remove(DEFAULT_ADDRESS);
+      return { defaultAddress: null };
+    },
+  },
 });
 
 export const addressReducer = addressSlice.reducer;

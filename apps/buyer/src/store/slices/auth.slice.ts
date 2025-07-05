@@ -13,35 +13,35 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
  * - return: bỏ qua Immer, bạn tự tạo và trả về state mới.
  */
 type TAuthState = {
-    accessToken: string | null;
-    currentUser: TUser | null;
+  accessToken: string | null;
+  currentUser: TUser | null;
 }
 
 const initialState: TAuthState = {
-    accessToken: clientCookies.get(ACCESS_TOKEN) || null,
-    currentUser: clientLocal.get(CURRENT_USER) || null,
+  accessToken: clientCookies.get(ACCESS_TOKEN) || null,
+  currentUser: clientLocal.get(CURRENT_USER) || null,
 }
 
 const authSlice = createSlice({
-    name: "auth",
-    initialState,
-    reducers: {
-        setCredentials: (state, { payload }: PayloadAction<TAuthResponse>) => {
-            clientCookies.set(ACCESS_TOKEN, payload.accessToken);
-            clientLocal.set(CURRENT_USER, payload.currentUser);
-            state.accessToken = payload.accessToken;
-            state.currentUser = payload.currentUser;
-        },
-        setCurrentUser: (state, { payload }: PayloadAction<TUser>) => {
-            clientLocal.set(CURRENT_USER, payload);
-            state.currentUser = payload;
-        },
-        clear: () => {
-            clientCookies.remove(ACCESS_TOKEN);
-            clientLocal.remove(CURRENT_USER);
-            return { accessToken: null, currentUser: null };
-        },
+  name: "auth",
+  initialState,
+  reducers: {
+    setCredentials: (state, { payload }: PayloadAction<TAuthResponse>) => {
+      clientCookies.set(ACCESS_TOKEN, payload.accessToken);
+      clientLocal.set(CURRENT_USER, payload.currentUser);
+      state.accessToken = payload.accessToken;
+      state.currentUser = payload.currentUser;
     },
+    setCurrentUser: (state, { payload }: PayloadAction<TUser>) => {
+      clientLocal.set(CURRENT_USER, payload);
+      state.currentUser = payload;
+    },
+    clean: () => {
+      clientCookies.remove(ACCESS_TOKEN);
+      clientLocal.remove(CURRENT_USER);
+      return { accessToken: null, currentUser: null };
+    },
+  },
 });
 
 export const authReducer = authSlice.reducer;

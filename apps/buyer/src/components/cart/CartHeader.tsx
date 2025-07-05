@@ -2,7 +2,7 @@
 import { useAppSelector } from "@/store/hooks";
 
 export function CartHeader() {
-    const totalCartItems = useAppSelector(state => state.cart.cart?.total);
+    const totalCartItems = useAppSelector(state => state.cart.total);
 
     return (
         <h1 className="text-2xl font-semibold mb-4 ml-4">
