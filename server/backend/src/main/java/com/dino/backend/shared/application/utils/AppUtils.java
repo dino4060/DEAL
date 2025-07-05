@@ -2,12 +2,35 @@ package com.dino.backend.shared.application.utils;
 
 import com.github.slugify.Slugify;
 import io.micrometer.common.util.StringUtils;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.util.CollectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Objects;
 import java.util.UUID;
 
 public class AppUtils {
+
+    public static boolean isNull(Object object) {
+        return Objects.isNull(object);
+    }
+
+    public static boolean isBlank(String string) {
+        return Objects.isNull(string) || string.isBlank();
+    }
+
+    public static boolean isEmpty(Collection<Object> collection) {
+        return CollectionUtils.isEmpty(collection);
+    }
+
+    public static Pageable defaultPageable() {
+        return PageRequest.of(0, 10,
+                Sort.by(Sort.Direction.DESC, "id"));
+    }
 
     public static String maskMiddle(String plainText, int keptLength) {
         if (StringUtils.isEmpty(plainText))

@@ -18,9 +18,13 @@ async function searchPage({ searchParams }: TSearchPageProps) {
   return (
     <div className="py-10 space-y-10">
       <HomeContainer>
-        {query.keyword && (
+        {query.keyword ? (
           <h2 className="text-xl font-medium">
             🔍 Search results for "<span className="text-primary">{query.keyword}</span>"
+          </h2>
+        ) : (
+          <h2 className="text-xl font-medium">
+            🔍 Search all
           </h2>
         )}
       </HomeContainer>
