@@ -37,7 +37,7 @@ public class OrderItem extends BaseEntity {
 
     int mainPrice;
 
-    int sidePrice;
+    Integer sidePrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false, updatable = false)

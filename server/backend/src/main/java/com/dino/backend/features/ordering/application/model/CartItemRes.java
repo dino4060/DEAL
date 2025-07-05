@@ -10,5 +10,6 @@ public record CartItemRes(
         String photo,
         ProductLeanRes product,
         SkuLeanRes sku,
-        SkuPriceRes price) {
+        SkuPriceRes price
+) {
 }

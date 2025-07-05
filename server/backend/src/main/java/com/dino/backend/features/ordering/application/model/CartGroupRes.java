@@ -7,5 +7,6 @@ import java.util.List;
 public record CartGroupRes(
         Long id,
         ShopLeanRes shop,
-        List<CartItemRes> cartItems) {
+        List<CartItemRes> cartItems
+) {
 }
