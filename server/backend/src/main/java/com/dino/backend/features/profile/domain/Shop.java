@@ -1,4 +1,4 @@
-package com.dino.backend.features.shop.domain;
+package com.dino.backend.features.profile.domain;
 
 import java.util.List;
 

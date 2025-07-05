@@ -134,4 +134,18 @@ public class Cart extends BaseEntity {
 
         return cartItemsToRemove;
     }
+
+    public List<CartItem> removeCartItemsBySkuIds(List<Long> skuIds) {
+        // NOTE: orphanRemoval
+        // 1. filter CartItems (objects on memory) to remove
+        var cartItemsToRemove = this.getCartItems().stream()
+                .filter(cartItem -> skuIds.contains(cartItem.getSku().getId()))
+                .toList();
+
+        // 2. removeAll items => JPA note they are orphan => orphanRemoval auto delete
+        this.getCartItems().removeAll(cartItemsToRemove);
+        this.setTotal(this.getTotal() - cartItemsToRemove.size());
+
+        return cartItemsToRemove;
+    }
 }

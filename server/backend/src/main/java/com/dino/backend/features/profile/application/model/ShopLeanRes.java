@@ -1,4 +1,4 @@
-package com.dino.backend.features.shop.application.model;
+package com.dino.backend.features.profile.application.model;
 
 public record ShopLeanRes(
         Long id,

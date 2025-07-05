@@ -34,7 +34,7 @@ public abstract class LockTemplate {
         try {
             Thread.sleep(timeout);
         } catch (InterruptedException e) {
-            throw new AppException(ErrorCode.SYSTEM__UNHANDLED_EXCEPTION);
+            throw new AppException(ErrorCode.LOCK__SLEEP_FAILED);
         }
     }
 
@@ -62,17 +62,17 @@ public abstract class LockTemplate {
     protected abstract void doTask();
 
     @Transactional
-    public void executeWithLock(String key) {
+    public void doTaskWithLock(String key) {
         // 1. tryLock
         boolean lockAcquired = tryLock(key);
 
         if (!lockAcquired)
-            throw new AppException(ErrorCode.SYSTEM__UNHANDLED_EXCEPTION);
+            throw new AppException(ErrorCode.LOCK__OUT_OF_TRY);
         // 2. doTask
         try {
             this.doTask();
         } catch (Exception e) {
-            throw new AppException(ErrorCode.SYSTEM__UNHANDLED_EXCEPTION);
+            throw new AppException(ErrorCode.LOCK__REQUEST_FAILED);
         }
         // 3. releaseLock
         finally {

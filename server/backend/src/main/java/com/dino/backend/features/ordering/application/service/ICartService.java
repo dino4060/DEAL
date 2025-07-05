@@ -3,7 +3,7 @@ package com.dino.backend.features.ordering.application.service;
 import com.dino.backend.features.ordering.application.model.*;
 import com.dino.backend.features.ordering.domain.Cart;
 import com.dino.backend.features.ordering.domain.CartItem;
-import com.dino.backend.features.shop.domain.Shop;
+import com.dino.backend.features.profile.domain.Shop;
 import com.dino.backend.shared.api.model.CurrentUser;
 import com.dino.backend.shared.application.utils.Deleted;
 
@@ -32,4 +32,6 @@ public interface ICartService {
     CartItemRes updateQuantity(UpdateQuantityReq request, CurrentUser currentUser);
 
     Deleted removeCartItems(RemoveCartItemReq request, CurrentUser currentUser);
+
+    Deleted removeCartItems(List<Long> skuIds, CurrentUser currentUser);
 }

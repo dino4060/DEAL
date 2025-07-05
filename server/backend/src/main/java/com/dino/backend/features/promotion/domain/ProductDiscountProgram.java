@@ -10,7 +10,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
 import com.dino.backend.features.promotion.domain.model.PricingType;
-import com.dino.backend.features.shop.domain.Shop;
+import com.dino.backend.features.profile.domain.Shop;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;

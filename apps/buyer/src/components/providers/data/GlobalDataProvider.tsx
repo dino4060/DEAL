@@ -1,11 +1,11 @@
 // components/providers/data/GlobalDataProvider.tsx
 import { TChildrenComponent } from "@/types/base.types";
-import { GlobalDataInitializer } from "./GlobalDataInitializer";
+import { DataInitializer } from "./DataInitializer";
 
 export const GlobalDataProvider = ({ children }: TChildrenComponent) => {
   return (
-    <GlobalDataInitializer>
+    <DataInitializer>
       {children}
-    </GlobalDataInitializer>
+    </DataInitializer>
   );
 };

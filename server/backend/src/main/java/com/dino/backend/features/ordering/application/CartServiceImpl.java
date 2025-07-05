@@ -8,7 +8,7 @@ import com.dino.backend.features.ordering.domain.Cart;
 import com.dino.backend.features.ordering.domain.CartItem;
 import com.dino.backend.features.ordering.domain.repository.ICartRepository;
 import com.dino.backend.features.productcatalog.application.service.ISkuService;
-import com.dino.backend.features.shop.domain.Shop;
+import com.dino.backend.features.profile.domain.Shop;
 import com.dino.backend.shared.api.model.CurrentUser;
 import com.dino.backend.shared.application.utils.Deleted;
 import com.dino.backend.shared.domain.exception.AppException;
@@ -185,8 +185,17 @@ public class CartServiceImpl implements ICartService {
     public Deleted removeCartItems(RemoveCartItemReq request, CurrentUser currentUser) {
         var cart = this.getCartWithSku(currentUser);
 
-        // 1.. removeCartItem
         var removedCartItems = cart.removeCartItems(request.cartItemIds());
+        this.cartRepository.save(cart);
+
+        return Deleted.success(removedCartItems.size());
+    }
+
+    @Override
+    public Deleted removeCartItems(List<Long> skuIds, CurrentUser currentUser) {
+        var cart = this.getCartWithSku(currentUser);
+
+        var removedCartItems = cart.removeCartItemsBySkuIds(skuIds);
         this.cartRepository.save(cart);
 
         return Deleted.success(removedCartItems.size());

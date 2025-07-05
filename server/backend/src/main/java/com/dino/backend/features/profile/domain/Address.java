@@ -1,4 +1,4 @@
-package com.dino.backend.features.userprofile.domain;
+package com.dino.backend.features.profile.domain;
 
 import com.dino.backend.features.identity.domain.User;
 import com.dino.backend.shared.domain.model.BaseEntity;

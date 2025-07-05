@@ -1,11 +1,11 @@
 package com.dino.backend.shared.application.utils;
 
 import com.github.slugify.Slugify;
-import io.micrometer.common.util.StringUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -15,12 +15,16 @@ import java.util.UUID;
 
 public class AppUtils {
 
+    public static boolean nonNull(Object object) {
+        return Objects.nonNull(object);
+    }
+
     public static boolean isNull(Object object) {
         return Objects.isNull(object);
     }
 
     public static boolean isBlank(String string) {
-        return Objects.isNull(string) || string.isBlank();
+        return !StringUtils.hasText(string);
     }
 
     public static boolean isEmpty(Collection<Object> collection) {
@@ -33,7 +37,7 @@ public class AppUtils {
     }
 
     public static String maskMiddle(String plainText, int keptLength) {
-        if (StringUtils.isEmpty(plainText))
+        if (isEmpty(plainText))
             return plainText;
         // the non-masked text
         int maskEndIndex = plainText.length() - keptLength;
@@ -45,7 +49,7 @@ public class AppUtils {
     }
 
     public static String maskStart(String plainText, int keptLength) {
-        if (StringUtils.isEmpty(plainText))
+        if (isEmpty(plainText))
             return plainText;
         // the non-masked text
         int maskEndIndex = plainText.length() - keptLength;

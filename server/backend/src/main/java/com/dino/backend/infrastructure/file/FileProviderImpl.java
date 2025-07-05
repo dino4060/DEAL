@@ -60,14 +60,14 @@ public class FileProviderImpl implements IFileProvider {
     private void validateFile(MultipartFile file) {
         // check not empty
         if (file == null || file.isEmpty())
-            throw new AppException(ErrorCode.FILE__FILE_EMPTY);
+            throw new AppException(ErrorCode.FILE__EMPTY);
 
         // check in extensions
         boolean isInExt = allowedExtensions
                 .stream()
                 .anyMatch(e -> Objects.requireNonNull(file.getOriginalFilename()).toLowerCase().endsWith("." + e));
         if (!isInExt)
-            throw new AppException(ErrorCode.FILE__FILE_OUT_EXTENSIONS);
+            throw new AppException(ErrorCode.FILE__OUT_EXTENSIONS);
         // todo: check other cases more
     }
 
@@ -88,14 +88,14 @@ public class FileProviderImpl implements IFileProvider {
         try {
             uri = new URI(this.env.FILE_LOCATION + "/" + folder + "/" + fileName);
         } catch (URISyntaxException e) {
-            throw new AppException(ErrorCode.FILE__FILE_CREATE_PATH);
+            throw new AppException(ErrorCode.FILE__CREATE_PATH);
         }
         final Path path = Paths.get(uri);
         // stream the file
         try (InputStream inputStream = file.getInputStream()) {
             Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            throw new AppException(ErrorCode.FILE__FILE_STREAM);
+            throw new AppException(ErrorCode.FILE__STREAM);
         }
         return fileName;
     }
@@ -107,7 +107,7 @@ public class FileProviderImpl implements IFileProvider {
         try {
             uri = new URI(this.env.FILE_LOCATION + "/" + folder);
         } catch (URISyntaxException e) {
-            throw new AppException(ErrorCode.FILE__FILE_CREATE_FOLDER);
+            throw new AppException(ErrorCode.FILE__CREATE_FOLDER);
         }
         // create a folder Path (use uri)
         Path path = Paths.get(uri);
@@ -118,7 +118,7 @@ public class FileProviderImpl implements IFileProvider {
                 Files.createDirectory(tempDir.toPath());
                 log.info("SSHOP MEDIA: CREATE NEW DIRECTORY SUCCESSFULLY, PATH = {}", tempDir.toPath());
             } catch (IOException e) {
-                throw new AppException(ErrorCode.FILE__FILE_CREATE_DIRECTORY);
+                throw new AppException(ErrorCode.FILE__CREATE_DIRECTORY);
             }
         } else
             log.info("SSHOP MEDIA: THE DIRECTORY ALREADY EXISTS");

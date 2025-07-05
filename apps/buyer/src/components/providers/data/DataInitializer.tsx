@@ -1,15 +1,16 @@
 // components/providers/data/GlobalDataInitializer.tsx
-import { getCachedUserCart, getCurrentUser, getDefaultAddress } from '@/functions/getStore';
+import { getCachedUserCart, getCurrentUser, getDefaultAddress } from '@/functions/getData';
 import { getIsAuthenticated } from "@/functions/getIsAuthenticated";
 import { Fragment } from 'react';
-import { GlobalDataHydrator } from './GlobalDataHydrator';
-import { GlobalDataCleaner } from './GlobalDataCleaner';
+import { DataHydrator } from './DataHydrator';
+import { DataCleaner } from './DataCleaner';
+import { TChildrenComponent } from '@/types/base.types';
 
-export const GlobalDataInitializer = async ({ children }: { children: React.ReactNode }) => {
+export const DataInitializer = async ({ children }: TChildrenComponent) => {
   const isAuthenticated = await getIsAuthenticated();
 
   if (!isAuthenticated)
-    return <GlobalDataCleaner>{children}</GlobalDataCleaner>;
+    return <DataCleaner>{children}</DataCleaner>;
 
   const [currentUser, defaultAddress, cart] = await Promise.all([
     getCurrentUser(),
@@ -20,7 +21,7 @@ export const GlobalDataInitializer = async ({ children }: { children: React.Reac
   return (
     <Fragment>
       {children}
-      <GlobalDataHydrator
+      <DataHydrator
         currentUser={currentUser}
         defaultAddress={defaultAddress}
         cart={cart}

@@ -6,4 +6,8 @@ export const CURRENT_USER = 'CURRENT_USER';
 
 export const DEFAULT_ADDRESS = 'DEFAULT_ADDRESS';
 
-export const CART = "CART";
+export const CART_TOTAL = "CART_TOTAL";
+
+export const CART_GROUPS = "CART_GROUPS";
+
+export const CART_VERSION = "CART_GROUPS";

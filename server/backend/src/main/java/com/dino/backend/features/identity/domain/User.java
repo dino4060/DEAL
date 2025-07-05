@@ -15,7 +15,7 @@ import com.dino.backend.features.identity.domain.model.UserRoleType;
 import com.dino.backend.features.identity.domain.model.UserStatusType;
 import com.dino.backend.features.ordering.domain.Cart;
 import com.dino.backend.features.ordering.domain.Order;
-import com.dino.backend.features.userprofile.domain.Address;
+import com.dino.backend.features.profile.domain.Address;
 import com.dino.backend.shared.domain.model.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

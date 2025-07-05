@@ -4,8 +4,7 @@ import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 
 export const Cart = () => {
-  const total = useAppSelector(state => state.cart.cart?.total)
-  console.log('>>> Cart: ', total);
+  const total = useAppSelector(state => state.cart.total)
 
   return (
     <Link

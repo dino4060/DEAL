@@ -45,18 +45,23 @@ public class Inventory extends BaseEntity {
     // SETTERS //
 
     public void setStocks(int stocks) {
-        if (stocks < 0)
-            throw new AppException(ErrorCode.INVENTORY__STOCKS_UNDER_MIN);
+        boolean isValid = 0 <= stocks && stocks < this.total;
+
+        if (!isValid) throw new AppException(ErrorCode.INVENTORY__STOCKS_LIMIT);
+
         this.stocks = stocks;
     }
 
     public void setSales(int sales) {
-        if (sales < 0)
-            throw new AppException(ErrorCode.INVENTORY__SALES_UNDER_MIN);
+        boolean isValid = 0 <= sales && sales <= this.total;
+
+        if (!isValid) throw new AppException(ErrorCode.INVENTORY__SALES_LIMIT);
+
         this.sales = sales;
     }
 
     // INSTANCE METHODS //
+
     public void reverseStock(int quantity) {
         this.setStocks(this.getStocks() - quantity);
         this.setSales(this.getSales() + quantity);

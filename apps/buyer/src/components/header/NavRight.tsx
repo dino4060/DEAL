@@ -21,8 +21,8 @@ const NavAccount = ({ currentUser }: { currentUser: TUser }) => {
 
     if (res.success) {
       console.log(">>> NavAccount: Log out: isAuthenticated: ", res.data.isAuthenticated)
-      dispatch(actions.auth.clear())
-      dispatch(actions.address.clear())
+      dispatch(actions.auth.clean())
+      dispatch(actions.address.clean())
       router.refresh();
     } else {
       toast.error(res.error)

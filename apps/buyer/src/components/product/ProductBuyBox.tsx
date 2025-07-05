@@ -1,11 +1,15 @@
 'use client';
-import { getPriceStrategy } from '@/helpers/product.helper';
 import { TProductBuyBox } from '@/types/product.types';
 import { TSku } from '@/types/sku.types';
 import { MessageCircleIcon, StoreIcon } from 'lucide-react';
 import { useState } from 'react';
 import { ProductSelector } from './ProductSelector';
 import { ProductShortInfo } from './ProductShortInfo';
+import { toast } from 'sonner';
+import { clientFetch } from '@/lib/fetch/fetch.client';
+import { api } from '@/lib/api';
+import { useAppDispatch } from '@/store/hooks';
+import { actions } from '@/store';
 
 type TProductBuyBoxProps = {
   onSelectPhoto: (photo: string) => void;
@@ -15,8 +19,30 @@ type TProductBuyBoxProps = {
 // select the first variant: ${selectedColor === code ? 'border-[var(--dino-red-1)] text-black' : 'border-gray-200'}
 // hover variants: 'hover:border-black'
 export const ProductBuyBox = ({ onSelectPhoto, product }: TProductBuyBoxProps) => {
-
+  const [quantity, setQuantity] = useState<number>(1);
   const [selectedSku, setSelectedSku] = useState<TSku | undefined>(undefined);
+  const [addingToCart, setAddingToCart] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+
+  const addToCart = async () => {
+    console.log(">>> addToCart: ");
+
+    if (!selectedSku || !quantity) {
+      toast.error("Vui lòng chọn mặt hàng 😊");
+      return;
+    }
+
+    setAddingToCart(true);
+    const { success, error, data: cartItem } = await clientFetch(api.carts.addCartItem({ skuId: selectedSku.id, quantity }));
+
+    if (success) {
+      cartItem.quantity === quantity && dispatch(actions.cart.plusTotal(1));
+      toast.success("Đã thêm vào giỏ hàng thành công 🤩");
+    } else {
+      toast.error(error + " 😭");
+    }
+    setAddingToCart(false);
+  }
 
   // REFERENCE: Max of Actions area is 100vh - header - breadcrumb - padding of ProductClientSide
   return (
@@ -30,7 +56,9 @@ export const ProductBuyBox = ({ onSelectPhoto, product }: TProductBuyBoxProps) =
 
         <ProductSelector
           product={{ ...product }}
-          onChangeSelectedSku={setSelectedSku}
+          quantity={quantity}
+          setQuantity={setQuantity}
+          setSelectedSku={setSelectedSku}
           onSelectPhoto={onSelectPhoto}
         />
       </div>
@@ -53,12 +81,15 @@ export const ProductBuyBox = ({ onSelectPhoto, product }: TProductBuyBoxProps) =
         </div>
 
         <div className="flex-1 flex gap-4">
-          <button className="flex-1 py-1.5 bg-gray-100 text-black rounded-md font-medium text-base">
-            Add to cart
+          <button
+            className="flex-1 py-1.5 bg-gray-100 text-black rounded-md font-medium text-base"
+            onClick={addToCart}
+          >
+            {addingToCart ? 'Đang thêm...' : 'Thêm vào giỏ hàng'}
           </button>
 
           <button className="flex-1 py-1 bg-[var(--dino-red-1)] text-white rounded-md font-medium text-base flex flex-col items-center justify-start">
-            <span>Buy now</span>
+            <span>Mua ngay</span>
             <span className="text-xs font-normal">Free shipping</span>
           </button>
         </div>

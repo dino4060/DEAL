@@ -1,5 +1,6 @@
 package com.dino.backend.features.inventory.application;
 
+import com.dino.backend.features.inventory.application.provider.IInventoryLockProvider;
 import com.dino.backend.features.inventory.application.service.IInventoryService;
 import com.dino.backend.features.inventory.domain.Inventory;
 import com.dino.backend.features.inventory.domain.repository.IInventoryRepository;
@@ -32,7 +33,7 @@ public class InventoryServiceImpl implements IInventoryService {
                 .orElseThrow(() -> new AppException(ErrorCode.INVENTORY__NOT_FOUND));
 
         if (inventory.getStocks() < quantity)
-            throw new AppException(ErrorCode.SKU__INSUFFICIENT_STOCK);
+            throw new AppException(ErrorCode.INVENTORY__INSUFFICIENT_STOCK);
 
         return inventory;
     }
@@ -54,8 +55,7 @@ public class InventoryServiceImpl implements IInventoryService {
     @Transactional
     private void reserveStockWithLock(Long skuId, int quantity) {
         this.lockProvider.reserveStockWithLock(
-                skuId,
-                () -> this.reserveStockNormally(skuId, quantity));
+                skuId, () -> this.reserveStockNormally(skuId, quantity));
     }
 
     /**

@@ -4,7 +4,7 @@ import com.dino.backend.features.pricing.application.model.ProductPriceRes;
 import com.dino.backend.features.productcatalog.domain.model.ProductMeta;
 import com.dino.backend.features.productcatalog.domain.model.ProductSpecification;
 import com.dino.backend.features.productcatalog.domain.model.ProductTierVariation;
-import com.dino.backend.features.shop.application.model.ShopLeanRes;
+import com.dino.backend.features.profile.application.model.ShopLeanRes;
 
 import java.util.List;
 

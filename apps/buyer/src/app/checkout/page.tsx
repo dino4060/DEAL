@@ -6,18 +6,18 @@ import { redirect } from 'next/navigation';
 
 // Đây là Server Component
 export default async function CheckoutPage() {
-    const isAuthenticated = await getIsAuthenticated();
+  const isAuthenticated = await getIsAuthenticated();
 
-    if (!isAuthenticated) {
-        redirect('/');
-    }
+  if (!isAuthenticated) {
+    redirect('/');
+  }
 
-    let selectedCartItemIds: number[] = [];
+  let selectedCartItemIds: number[] = [];
 
-    return (
-        <div className="container mx-auto px-20 py-6">
-            <CheckoutHeader />
-            <CheckoutHydrator />
-        </div>
-    );
+  return (
+    <div className="container mx-auto px-20 py-6">
+      <CheckoutHeader />
+      <CheckoutHydrator />
+    </div>
+  );
 }

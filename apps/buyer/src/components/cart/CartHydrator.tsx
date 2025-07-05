@@ -1,16 +1,19 @@
 // src/components/cart/CartHydrator.tsx
 "use client";
+import { api } from "@/lib/api";
+import { clientFetch } from "@/lib/fetch/fetch.client";
+import { actions } from "@/store";
 import { TAddress } from "@/types/address.types";
 import { TCart } from "@/types/cart.types";
+import { TEstimateCheckout } from "@/types/checkout.types";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useDispatch } from "react-redux";
+import { toast } from "sonner";
 import { CartDisplay } from "./CartDisplay";
 import { CartSummary } from "./CartSummary";
 import { DefaultAddress } from "./DefaultAddress";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { clientFetch } from "@/lib/fetch/fetch.client";
-import { api } from "@/lib/api";
-import { TEstimateCheckout } from "@/types/checkout.types";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 interface CartHydratorProps {
   initialCart: TCart;
@@ -19,9 +22,15 @@ interface CartHydratorProps {
 
 export function CartHydrator({ initialCart, initialDefaultAddress }: CartHydratorProps) {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const cartVersion = useAppSelector(state => state.cart.version)
   const [cartData, setCartData] = useState<TCart>(initialCart);
   const [selectedCartItemIds, setSelectedCartItemIds] = useState<Set<number>>(new Set());
   const [estimateData, setEstimateData] = useState<TEstimateCheckout | null>(null);
+
+  useEffect(() => {
+    dispatch(actions.cart.setCart(initialCart));
+  }, []);
 
   // Lấy tất cả các ID của item trong giỏ hàng (dùng useMemo để tối ưu)
   const allCartItemIds = useMemo(() => {
@@ -32,16 +41,16 @@ export function CartHydrator({ initialCart, initialDefaultAddress }: CartHydrato
     return ids;
   }, [initialCart]);
 
-  // Handler cho checkbox "Chọn tất cả"
+  // handleCheckAll
   const handleCheckAll = useCallback((checked: boolean) => {
     if (checked) {
-      setSelectedCartItemIds(new Set(allCartItemIds)); // Chọn tất cả
+      setSelectedCartItemIds(new Set(allCartItemIds));
     } else {
-      setSelectedCartItemIds(new Set()); // Bỏ chọn tất cả
+      setSelectedCartItemIds(new Set());
     }
   }, [allCartItemIds]);
 
-  // Handler cho checkbox của một nhóm
+  // handleCheckGroup
   const handleCheckGroup = useCallback((groupId: number, checked: boolean) => {
     const newSelectedIds = new Set(selectedCartItemIds);
     const groupItems = initialCart.cartGroups.find(g => g.id === groupId)?.cartItems || [];
@@ -54,7 +63,7 @@ export function CartHydrator({ initialCart, initialDefaultAddress }: CartHydrato
     setSelectedCartItemIds(newSelectedIds);
   }, [selectedCartItemIds, initialCart]);
 
-  // Handler cho checkbox của một item
+  // handleCheckItem
   const handleCheckItem = useCallback((itemId: number, checked: boolean) => {
     const newSelectedIds = new Set(selectedCartItemIds);
     if (checked) {
@@ -65,41 +74,47 @@ export function CartHydrator({ initialCart, initialDefaultAddress }: CartHydrato
     setSelectedCartItemIds(newSelectedIds);
   }, [selectedCartItemIds]);
 
-  // Hàm xử lý optimistic update cho cập nhật số lượng (tương tự)
-  // TODO: chưa check hàm handleQuantityUpdateOptimistic
+  // handleQuantityUpdateOptimistic
   const handleQuantityUpdateOptimistic = useCallback(async (cartItemId: number, newQuantity: number) => {
     const previousCartData = cartData;
     const originalQuantity = cartData.cartGroups.flatMap(g => g.cartItems).find(item => item.id === cartItemId)?.quantity || 0;
 
-    // Optimistic UI update: Cập nhật số lượng ngay lập tức
+    // 1. update cart optimistically
     setCartData(prevCart => {
       if (!prevCart) return prevCart;
+
       const newCartGroups = prevCart.cartGroups.map(group => ({
         ...group,
-        cartItems: group.cartItems.map(item =>
-          item.id === cartItemId ? { ...item, quantity: newQuantity } : item
-        )
+        cartItems: group.cartItems
+          .map(item => item.id === cartItemId ? { ...item, quantity: newQuantity } : item
+          )
       }));
+
       return { ...prevCart, cartGroups: newCartGroups };
     });
 
-    const result = await clientFetch(api.carts.updateQuantity({ cartItemId, quantity: newQuantity }));
+    // 2. trigger to re-estimate checkout
+    const isUpdatedSelected = selectedCartItemIds.has(cartItemId);
+    isUpdatedSelected && dispatch(actions.cart.updateVersion());
 
-    if (!result.success) {
-      console.error("Failed to update quantity:", result.error);
-      toast.error(result.error || "Có lỗi xảy ra khi cập nhật số lượng.");
-      setCartData(previousCartData); // Rollback
+    // 3. fetch to updateQuantity
+    const { success, error } = await clientFetch(api.carts.updateQuantity({ cartItemId, quantity: newQuantity }));
+
+    if (success) {
+      toast.success("Cập nhật số lượng thành công 😍");
     } else {
-      toast.success("Cập nhật số lượng thành công!");
+      toast.error(error + ' 😭');
+      setCartData(previousCartData);
+      isUpdatedSelected && dispatch(actions.cart.updateVersion());
     }
   }, [cartData]);
 
-  // Hàm xử lý optimistic update cho xóa item
+  // handleRemoveItemsOptimistically
   const handleRemoveItemsOptimistically = useCallback(async (cartItemIdsToRemove: number[]) => {
     const prevCartData = cartData;
     const prevSelectedCartItemIds = new Set(selectedCartItemIds);
 
-    // Optimistic UI update: Cập nhật state để xóa item ngay lập tức
+    // 1. remove cart optimistically
     setCartData(prevCart => {
       if (!prevCart) return prevCart;
 
@@ -108,31 +123,33 @@ export function CartHydrator({ initialCart, initialDefaultAddress }: CartHydrato
         cartItems: group.cartItems.filter(item => !cartItemIdsToRemove.includes(item.id))
       })).filter(group => group.cartItems.length > 0);
 
-      // Cập nhật selectedCartItemIds nếu item bị xóa đang được chọn
-      setSelectedCartItemIds(prevSelected => {
-        const newSelected = new Set(prevSelected);
-        cartItemIdsToRemove.forEach(id => newSelected.delete(id));
-        return newSelected;
-      });
-
       return { ...prevCart, cartGroups: newCartGroups };
     });
 
-    // Gọi API để xóa item
-    const result = await clientFetch(api.carts.removeCartItems({ cartItemIds: cartItemIdsToRemove }));
+    // 2. trigger to update selectedCartItemIds && re-estimate checkout
+    const currentSelected = new Set(selectedCartItemIds);
+    cartItemIdsToRemove.forEach(id => currentSelected.delete(id));
+    const isRemovedSelected = currentSelected.size !== selectedCartItemIds.size;
 
-    // Xử lý kết quả từ API
-    if (!result.success || !result.data?.isDeleted) {
-      toast.error(result.error || "Có lỗi xảy ra khi xóa sản phẩm.");
-      setCartData(prevCartData);
-      setSelectedCartItemIds(prevSelectedCartItemIds);
+    if (isRemovedSelected) {
+      setSelectedCartItemIds(currentSelected);
+      dispatch(actions.cart.updateVersion());
+    }
+
+    // 3. fetch to removeCartItems
+    const { success, error, data } = await clientFetch(api.carts.removeCartItems({ cartItemIds: cartItemIdsToRemove }));
+
+    if (success && data.isDeleted) {
+      dispatch(actions.cart.plusTotal(-1 * data.count));
+      toast.success(`Đã xóa ${data.count} sản phẩm thành công 😍`);
     } else {
-      // TODO: revalidate cart
-      toast.success(`Đã xóa ${result.data.count} sản phẩm thành công!`);
+      setCartData(prevCartData);
+      isRemovedSelected && dispatch(actions.cart.updateVersion());
+      toast.error(error + ' 😭');
     }
   }, [cartData, selectedCartItemIds]);
 
-  // Hàm để refresh dữ liệu giỏ hàng sau khi clientFetch thành côngs
+  // Hàm để refresh dữ liệu giỏ hàng sau khi clientFetch thành công
   const refreshCartData = useCallback(() => {
     router.refresh();
   }, [router]);
@@ -147,10 +164,11 @@ export function CartHydrator({ initialCart, initialDefaultAddress }: CartHydrato
 
       const itemIdsArray = Array.from(selectedCartItemIds);
       const result = await clientFetch(api.checkout.estimateCheckout({ cartItemIds: itemIdsArray }));
+
       if (result.success && result.data) {
         setEstimateData(result.data);
       } else {
-        console.error("Failed to fetch estimate data:", result.error);
+        console.error(result.error + ' 😭');
         setEstimateData(null);
       }
     };
@@ -161,7 +179,7 @@ export function CartHydrator({ initialCart, initialDefaultAddress }: CartHydrato
     }, 300);
 
     return () => clearTimeout(debounceTimer); // Clear timer
-  }, [selectedCartItemIds]);
+  }, [selectedCartItemIds, cartVersion]);
 
   // TODO: remove try catch fetch checkout
   const handleCheckout = useCallback(() => {

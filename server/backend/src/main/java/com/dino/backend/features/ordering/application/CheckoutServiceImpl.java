@@ -57,7 +57,7 @@ public class CheckoutServiceImpl implements ICheckoutService {
         Cart cart = cartService.getCartWithShop(currentUser);
 
         var itemsGroupedByShop = this.cartService.groupCartItemByShop(cart, request.cartItemIds())
-                .orElseThrow(() -> new AppException(ErrorCode.CART__NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.CART__ITEM_NOT_FOUND));
 
         // 2. checkout each group, then total checkout
         var totalCheckoutSnapshot = CheckoutSnapshot.createEmpty();
@@ -84,20 +84,18 @@ public class CheckoutServiceImpl implements ICheckoutService {
         Cart cart = this.cartService.getCartWithShop(currentUser);
 
         var itemsGroupedByShop = this.cartService.groupCartItemByShop(cart, request.cartItemIds())
-                .orElseThrow(() -> new AppException(ErrorCode.CART__NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.CART__ITEM_NOT_FOUND));
 
         // 2. create draft Orders
         var ordersRes = new ArrayList<DraftOrderRes>();
         var totalCheckoutSnapshot = CheckoutSnapshot.createEmpty();
 
         for (var entry : itemsGroupedByShop.entrySet()) {
-            // create OrderItems
             var shop = entry.getKey();
             var cartItems = entry.getValue();
 
             var createdOrder = this.orderService.createDraftOrder(cartItems, shop, currentUser);
 
-            // response
             ordersRes.add(this.orderMapper.toDraftOrderRes(createdOrder));
             totalCheckoutSnapshot.accumulateFrom(createdOrder.getCheckoutSnapshot());
         }
@@ -118,9 +116,9 @@ public class CheckoutServiceImpl implements ICheckoutService {
         var updatedOrders = new ArrayList<>();
 
         for (Order order : ordersToConfirm) {
-            for (OrderItem orderItem : order.getOrderItems()) {
+            for (OrderItem orderItem : order.getOrderItems())
                 inventoryService.reserveStock(orderItem.getSku().getId(), orderItem.getQuantity());
-            }
+
             Order updatedOrder = this.orderService.markAsPending(order);
             updatedOrders.add(updatedOrder);
         }
@@ -132,7 +130,7 @@ public class CheckoutServiceImpl implements ICheckoutService {
             for (OrderItem orderItem : order.getOrderItems())
                 skuIds.add(orderItem.getSku().getId());
         }
-        // TEMP: this.cartService.removeCartItems(new RemoveCartItemReq(skuIds), currentUser);
+        this.cartService.removeCartItems(skuIds, currentUser);
 
         return ConfirmCheckoutRes.success(updatedOrders.size());
     }

@@ -1,6 +1,6 @@
 package com.dino.backend.features.ordering.domain.model;
 
-import com.dino.backend.features.userprofile.domain.Address;
+import com.dino.backend.features.profile.domain.Address;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

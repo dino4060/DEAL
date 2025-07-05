@@ -1,10 +1,10 @@
-package com.dino.backend.features.userprofile.application;
+package com.dino.backend.features.profile.application;
 
-import com.dino.backend.features.userprofile.application.service.IAddressService;
+import com.dino.backend.features.profile.application.service.IAddressService;
 import org.springframework.stereotype.Service;
 
-import com.dino.backend.features.userprofile.domain.Address;
-import com.dino.backend.features.userprofile.domain.repository.IAddressRepository;
+import com.dino.backend.features.profile.domain.Address;
+import com.dino.backend.features.profile.domain.repository.IAddressRepository;
 import com.dino.backend.shared.api.model.CurrentUser;
 import com.dino.backend.shared.domain.exception.AppException;
 import com.dino.backend.shared.domain.exception.ErrorCode;

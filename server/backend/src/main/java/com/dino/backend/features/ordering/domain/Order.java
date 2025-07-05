@@ -2,7 +2,7 @@ package com.dino.backend.features.ordering.domain;
 
 import com.dino.backend.features.identity.domain.User;
 import com.dino.backend.features.ordering.domain.model.*;
-import com.dino.backend.features.shop.domain.Shop;
+import com.dino.backend.features.profile.domain.Shop;
 import com.dino.backend.shared.domain.exception.AppException;
 import com.dino.backend.shared.domain.exception.ErrorCode;
 import com.dino.backend.shared.domain.model.BaseEntity;

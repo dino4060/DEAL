@@ -1,10 +1,10 @@
 package com.dino.backend.features.ordering.domain;
 
 import com.dino.backend.features.productcatalog.domain.Sku;
+import com.dino.backend.shared.application.utils.AppUtils;
 import com.dino.backend.shared.domain.exception.AppException;
 import com.dino.backend.shared.domain.exception.ErrorCode;
 import com.dino.backend.shared.domain.model.BaseEntity;
-
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -50,32 +50,25 @@ public class OrderItem extends BaseEntity {
     // SETTER //
 
     public void setQuantity(int quantity) {
-        if (quantity < 1)
-            throw new AppException(ErrorCode.ORDER__QUANTITY_UNDER_MIN);
-        if (quantity > 100)
-            throw new AppException(ErrorCode.ORDER__QUANTITY_OVER_MAX);
+        boolean isValid = 1 <= quantity && quantity <= 100;
+
+        if (!isValid) throw new AppException(ErrorCode.ORDER__QUANTITY_LIMIT);
 
         this.quantity = quantity;
     }
 
     public void setMainPrice(int mainPrice) {
-        if (mainPrice < 1000)
-            throw new AppException(ErrorCode.ORDER__MAIN_PRICE_INVALID);
+        boolean isValid = 1000 <= mainPrice && (AppUtils.isNull(this.sidePrice) || this.sidePrice <= mainPrice);
 
-        // if sidePrice != 0, check mainPrice < sidePrice
-        if (this.sidePrice != 0 && mainPrice >= this.sidePrice)
-            throw new AppException(ErrorCode.ORDER__MAIN_PRICE_INVALID);
+        if (!isValid) throw new AppException(ErrorCode.ORDER__MAIN_PRICE_LIMIT);
 
         this.mainPrice = mainPrice;
     }
 
-    public void setSidePrice(int sidePrice) {
-        if (sidePrice != 0 && sidePrice <= 1000)
-            throw new AppException(ErrorCode.ORDER__SIDE_PRICE_INVALID);
+    public void setSidePrice(Integer sidePrice) {
+        boolean isValid = AppUtils.isNull(this.sidePrice) || (1000 <= sidePrice && sidePrice <= this.mainPrice);
 
-        // if sidePrice > 0, check sidePrice > mainPrice
-        if (sidePrice != 0 && this.mainPrice >= sidePrice)
-            throw new AppException(ErrorCode.ORDER__SIDE_PRICE_INVALID);
+        if (!isValid) throw new AppException(ErrorCode.ORDER__SIDE_PRICE_LIMIT);
 
         this.sidePrice = sidePrice;
     }
