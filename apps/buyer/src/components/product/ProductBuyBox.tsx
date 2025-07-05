@@ -1,5 +1,5 @@
 'use client';
-import { getPriceStrategy } from '@/helpers/product.helper2';
+import { getPriceStrategy } from '@/helpers/product.helper';
 import { formatCurrency, formatPercent } from '@/lib/utils';
 import { TProductBuyBox } from '@/types/product.types';
 import { TSku } from '@/types/sku.types';

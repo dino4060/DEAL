@@ -1,5 +1,5 @@
 'use client';
-import { getDisabledOptionsMatrix } from '@/helpers/product.helper2';
+import { getDisabledOptionsMatrix } from '@/helpers/product.helper';
 import { findMatchingSku } from '@/helpers/sku.helper';
 import { RESOURCES } from '@/lib/constants';
 import { getFileUrl } from '@/lib/files';

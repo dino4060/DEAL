@@ -1,5 +1,5 @@
 "use client";
-import { getPriceStrategy } from "@/helpers/product.helper2";
+import { getPriceStrategy } from "@/helpers/product.helper";
 import { RESOURCES } from "@/lib/constants";
 import { getFileUrl } from "@/lib/files";
 import { formatCurrency } from "@/lib/utils";

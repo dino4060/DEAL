@@ -27,7 +27,7 @@ export type TCategoryBranch = TMainType & {
   level3Category: TCategory | null;
 }
 
-// PICK TYPES //
+// SIDE TYPES //
 
 export type TCategoryItem = Pick<TCategory,
-  'id' | 'name' | 'slug' | 'photo' | 'description' | 'position' | 'level'>
+  'id' | 'name' | 'photo' | 'position' | 'childCategories'>

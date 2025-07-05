@@ -7,9 +7,10 @@ import { useEffect, useState } from "react";
 import HomeContainer from "./HomeContainer";
 import { ProductItem } from "./ProductItem";
 import { toast } from "sonner";
+import { TCategoryItem } from "@/types/category.types";
 
 type TProductGridSectionProps = {
-  selectedCategory: string | null;
+  selectedCategory: TCategoryItem | undefined;
 }
 
 export const ProductGridSection = ({ selectedCategory }: TProductGridSectionProps) => {
