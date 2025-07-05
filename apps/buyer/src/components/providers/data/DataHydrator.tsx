@@ -7,13 +7,13 @@ import { TUser } from "@/types/auth.types";
 import { TCart } from "@/types/cart.types";
 import { useEffect } from "react";
 
-type TGlobalDataHydratorProps = {
+type TDataHydratorProps = {
   currentUser: TUser | null;
   defaultAddress: TAddress | null;
   cart: TCart | null;
 }
 
-export const GlobalDataHydrator = ({ currentUser, defaultAddress, cart }: TGlobalDataHydratorProps) => {
+export const DataHydrator = ({ currentUser, defaultAddress, cart }: TDataHydratorProps) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {

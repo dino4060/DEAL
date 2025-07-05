@@ -1,12 +1,13 @@
 // app/auth/TokenRefresher.tsx
+import { getIsAuthenticated } from "@/functions/getIsAuthenticated";
 import { api } from "@/lib/api";
 import { serverFetch } from "@/lib/fetch/fetch.server";
-import { Fragment, Suspense } from "react";
-import { TokenRestorer } from "./TokenRestorer";
-import { getIsAuthenticated } from "@/functions/getIsAuthenticated";
+import { TChildrenComponent } from "@/types/base.types";
+import { Fragment } from "react";
 import { TokenCleaner } from "./TokenCleaner";
+import { TokenRestorer } from "./TokenRestorer";
 
-export const TokenGate = async ({ children }: { children: React.ReactNode }) => {
+export const TokenGate = async ({ children }: TChildrenComponent) => {
   // If don't exist accessToken → clean → render children
   const isAuthenticated = await getIsAuthenticated();
   if (!isAuthenticated) {

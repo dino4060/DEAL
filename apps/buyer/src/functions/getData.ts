@@ -1,4 +1,4 @@
-// src/functions/getStore.ts
+// src/functions/getData.ts
 import { api } from '@/lib/api';
 import { serverFetch } from '@/lib/fetch/fetch.server';
 import { TAddress } from '@/types/address.types';

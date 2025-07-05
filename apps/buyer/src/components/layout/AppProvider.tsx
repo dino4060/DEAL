@@ -1,8 +1,9 @@
 import { StoreProvider } from "@/components/providers/store/StoreProvider";
 import { TokenAuthProvider } from "@/components/providers/token/TokenAuthProvider";
-import { GlobalDataProvider } from "@/components/providers/data/GlobalDataProvider";
+import { GlobalDataProvider } from "@/components/providers/data/DataProvider";
+import { TChildrenComponent } from "@/types/base.types";
 
-export const AppProvider = ({ children }: { children: React.ReactNode }) => {
+export const AppProvider = ({ children }: TChildrenComponent) => {
     return (
         <StoreProvider>
             <TokenAuthProvider>

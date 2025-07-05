@@ -1,5 +1,5 @@
+// app/auth/TokenCleaner.tsx
 'use client';
-
 import { actions } from "@/store";
 import { useAppDispatch } from "@/store/hooks";
 import { TChildrenComponent } from "@/types/base.types";
