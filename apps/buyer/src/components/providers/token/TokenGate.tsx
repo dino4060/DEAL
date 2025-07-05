@@ -10,33 +10,27 @@ export const TokenGate = async ({ children }: { children: React.ReactNode }) => 
   // If don't exist accessToken → clean → render children
   const isAuthenticated = await getIsAuthenticated();
   if (!isAuthenticated) {
-    console.log(">>> TokenGate: isAuthenticated F: render children with no auth");
+    console.log(">>> TokenGate: isAuthenticated F: clean & render children");
     return <TokenCleaner>{children}</TokenCleaner>;
   }
 
-  // Check token is valid that using fetch current user
-  const apiRes = await serverFetch(api.auth.getCurrentUser());
-  console.log(">>> TokenGate: apiRes: ", apiRes);
+  // Check token using fetch current user
+  const { success, code } = await serverFetch(api.auth.getCurrentUser());
 
   // If token expired → render TokenRestorer
-  if (!apiRes.success && apiRes.code === 1010) {
-    console.log(">>> TokenGate: Access token expired, render TokenRestorer");
-    return (
-      <Suspense fallback={
-        <div className="container mx-auto p-4 flex justify-center items-center min-h-[calc(100vh-150px)]">
-          <div className="text-center text-lg text-gray-600">Đang khôi phục trạng thái đã xác thực...</div>
-        </div>
-      }>
-        <TokenRestorer />
-      </Suspense>
-    );
+  if (!success && code === 1010) {
+    console.log(">>> TokenGate: Access token expired: render TokenRestorer");
+    return (<TokenRestorer />);
   }
 
   // If token is valid → render children
-  if (apiRes.success) return <Fragment>{children}</Fragment>;
+  if (success) {
+    console.log(">>> TokenGate: Access token is valid: render children");
+    return <Fragment>{children}</Fragment>;
+  }
 
 
   // If occur unhandled exception → clean → render children
-  console.error(">>> TokenGate: Unhandled error: render children with no auth");
+  console.error(">>> TokenGate: Unhandled error: clean & render children");
   return <TokenCleaner>{children}</TokenCleaner>;
 }

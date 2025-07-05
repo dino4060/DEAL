@@ -1,5 +1,5 @@
 // components/providers/data/GlobalDataInitializer.tsx
-import { getCachedUserCart, getCurrentUser, getDefaultAddress } from '@/functions/getStore';
+import { getCachedUserCart, getCurrentUser, getDefaultAddress } from '@/functions/getData';
 import { getIsAuthenticated } from "@/functions/getIsAuthenticated";
 import { Fragment } from 'react';
 import { GlobalDataHydrator } from './GlobalDataHydrator';
