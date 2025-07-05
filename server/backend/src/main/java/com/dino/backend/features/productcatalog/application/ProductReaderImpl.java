@@ -28,7 +28,17 @@ public class ProductReaderImpl implements IProductReader {
     IDiscountService discountService;
 
     @Override
-    public PageRes<ProductItemRes> searchProduct(ProductSearchParams searchParams, Pageable pageable) {
+    public List<ProductItemRes> searchProducts(ProductSearchParams searchParams) {
+        var products = this.productQuery.searchByMultiParams(
+                searchParams.keyword(), searchParams.categories(), searchParams.priceRange());
+
+        return products.stream()
+                .map(p -> this.productMapper.toProductItemRes(p))
+                .toList();
+    }
+
+    @Override
+    public PageRes<ProductItemRes> searchProducts(ProductSearchParams searchParams, Pageable pageable) {
         var pageDomain = this.productQuery.searchByMultiParams(
                 searchParams.keyword(), searchParams.categories(), searchParams.priceRange(), pageable);
 
@@ -47,11 +57,5 @@ public class ProductReaderImpl implements IProductReader {
                 .toList();
 
         return PageRes.from(pageDomain, productList);
-    }
-
-    @Override
-    public List<ProductItemView> searchProduct(ProductSearchParams searchParams) {
-        return this.productQuery.searchByMultiParams(
-                searchParams.keyword(), searchParams.categories(), searchParams.priceRange());
     }
 }

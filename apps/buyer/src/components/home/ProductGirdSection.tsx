@@ -5,7 +5,7 @@ import { TPagination } from "@/types/base.types";
 import { TProductItem } from "@/types/product.types";
 import { useEffect, useState } from "react";
 import HomeContainer from "./HomeContainer";
-import { ProductItem } from "./ProductItem";
+import { ProductItem } from "../product/ProductItem";
 import { toast } from "sonner";
 import { TCategoryItem } from "@/types/category.types";
 

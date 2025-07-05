@@ -23,17 +23,17 @@ public class ProductQueryImpl implements IProductQuery {
     IProductSpecification productSpecification;
 
     @Override
+    public List<ProductItemView> searchByMultiParams(
+            String keyword, List<Integer> categories, Integer[] priceRange
+    ) {
+        return this.productSpecification.searchFullText(keyword);
+    }
+
+    @Override
     public Page<ProductItemView> searchByMultiParams(
             String keyword, List<Integer> categories, Integer[] priceRange,
             @NonNull Pageable pageable
     ) {
         return null;
-    }
-
-    @Override
-    public List<ProductItemView> searchByMultiParams(
-            String keyword, List<Integer> categories, Integer[] priceRange
-    ) {
-        return this.productSpecification.searchFullText(keyword);
     }
 }

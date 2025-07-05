@@ -12,8 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.dino.backend.features.productcatalog.application.service.IProductService;
-import com.dino.backend.shared.api.annotation.AuthUser;
-import com.dino.backend.shared.api.model.CurrentUser;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -34,24 +32,19 @@ public class BuyerProductController {
 
         // QUERY //
 
-        // listProduct //
+        // listProducts //
         @GetMapping("/list")
-        public ResponseEntity<Object> listProduct(
+        public ResponseEntity<Object> listProducts(
                 @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-            return ResponseEntity.ok(this.productService.listProduct(pageable));
+            return ResponseEntity.ok(this.productService.listProducts(pageable));
         }
 
-        // searchProduct //
+        // searchProducts //
         @GetMapping("/search")
-        public ResponseEntity<Object> searchProduct(
+        public ResponseEntity<Object> searchProducts(
                 @ModelAttribute ProductSearchParams params) {
-            return ResponseEntity.ok(this.productReader.searchProduct(params));
+            return ResponseEntity.ok(this.productReader.searchProducts(params));
         }
-
-//        @GetMapping("/id")
-//        public ResponseEntity<Object> getProduct() {
-//            return ResponseEntity.ok("oke");
-//        }
 
         // getProduct //
         @GetMapping("/{id}")
@@ -60,6 +53,5 @@ public class BuyerProductController {
 
             return ResponseEntity.ok(this.productService.getProduct(idObject));
         }
-
     }
 }

@@ -31,7 +31,7 @@ public class ProductServiceImpl implements IProductService {
 
     // list //
     @Override
-    public PageRes<ProductItemRes> listProduct(Pageable pageable) {
+    public PageRes<ProductItemRes> listProducts(Pageable pageable) {
         var page = this.productRepository.findAllProjectedBy(pageable);
 
         var products = page.getContent().stream()

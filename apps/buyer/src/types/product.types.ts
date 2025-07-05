@@ -75,3 +75,9 @@ export type TProductDescription = Pick<TProduct,
 
 export type TProductLean = Pick<TProduct,
   'id' | 'name' | 'thumb'>;
+
+// API TYPES //
+
+export type TProductSearchQuery = {
+  keyword: string | undefined;
+}

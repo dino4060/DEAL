@@ -21,34 +21,50 @@ public class ProductItemView {
     Instant updatedAt;
     String name;
     String thumb;
-    Integer retailPrice;
     ProductMeta meta;
+    ProductPriceView price;
     Float rank;
-    
+
     /**
      * Constructor được sử dụng bởi @ConstructorResult trong @SqlResultSetMapping.
      */
     public ProductItemView(
-            Long id,
-            String status, Instant updatedAt, String name, String thumb, Integer retailPrice,
-            String metaJson,
+            Long productId,
+            String status, Instant updatedAt, String name, String thumb, String metaJson,
+            Long priceId,
+            int mainPrice, Integer sidePrice, int discountPercent,
+            Integer maxMainPrice, Integer maxSidePrice, Integer maxDiscountPercent,
             Float rank
-
     ) {
-        this.id = id;
+        this.id = productId;
         this.status = status;
         this.updatedAt = updatedAt;
         this.name = name;
         this.thumb = thumb;
-        this.retailPrice = retailPrice;
-
-        try {
-            this.meta = (metaJson == null) ? null : objectMapper.readValue(metaJson, ProductMeta.class);
-        } catch (JsonProcessingException e) {
-            this.meta = null;
-        }
-
+        this.meta = mapMeta(metaJson);
+        this.price = mapPrice(
+                priceId,
+                mainPrice, sidePrice, discountPercent,
+                maxMainPrice, maxSidePrice, maxDiscountPercent);
         this.rank = rank;
     }
 
+    private ProductMeta mapMeta(String metaJson) {
+        try {
+            return (metaJson == null) ? null : objectMapper.readValue(metaJson, ProductMeta.class);
+        } catch (JsonProcessingException e) {
+            return null;
+        }
+    }
+
+    private ProductPriceView mapPrice(
+            Long priceId,
+            int mainPrice, Integer sidePrice, int discountPercent,
+            Integer maxMainPrice, Integer maxSidePrice, Integer maxDiscountPercent
+    ) {
+        return new ProductPriceView(
+                priceId,
+                mainPrice, sidePrice, discountPercent,
+                maxMainPrice, maxSidePrice, maxDiscountPercent);
+    }
 }

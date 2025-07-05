@@ -9,15 +9,14 @@ import org.springframework.lang.Nullable;
 import java.util.List;
 
 public interface IProductQuery {
+    List<ProductItemView> searchByMultiParams(
+            String keyword, List<Integer> categories, Integer[] priceRange
+    );
 
     Page<ProductItemView> searchByMultiParams(
             @Nullable String keyword,
             @Nullable List<Integer> categories,
             @Nullable Integer[] priceRange,
             @NonNull Pageable pageable
-    );
-
-    List<ProductItemView> searchByMultiParams(
-            String keyword, List<Integer> categories, Integer[] priceRange
     );
 }
