@@ -3,6 +3,7 @@ import { ProductGrid } from "@/components/product/ProductGrid";
 import { api } from "@/lib/api";
 import { serverFetch } from "@/lib/fetch/fetch.server";
 import { TProductSearchQuery } from "@/types/product.types";
+import { Fragment } from "react";
 
 type TSearchPageProps = {
   searchParams: Promise<TProductSearchQuery>
@@ -18,15 +19,13 @@ async function searchPage({ searchParams }: TSearchPageProps) {
   return (
     <div className="py-10 space-y-10">
       <HomeContainer>
-        {query.keyword ? (
-          <h2 className="text-xl font-medium">
-            🔍 Search results for "<span className="text-primary">{query.keyword}</span>"
-          </h2>
-        ) : (
-          <h2 className="text-xl font-medium">
-            🔍 Search all
-          </h2>
-        )}
+        <h2 className="text-xl font-medium">
+          {query.keyword ? (
+            <Fragment>🔍 Search results for "<span className="text-primary">{query.keyword}</span>"</Fragment>
+          ) : (
+            <Fragment>🔍 Search all</Fragment>
+          )}
+        </h2>
       </HomeContainer>
 
       <HomeContainer>

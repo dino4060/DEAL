@@ -1,25 +1,16 @@
-package com.dino.backend.infrastructure.persistence.specification;
+package com.dino.backend.infrastructure.persistence.sqlquery;
 
 import com.dino.backend.features.productcatalog.domain.Product;
 import com.dino.backend.features.productcatalog.domain.model.ProductItemView;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.repository.query.Param;
 import org.springframework.lang.NonNull;
 
 import java.util.List;
 
-public interface IProductSpecification extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
+public interface IProductSqlQuery extends JpaRepository<Product, Long> {
 
-    //    @NativeQuery("""
-//            WITH query AS (SELECT plainto_tsquery('english', :keyword) AS q)
-//            SELECT p.product_id, p.status, p.updated_at, p.name, p.thumb, p.meta, p.price,
-//                   ts_rank(p.text_search_vector, query.q) AS rank
-//            FROM deal.public.products p, query
-//            WHERE p.text_search_vector @@ query.q
-//            ORDER BY rank DESC;
-//            """)
     @NativeQuery("""
             WITH query AS (SELECT plainto_tsquery('english', :keyword) AS q)
             SELECT
