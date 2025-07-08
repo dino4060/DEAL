@@ -7,6 +7,7 @@
  * - Function: result, output
  */
 
+// src/types/auth.types.ts
 // Entity //
 export type TUser = {
     status: 'LACK_INFO' | 'LIVE' | 'DEACTIVATED' | 'SUSPENDED' | 'DELETED',

@@ -1,6 +1,6 @@
 package com.dino.backend.features.ordering.application;
 
-import com.dino.backend.features.identity.domain.User;
+import com.dino.backend.features.profile.domain.User;
 import com.dino.backend.features.inventory.application.service.IInventoryService;
 import com.dino.backend.features.ordering.application.service.IOrderService;
 import com.dino.backend.features.ordering.domain.CartItem;

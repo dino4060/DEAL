@@ -2,7 +2,7 @@ package com.dino.backend.infrastructure.security;
 
 import org.springframework.stereotype.Service;
 
-import com.dino.backend.features.identity.application.model.GoogleUserResponse;
+import com.dino.backend.features.identity.application.model.GoogleUserRes;
 import com.dino.backend.features.identity.application.provider.IIdentityOauth2Provider;
 import com.dino.backend.infrastructure.common.Env;
 import com.dino.backend.infrastructure.htttpclient.oauth2.GoogleTokenClient;
@@ -60,7 +60,7 @@ public class Oauth2ProviderImpl implements IIdentityOauth2Provider {
      * @param accessToken: String
      * @return user: GoogleUserResponse
      */
-    private GoogleUserResponse getGoogleUser(String accessToken) {
+    private GoogleUserRes getGoogleUser(String accessToken) {
         try {
             return this.googleUserClient.getUser("json", accessToken);
 
@@ -71,7 +71,7 @@ public class Oauth2ProviderImpl implements IIdentityOauth2Provider {
     }
 
     @Override
-    public GoogleUserResponse authViaGoogle(String code) {
+    public GoogleUserRes authViaGoogle(String code) {
         // 1. exchange code for token
         var googleToken = this.getGoogleToken(code);
 

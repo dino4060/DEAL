@@ -30,7 +30,6 @@ export const TokenGate = async ({ children }: TChildrenComponent) => {
     return <Fragment>{children}</Fragment>;
   }
 
-
   // If occur unhandled exception → clean → render children
   console.error(">>> TokenGate: Unhandled error: clean & render children");
   return <TokenCleaner>{children}</TokenCleaner>;

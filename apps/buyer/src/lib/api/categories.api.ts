@@ -1,6 +1,6 @@
-import { TApiDefinition } from "@/types/base.types";
 import { TCategoryItem } from "@/types/category.types";
-import { HttpMethod, RESOURCES } from "../constants";
+import { TApiDefinition, HttpMethod } from "@/types/base.types";
+import { RESOURCES } from "../constants";
 
 export const categoriesApi = {
   // PUBLIC //

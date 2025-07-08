@@ -1,3 +1,3 @@
-export const Settings = () => {
-  return <div>settings</div>
+export const SettingPage = () => {
+  return <div>SettingPage</div>
 }

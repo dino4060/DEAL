@@ -1,6 +1,6 @@
 // src/api/carts.api.ts
-import { TApiDefinition, TDeletedRes } from "@/types/base.types";
-import { HttpMethod, RESOURCES } from "@/lib/constants";
+import { TApiDefinition, HttpMethod, TDeletedRes } from "@/types/base.types";
+import { RESOURCES } from "../constants";
 import { TAddCartItemBody, TCart, TCartItem, TRemoveCartItemBody, TUpdateQuantityBody } from "@/types/cart.types";
 
 export const cartsApi = {

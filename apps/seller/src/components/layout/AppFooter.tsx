@@ -1,3 +1,4 @@
+// src/components/layout/AppFooter.tsx
 import { Layout } from 'antd';
 
 const { Footer } = Layout;

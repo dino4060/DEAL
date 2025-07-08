@@ -29,16 +29,19 @@ const authSlice = createSlice({
     setCredentials: (state, { payload }: PayloadAction<TAuthResponse>) => {
       clientCookies.set(ACCESS_TOKEN, payload.accessToken);
       clientLocal.set(CURRENT_USER, payload.currentUser);
+
       state.accessToken = payload.accessToken;
       state.currentUser = payload.currentUser;
     },
     setCurrentUser: (state, { payload }: PayloadAction<TUser>) => {
       clientLocal.set(CURRENT_USER, payload);
+
       state.currentUser = payload;
     },
     clean: () => {
       clientCookies.remove(ACCESS_TOKEN);
       clientLocal.remove(CURRENT_USER);
+
       return { accessToken: null, currentUser: null };
     },
   },

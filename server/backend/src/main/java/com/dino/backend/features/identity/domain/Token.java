@@ -2,6 +2,7 @@ package com.dino.backend.features.identity.domain;
 
 import java.time.Instant;
 
+import com.dino.backend.features.profile.domain.User;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
@@ -56,16 +57,20 @@ public class Token extends BaseEntity {
     @JsonIgnore
     User user;
 
-    public static Token createToken(User user) {
-        var newToken = Token.builder()
-                .user(user)
-                .build();
+    // FACTORY //
 
-        return newToken;
+    public static Token createToken(User user) {
+        Token token = new Token();
+
+        token.setUser(user);
+
+        return token;
     }
 
-    public static void updateRefreshToken(Token token, String refreshToken, Instant refreshTokenExpiry) {
-        token.setRefreshToken(refreshToken);
-        token.setRefreshTokenExpiry(refreshTokenExpiry);
+    // INSTANCE //
+
+    public void updateRefreshToken(String refreshToken, Instant refreshTokenExpiry) {
+        this.setRefreshToken(refreshToken);
+        this.setRefreshTokenExpiry(refreshTokenExpiry);
     }
 }

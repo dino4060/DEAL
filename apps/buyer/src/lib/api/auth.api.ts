@@ -1,6 +1,7 @@
-import { TApiDefinition } from "@/types/base.types";
+// src/api/auth.api.ts
 import { TAuthResponse, TLoginOrSignUpWithGoogleBody, TLoginWithPasswordBody, TLookupIdentifierQuery, TLookupIdentifierResponse, TUser } from "../../types/auth.types";
-import { HttpMethod, RESOURCES } from "../constants";
+import { TApiDefinition, HttpMethod } from "@/types/base.types";
+import { RESOURCES } from "../constants";
 
 export const authApi = {
     // PUBLIC //

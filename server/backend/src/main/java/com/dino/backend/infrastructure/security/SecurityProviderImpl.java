@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 import javax.crypto.spec.SecretKeySpec;
 
@@ -21,7 +22,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.dino.backend.features.identity.application.model.TokenPair;
 import com.dino.backend.features.identity.application.provider.IIdentitySecurityProvider;
-import com.dino.backend.features.identity.domain.User;
+import com.dino.backend.features.profile.domain.User;
 import com.dino.backend.infrastructure.common.Env;
 import com.dino.backend.infrastructure.security.model.JwtType;
 import com.dino.backend.shared.application.utils.Id;
@@ -114,7 +115,10 @@ public class SecurityProviderImpl implements IIdentitySecurityProvider {
                         .issuer("deal.dino.com")
                         .issueTime(new Date())
                         .expirationTime(new Date(this.getExpiry(jwtType).toEpochMilli()))
-                        .claim("scope", this.buildScope(user.getRoles()))
+                        .claim("scope", this.buildScope(user.getRoles()
+                                .stream()
+                                .map(role -> role.toString())
+                                .collect(Collectors.toSet())))
                         .build()
                         .toJSONObject());
 

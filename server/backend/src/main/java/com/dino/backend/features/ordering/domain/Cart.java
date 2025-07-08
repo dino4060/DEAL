@@ -1,6 +1,6 @@
 package com.dino.backend.features.ordering.domain;
 
-import com.dino.backend.features.identity.domain.User;
+import com.dino.backend.features.profile.domain.User;
 import com.dino.backend.features.productcatalog.domain.Sku;
 import com.dino.backend.shared.domain.exception.AppException;
 import com.dino.backend.shared.domain.exception.ErrorCode;
@@ -65,6 +65,7 @@ public class Cart extends BaseEntity {
      */
     public static Cart createCart(User buyer) {
         Cart cart = new Cart();
+
         cart.setCartItems(new ArrayList<>());
         cart.setTotal(0);
         cart.setBuyer(buyer);

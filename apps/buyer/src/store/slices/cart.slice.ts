@@ -22,7 +22,7 @@ const cartSlice = createSlice({
   reducers: {
     setCart: (_, { payload: cart }: PayloadAction<TCart>) => {
       const { total, cartGroups: groups } = cart;
-      const version = 1
+      const version = 1;
 
       clientLocal.set(CART_TOTAL, total);
       clientLocal.set(CART_GROUPS, groups);
@@ -31,17 +31,20 @@ const cartSlice = createSlice({
       return { total, groups, version };
     },
     plusTotal: (state, { payload: delta }: PayloadAction<number>) => {
-      if (!state.total) {
-        const update = 0 + delta;
-        state.total = Math.min(100, Math.max(0, update));
+      console.log("plusTotal");
 
-      } else {
-        const update = state.total + delta;
-        state.total = Math.min(100, Math.max(0, update));
-      }
+      const update = (state.total || 0) + delta
+
+      clientLocal.set(CART_TOTAL, update);
+
+      state.total = Math.min(100, Math.max(0, update));
     },
     updateVersion: (state) => {
-      state.version = state.version || 0 + 1;
+      const update = (state.version || 0) + 1;
+
+      clientLocal.set(CART_VERSION, update);
+
+      state.version = update;
     },
     clean: () => {
       clientLocal.remove(CART_TOTAL);

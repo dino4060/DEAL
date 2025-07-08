@@ -1,42 +1,33 @@
 // src/routes.ts
+import { Outlet } from 'react-router';
+import { AboutPage } from './app/about/page';
+import { LoginPage } from './app/auth/login/page';
+import { SignupPage } from './app/auth/signup/page';
+import { DashboardPage } from './app/dashboard/page';
+import { HomePage } from './app/home/page';
+import { SettingPage } from './app/settings/page';
+import { VerifyPage } from './app/verify/page';
 import { AppLayout } from './app/layout';
-import { About } from './app/about/page';
-import { Login } from './app/auth/login';
-import { Register } from './app/auth/register';
-import { Dashboard } from './app/dashboard/page';
-import { HomePage } from './app/page';
-import { Settings } from './app/settings/page';
-import { DashboardLayout } from './app/dashboard/layout';
-import { AppProtection } from './protection';
+import { AppProvider } from './app/provider';
+import { AppProtection } from './app/protection';
 
 export const routes = [
   {
-    element: <AppLayout />,
+    element: <AppProvider><Outlet /></AppProvider>,
     children: [
-      { index: true, element: <HomePage /> },
-      { path: 'about', element: <About /> },
+      { path: 'login', element: <LoginPage /> },
+      { path: 'signup', element: <SignupPage /> },
+      { path: 'verify', element: <VerifyPage /> },
       {
-        path: 'auth',
+        element: <AppProtection><AppLayout><Outlet /></AppLayout></AppProtection>,
         children: [
-          { path: 'login', element: <Login /> },
-          { path: 'register', element: <Register /> },
+          { index: true, element: <HomePage /> },
+          { path: 'about', element: <AboutPage /> },
+          { path: 'dashboard', element: <DashboardPage /> },
+          { path: 'settings', element: <SettingPage /> }
         ],
       },
-      {
-        element: <AppProtection />,
-        children: [
-          {
-            path: 'dashboard',
-            element: <DashboardLayout />,
-            children: [
-              { index: true, element: <Dashboard /> },
-              { path: 'settings', element: <Settings /> },
-            ],
-          },
-        ]
-      }
-
-    ],
-  },
+    ]
+  }
   // { path: '*', element: <NotFoundPage /> },
 ];

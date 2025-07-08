@@ -6,8 +6,7 @@
  * - Khi tách, services dùng types, nhưng types không biết gì về service — đúng hướng phụ thuộc.
  */
 
-import { HttpMethod } from "@/lib/constants";
-
+// src/types/base.types.ts
 export type TChildrenComponent = {
   children: React.ReactNode
 };
@@ -17,6 +16,14 @@ export type TMainType = {
   createdAt: Date;
   updatedAt: Date;
   isDeleted: boolean;
+}
+
+export enum HttpMethod {
+    GET = 'GET',
+    POST = 'POST',
+    PATCH = 'PATCH',
+    PUT = 'PUT',
+    DELETE = 'DELETE',
 }
 
 export type TApiDefinition<T> = {

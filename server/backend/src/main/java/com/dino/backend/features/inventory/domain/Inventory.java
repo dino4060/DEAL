@@ -45,17 +45,17 @@ public class Inventory extends BaseEntity {
     // SETTERS //
 
     public void setStocks(int stocks) {
-        boolean isValid = 0 <= stocks && stocks < this.total;
+        boolean condition = 0 <= stocks && stocks < this.total;
 
-        if (!isValid) throw new AppException(ErrorCode.INVENTORY__STOCKS_LIMIT);
+        if (!condition) throw new AppException(ErrorCode.INVENTORY__STOCKS_LIMIT);
 
         this.stocks = stocks;
     }
 
     public void setSales(int sales) {
-        boolean isValid = 0 <= sales && sales <= this.total;
+        boolean condition = 0 <= sales && sales <= this.total;
 
-        if (!isValid) throw new AppException(ErrorCode.INVENTORY__SALES_LIMIT);
+        if (!condition) throw new AppException(ErrorCode.INVENTORY__SALES_LIMIT);
 
         this.sales = sales;
     }

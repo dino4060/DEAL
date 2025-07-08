@@ -1,6 +1,5 @@
 package com.dino.backend.features.profile.domain;
 
-import com.dino.backend.features.identity.domain.User;
 import com.dino.backend.shared.domain.model.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

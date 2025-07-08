@@ -10,4 +10,4 @@ export const CART_TOTAL = "CART_TOTAL";
 
 export const CART_GROUPS = "CART_GROUPS";
 
-export const CART_VERSION = "CART_GROUPS";
+export const CART_VERSION = "CART_VERSION";

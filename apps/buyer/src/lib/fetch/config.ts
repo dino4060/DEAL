@@ -1,5 +1,5 @@
-import { TApiDefinition, TApiResponse } from "@/types/base.types";
-import { HttpMethod } from "../constants";
+// src/lib/fetch/config.ts
+import { HttpMethod, TApiDefinition, TApiResponse } from "@/types/base.types";
 import { env } from "../env";
 
 export function buildEndpoint(domain: string, route: string, query?: any): RequestInfo {

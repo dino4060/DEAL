@@ -1,3 +1,4 @@
+// src/lib/fetch/fetch.client.ts
 import { TApiDefinition } from "@/types/base.types";
 import clientCookies from "../storage/cookie.client";
 import { fetchSafely } from "./config";

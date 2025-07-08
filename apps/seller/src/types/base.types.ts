@@ -1,4 +1,4 @@
-import type { HttpMethod } from "../lib/constants";
+// src/types/base.types.ts
 
 export type TChildrenComponent = {
   children: React.ReactNode
@@ -11,10 +11,21 @@ export type TMainType = {
   isDeleted: boolean;
 }
 
+export const HttpMethod = {
+  GET: 'GET',
+  POST: 'POST',
+  PATCH: 'PATCH',
+  PUT: 'PUT',
+  DELETE: 'DELETE',
+} as const;
+
+export type THttpMethod = typeof HttpMethod[keyof typeof HttpMethod];
+
+
 // @ts-ignore
 export type TApiDefinition<T> = {
   route: string;
-  method: HttpMethod;
+  method: THttpMethod;
   withAuth?: boolean;
   query?: object;
   body?: object;

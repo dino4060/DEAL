@@ -1,6 +1,6 @@
 package com.dino.backend.features.ordering.application;
 
-import com.dino.backend.features.identity.application.service.IUserService;
+import com.dino.backend.features.profile.application.service.IUserService;
 import com.dino.backend.features.ordering.application.mapper.ICartMapper;
 import com.dino.backend.features.ordering.application.model.*;
 import com.dino.backend.features.ordering.application.service.ICartService;
@@ -9,6 +9,7 @@ import com.dino.backend.features.ordering.domain.CartItem;
 import com.dino.backend.features.ordering.domain.repository.ICartRepository;
 import com.dino.backend.features.productcatalog.application.service.ISkuService;
 import com.dino.backend.features.profile.domain.Shop;
+import com.dino.backend.features.profile.domain.User;
 import com.dino.backend.shared.api.model.CurrentUser;
 import com.dino.backend.shared.application.utils.Deleted;
 import com.dino.backend.shared.domain.exception.AppException;
@@ -117,7 +118,7 @@ public class CartServiceImpl implements ICartService {
                     throw new AppException(ErrorCode.CART__IS_DELETED);
                 });
         // create
-        var buyer = this.userService.get(currentUser);
+        var buyer = this.userService.getUser(currentUser);
         var newCart = Cart.createCart(buyer);
         return this.cartRepository.save(newCart);
     }
@@ -145,8 +146,17 @@ public class CartServiceImpl implements ICartService {
 
         return this.cartMapper.toCartRes(cart, cartGroups);
     }
-
     // COMMAND //
+
+    /**
+     * createCart
+     */
+    @Override
+    public void createCart(User buyer) {
+        var cart = Cart.createCart(buyer);
+        this.cartRepository.save(cart);
+    }
+
 
     /**
      * addCartItem

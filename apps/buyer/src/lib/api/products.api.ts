@@ -1,6 +1,6 @@
-import { TApiDefinition, TPageRes } from "@/types/base.types";
 import { TProduct, TProductItem, TProductSearchQuery } from "@/types/product.types";
-import { HttpMethod, RESOURCES } from "../constants";
+import { TApiDefinition, TPageRes, HttpMethod } from "@/types/base.types";
+import { RESOURCES } from "../constants";
 
 export const productsApi = {
   // PUBLIC //

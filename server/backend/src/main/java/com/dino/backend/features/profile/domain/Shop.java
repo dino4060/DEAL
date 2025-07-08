@@ -1,38 +1,26 @@
 package com.dino.backend.features.profile.domain;
 
-import java.util.List;
-
+import com.dino.backend.features.ordering.domain.Order;
+import com.dino.backend.features.productcatalog.domain.Product;
+import com.dino.backend.features.profile.domain.model.BusinessType;
+import com.dino.backend.features.profile.domain.model.ShopStatus;
+import com.dino.backend.features.promotion.domain.ProductDiscountProgram;
+import com.dino.backend.shared.domain.exception.AppException;
+import com.dino.backend.shared.domain.exception.ErrorCode;
+import com.dino.backend.shared.domain.model.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
-import com.dino.backend.features.identity.domain.User;
-import com.dino.backend.features.ordering.domain.Order;
-import com.dino.backend.features.productcatalog.domain.Product;
-import com.dino.backend.features.promotion.domain.ProductDiscountProgram;
-import com.dino.backend.shared.domain.model.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.FieldDefaults;
-import lombok.experimental.SuperBuilder;
+// NOTE: == & equal()
 
 @Entity
 @Table(name = "shops")
@@ -53,7 +41,9 @@ public class Shop extends BaseEntity {
     @Column(name = "shop_id")
     Long id;
 
-    String status;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    ShopStatus status;
 
     String code;
 
@@ -65,9 +55,9 @@ public class Shop extends BaseEntity {
 
     String contactPhone;
 
-    String businessType;
-
-    String sellerType;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    BusinessType businessType;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seller_id", nullable = false, updatable = false)
@@ -89,13 +79,51 @@ public class Shop extends BaseEntity {
     @ToString.Exclude
     List<Order> orders;
 
-    // location => address
+    // FACTORY //
 
-    // stars => review
+    public static Shop createShop(User seller) {
+        Shop shop = new Shop();
 
-    // sales => product metrics
+        shop.setStatus(ShopStatus.VERIFYING);
+        shop.setCode("shop" + System.currentTimeMillis());
+        shop.setContactEmail(seller.getEmail());
+        shop.setContactPhone(seller.getPhone());
+        shop.setSeller(seller);
 
-    // returning customers => product metrics
+        return shop;
+    }
 
-    // mall, vietnam => meta
+    // INSTANCE //
+
+    public void maskAsReviewing(
+            BusinessType businessType, String name, String contactEmail, String contactPhone
+    ) {
+        boolean condition = this.status == ShopStatus.VERIFYING;
+
+        if (!condition) throw new AppException(ErrorCode.SHOP__NOT_UPDATABLE);
+
+        this.setStatus(ShopStatus.REVIEWING);
+        this.setBusinessType(businessType);
+        this.setName(name);
+        this.setContactEmail(contactEmail);
+        this.setContactPhone(contactPhone);
+    }
+
+    public void maskAsLive() {
+        boolean condition = this.status == ShopStatus.REVIEWING;
+
+        if (!condition) throw new AppException(ErrorCode.SHOP__NOT_UPDATABLE);
+
+        this.setStatus(ShopStatus.LIVE);
+    }
 }
+
+// location => address
+
+// stars => review
+
+// sales => product metrics
+
+// returning customers => product metrics
+
+// mall, vietnam => meta
