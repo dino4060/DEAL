@@ -1,6 +1,6 @@
 package com.dino.backend.features.pricing.domain;
 
-import com.dino.backend.features.productcatalog.domain.Sku;
+import com.dino.backend.features.product.domain.Sku;
 import com.dino.backend.shared.domain.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;

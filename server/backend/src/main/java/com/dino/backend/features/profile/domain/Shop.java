@@ -1,7 +1,7 @@
 package com.dino.backend.features.profile.domain;
 
 import com.dino.backend.features.ordering.domain.Order;
-import com.dino.backend.features.productcatalog.domain.Product;
+import com.dino.backend.features.product.domain.Product;
 import com.dino.backend.features.profile.domain.model.BusinessType;
 import com.dino.backend.features.profile.domain.model.ShopStatus;
 import com.dino.backend.features.promotion.domain.ProductDiscountProgram;

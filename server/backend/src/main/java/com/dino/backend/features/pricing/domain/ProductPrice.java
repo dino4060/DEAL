@@ -1,8 +1,7 @@
 package com.dino.backend.features.pricing.domain;
 
-import com.dino.backend.features.productcatalog.domain.Product;
+import com.dino.backend.features.product.domain.Product;
 import com.dino.backend.shared.domain.model.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;

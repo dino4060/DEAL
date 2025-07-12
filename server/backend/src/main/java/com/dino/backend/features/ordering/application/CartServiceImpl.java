@@ -7,7 +7,7 @@ import com.dino.backend.features.ordering.application.service.ICartService;
 import com.dino.backend.features.ordering.domain.Cart;
 import com.dino.backend.features.ordering.domain.CartItem;
 import com.dino.backend.features.ordering.domain.repository.ICartRepository;
-import com.dino.backend.features.productcatalog.application.service.ISkuService;
+import com.dino.backend.features.product.application.service.ISkuService;
 import com.dino.backend.features.profile.domain.Shop;
 import com.dino.backend.features.profile.domain.User;
 import com.dino.backend.shared.api.model.CurrentUser;

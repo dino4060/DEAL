@@ -9,7 +9,7 @@ import org.hibernate.annotations.SQLRestriction;
 import org.springframework.lang.Nullable;
 import org.springframework.util.CollectionUtils;
 
-import com.dino.backend.features.productcatalog.domain.Product;
+import com.dino.backend.features.product.domain.Product;
 import com.dino.backend.features.promotion.domain.model.LevelType;
 import com.dino.backend.shared.api.model.CurrentUser;
 import com.dino.backend.shared.domain.model.BaseEntity;

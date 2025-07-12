@@ -1,7 +1,7 @@
 package com.dino.backend.features.ordering.domain;
 
 import com.dino.backend.features.profile.domain.User;
-import com.dino.backend.features.productcatalog.domain.Sku;
+import com.dino.backend.features.product.domain.Sku;
 import com.dino.backend.shared.domain.exception.AppException;
 import com.dino.backend.shared.domain.exception.ErrorCode;
 import com.dino.backend.shared.domain.model.BaseEntity;

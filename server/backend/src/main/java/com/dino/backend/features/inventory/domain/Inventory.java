@@ -1,6 +1,6 @@
 package com.dino.backend.features.inventory.domain;
 
-import com.dino.backend.features.productcatalog.domain.Sku;
+import com.dino.backend.features.product.domain.Sku;
 import com.dino.backend.shared.domain.exception.AppException;
 import com.dino.backend.shared.domain.exception.ErrorCode;
 import com.dino.backend.shared.domain.model.BaseEntity;

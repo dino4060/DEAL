@@ -1,7 +1,7 @@
 package com.dino.backend.infrastructure.persistence;
 
-import com.dino.backend.features.productcatalog.domain.model.ProductItemView;
-import com.dino.backend.features.productcatalog.domain.query.IProductQuery;
+import com.dino.backend.features.product.domain.model.ProductItemView;
+import com.dino.backend.features.product.domain.query.IProductQuery;
 import com.dino.backend.infrastructure.persistence.sqlquery.IProductSqlQuery;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

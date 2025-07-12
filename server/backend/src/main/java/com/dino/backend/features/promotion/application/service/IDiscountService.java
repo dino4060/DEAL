@@ -1,8 +1,8 @@
 package com.dino.backend.features.promotion.application.service;
 
 import com.dino.backend.features.promotion.domain.ProductDiscount;
-import com.dino.backend.features.productcatalog.domain.Product;
-import com.dino.backend.features.productcatalog.domain.Sku;
+import com.dino.backend.features.product.domain.Product;
+import com.dino.backend.features.product.domain.Sku;
 import com.dino.backend.shared.api.model.CurrentUser;
 
 import java.util.Optional;

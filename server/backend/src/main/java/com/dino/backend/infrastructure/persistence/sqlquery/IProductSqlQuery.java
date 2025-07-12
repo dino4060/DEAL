@@ -1,7 +1,7 @@
 package com.dino.backend.infrastructure.persistence.sqlquery;
 
-import com.dino.backend.features.productcatalog.domain.Product;
-import com.dino.backend.features.productcatalog.domain.model.ProductItemView;
+import com.dino.backend.features.product.domain.Product;
+import com.dino.backend.features.product.domain.model.ProductItemView;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.repository.query.Param;

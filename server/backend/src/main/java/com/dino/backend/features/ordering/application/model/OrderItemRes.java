@@ -1,7 +1,7 @@
 package com.dino.backend.features.ordering.application.model;
 
-import com.dino.backend.features.productcatalog.application.model.ProductLeanRes;
-import com.dino.backend.features.productcatalog.application.model.SkuLeanRes;
+import com.dino.backend.features.product.application.model.ProductLeanRes;
+import com.dino.backend.features.product.application.model.SkuLeanRes;
 
 public record OrderItemRes(
         Long id,
