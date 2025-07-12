@@ -11,6 +11,7 @@ public record SkuRes(
         String code,
         List<Integer> tierOptionIndexes,
         String tierOptionValue,
+        int retailPrice,
         Integer productionCost,
 
         InventoryRes inventory

@@ -30,6 +30,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         // define an apiResponse
         ApiResClone<?> apiRes = ApiResClone.builder()
                 .success(false)
+                .status(exceptionCode.getStatus().value())
                 .code(exceptionCode.getCode())
                 .error(exceptionCode.getMessage())
                 .build();
@@ -40,17 +41,17 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     }
 
+    @Builder
     @Getter
     @Setter
-    @Builder
-    @NoArgsConstructor
     @AllArgsConstructor
+    @NoArgsConstructor
     @FieldDefaults(level = AccessLevel.PRIVATE)
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private static class ApiResClone<T> {
         boolean success;
+        int status;
         int code;
         String error;
-        T result;
+        T data;
     }
 }

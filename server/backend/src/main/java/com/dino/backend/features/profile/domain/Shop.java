@@ -20,8 +20,6 @@ import org.hibernate.annotations.SQLRestriction;
 
 import java.util.List;
 
-// NOTE: == & equal()
-
 @Entity
 @Table(name = "shops")
 @DynamicInsert
@@ -84,6 +82,7 @@ public class Shop extends BaseEntity {
     public static Shop createShop(User seller) {
         Shop shop = new Shop();
 
+        shop.setId(seller.getId());
         shop.setStatus(ShopStatus.VERIFYING);
         shop.setCode("shop" + System.currentTimeMillis());
         shop.setContactEmail(seller.getEmail());

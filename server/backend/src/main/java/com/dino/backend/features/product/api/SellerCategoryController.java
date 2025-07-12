@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class BuyerCategoryController {
+public class SellerCategoryController {
 
-    // BuyerPublicCategoryController //
+    // SellerPublicCategoryController //
     @RestController
-    @RequestMapping("/api/v1/public/categories")
+    @RequestMapping("/api/v1/public/seller/categories")
     @AllArgsConstructor
     @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-    public static class BuyerPublicCategoryController {
+    public static class SellerPublicCategoryController {
 
         ICategoryService categoryService;
 

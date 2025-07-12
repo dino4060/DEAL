@@ -1,7 +1,7 @@
 package com.dino.backend.features.product.application;
 
 import com.dino.backend.features.product.application.mapper.IProductMapper;
-import com.dino.backend.features.product.application.model.ProductItemRes;
+import com.dino.backend.features.product.application.model.ProductWithPriceRes;
 import com.dino.backend.features.product.application.model.ProductSearchParams;
 import com.dino.backend.features.product.application.reader.IProductReader;
 import com.dino.backend.features.product.application.service.IProductService;
@@ -28,7 +28,7 @@ public class ProductReaderImpl implements IProductReader {
     IProductMapper productMapper;
 
     @Override
-    public List<ProductItemRes> searchProducts(ProductSearchParams searchParams) {
+    public List<ProductWithPriceRes> searchProducts(ProductSearchParams searchParams) {
         if (AppUtils.isBlank(searchParams.keyword()))
             return this.productService.listProducts(AppUtils.defaultPageable()).getItems();
 
@@ -41,7 +41,7 @@ public class ProductReaderImpl implements IProductReader {
     }
 
     @Override
-    public PageRes<ProductItemRes> searchProducts(ProductSearchParams searchParams, Pageable pageable) {
+    public PageRes<ProductWithPriceRes> searchProducts(ProductSearchParams searchParams, Pageable pageable) {
         var pageDomain = this.productQuery.searchByMultiParams(
                 searchParams.keyword(), searchParams.categories(), searchParams.priceRange(), pageable);
 

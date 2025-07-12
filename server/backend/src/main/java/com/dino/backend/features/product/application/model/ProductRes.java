@@ -17,6 +17,7 @@ public record ProductRes(
         List<String> photos,
         String sizeGuidePhoto,
         String video,
+        int retailPrice,
         String description,
         List<ProductSpecification> specifications,
         List<ProductTierVariation> tierVariations,

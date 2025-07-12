@@ -5,7 +5,7 @@ import com.dino.backend.features.product.domain.model.ProductMeta;
 
 import java.time.Instant;
 
-public record ProductItemRes(
+public record ProductWithPriceRes(
         Long id,
         String status,
         Instant updatedAt,

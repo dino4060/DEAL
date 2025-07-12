@@ -1,16 +1,20 @@
 package com.dino.backend.infrastructure.security;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.Optional;
-import java.util.Set;
-import java.util.StringJoiner;
-import java.util.stream.Collectors;
-
-import javax.crypto.spec.SecretKeySpec;
-
+import com.dino.backend.features.identity.application.model.TokenPair;
+import com.dino.backend.features.identity.application.provider.IIdentitySecurityProvider;
+import com.dino.backend.features.profile.domain.User;
+import com.dino.backend.infrastructure.common.Env;
+import com.dino.backend.infrastructure.security.model.JwtType;
+import com.dino.backend.shared.application.utils.Id;
+import com.dino.backend.shared.domain.exception.AppException;
+import com.dino.backend.shared.domain.exception.ErrorCode;
+import com.nimbusds.jose.*;
+import com.nimbusds.jose.crypto.MACSigner;
+import com.nimbusds.jwt.JWTClaimsSet;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -20,29 +24,19 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import com.dino.backend.features.identity.application.model.TokenPair;
-import com.dino.backend.features.identity.application.provider.IIdentitySecurityProvider;
-import com.dino.backend.features.profile.domain.User;
-import com.dino.backend.infrastructure.common.Env;
-import com.dino.backend.infrastructure.security.model.JwtType;
-import com.dino.backend.shared.application.utils.Id;
-import com.dino.backend.shared.domain.exception.AppException;
-import com.dino.backend.shared.domain.exception.ErrorCode;
-import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.JWSAlgorithm;
-import com.nimbusds.jose.JWSHeader;
-import com.nimbusds.jose.JWSObject;
-import com.nimbusds.jose.Payload;
-import com.nimbusds.jose.crypto.MACSigner;
-import com.nimbusds.jwt.JWTClaimsSet;
-
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
+import javax.crypto.spec.SecretKeySpec;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.Optional;
+import java.util.Set;
+import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 // NOTE: RequiredArgsConstructor
 // create a constructor for final and @NonNull fields
+
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -56,9 +50,9 @@ public class SecurityProviderImpl implements IIdentitySecurityProvider {
     /**
      * // buildScope //
      *
-     * @des It means to build roles. Scope is a claim of jwt payload
      * @param roles: Set<String>
      * @return scope: String. Example "ADMIN_SELLER_USER"
+     * @des It means to build roles. Scope is a claim of jwt payload
      */
     private String buildScope(Set<String> roles) {
         StringJoiner stringJoiner = new StringJoiner(" ");
@@ -115,10 +109,10 @@ public class SecurityProviderImpl implements IIdentitySecurityProvider {
                         .issuer("deal.dino.com")
                         .issueTime(new Date())
                         .expirationTime(new Date(this.getExpiry(jwtType).toEpochMilli()))
-                        .claim("scope", this.buildScope(user.getRoles()
-                                .stream()
-                                .map(role -> role.toString())
-                                .collect(Collectors.toSet())))
+                        .claim("scope",
+                                this.buildScope(user.getRoles().stream()
+                                        .map(role -> role.toString())
+                                        .collect(Collectors.toSet())))
                         .build()
                         .toJSONObject());
 

@@ -35,7 +35,7 @@ public class BuyerProductController {
         // listProducts //
         @GetMapping("/list")
         public ResponseEntity<Object> listProducts(
-                @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+                @PageableDefault(sort = "updatedAt", direction = Sort.Direction.DESC) Pageable pageable) {
             return ResponseEntity.ok(this.productService.listProducts(pageable));
         }
 

@@ -28,8 +28,8 @@ public class ShopServiceIm implements IShopService {
     IUserService userService;
 
     @Override
-    public Shop getShopBySellerId(@NonNull Long id) {
-        return this.shopRepository.findBySellerId(id)
+    public Shop getShop(@NonNull Long sellerId) {
+        return this.shopRepository.findBySellerId(sellerId)
                 .orElseThrow(() -> new AppException(ErrorCode.SHOP__NOT_FOUND));
     }
 
@@ -41,7 +41,7 @@ public class ShopServiceIm implements IShopService {
 
     @Override
     public VerifyShopRes verifyShop(VerifyShopReq request, CurrentUser currentUser) {
-        Shop shopToUpdate = this.getShopBySellerId(currentUser.id());
+        Shop shopToUpdate = this.getShop(currentUser.id());
 
         shopToUpdate.maskAsReviewing(
                 request.businessType(), request.name(), request.contactEmail(), request.contactPhone()

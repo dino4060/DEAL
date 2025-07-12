@@ -8,7 +8,7 @@ import com.dino.backend.shared.api.model.CurrentUser;
 import lombok.NonNull;
 
 public interface IShopService {
-    Shop getShopBySellerId(@NonNull Long id);
+    Shop getShop(@NonNull Long sellerId);
 
     void createShop(User seller);
 

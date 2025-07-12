@@ -41,7 +41,7 @@ public class AuthServiceImSeller extends AuthTemplate implements IAuthServiceFor
     // getCurrentShop //
     @Override
     public CurrentShopRes getCurrentShop(CurrentUser currentUser) {
-        Shop shop = this.shopService.getShopBySellerId(currentUser.id());
+        Shop shop = this.shopService.getShop(currentUser.id());
 
         return this.authMapper.toCurrentShopRes(shop);
     }
