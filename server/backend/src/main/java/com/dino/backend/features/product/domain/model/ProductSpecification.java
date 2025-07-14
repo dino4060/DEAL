@@ -11,8 +11,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductSpecification {
     String name;
-
     String value;
-
     String link;
 }

@@ -31,7 +31,7 @@ export type TApiDefinition<T> = {
   body?: object;
 };
 
-export type TApiRes<T> = {
+export type TApiResult<T> = {
   success: boolean;
   status: number;
   code: number;
@@ -46,12 +46,12 @@ export type TPagination = {
   size: number;
 }
 
-export type TPageRes<T> = {
+export type TPage<T> = {
   pagination: TPagination,
   items: T[]
 }
 
-export type TDeletedRes = {
+export type TDeleted = {
   isDeleted: boolean;
   count: number;
 };

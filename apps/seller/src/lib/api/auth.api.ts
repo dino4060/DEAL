@@ -1,4 +1,4 @@
-// src/api/auth.api.ts
+// src/lib/api/auth.api.ts
 import type { TAuthResult, TAuthEmailBody } from "../../types/auth.types";
 import { HttpMethod, type TApiDefinition } from "../../types/base.types";
 import type { TCurrentShop } from "../../types/shop.types";
@@ -35,13 +35,11 @@ export const authApi = {
   getCurrentShop: (): TApiDefinition<TCurrentShop> => ({
     route: `${RESOURCES.AUTH.PRIVATE}/me`,
     method: HttpMethod.GET,
-    withAuth: true,
   }),
 
   // COMMAND //
   logout: (): TApiDefinition<TAuthResult> => ({
     route: `${RESOURCES.AUTH.PRIVATE}/logout`,
     method: HttpMethod.POST,
-    withAuth: true,
   }),
 };

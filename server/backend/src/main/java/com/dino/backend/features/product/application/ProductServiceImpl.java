@@ -82,12 +82,12 @@ public class ProductServiceImpl implements IProductService {
 
     // getProductOfShop //
     @Override
-    public ProductRes getProductOfShop(@NonNull Long productId, @NonNull CurrentUser currentUser) {
+    public ProductOfShopRes getProductOfShop(@NonNull Long productId, @NonNull CurrentUser currentUser) {
         var product = this.productRepository.findWithSkusAndShopById(productId)
                 .orElseThrow(() -> new AppException(ErrorCode.PRODUCT__NOT_FOUND));
 
         this.checkOwnProduct(currentUser, product);
 
-        return this.productMapper.toProductRes(product);
+        return this.productMapper.toProductOfShopRes(product);
     }
 }

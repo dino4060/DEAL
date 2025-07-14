@@ -1,5 +1,5 @@
 // src/lib/http/config.ts
-import type { TApiDefinition, TApiRes, THttpMethod } from "../../types/base.types";
+import type { TApiDefinition, TApiResult, THttpMethod } from "../../types/base.types";
 import { createAppError } from "../constants";
 import { env } from "../env";
 import { handleRefresh } from "./refresh";
@@ -33,7 +33,7 @@ export function shouldAuth(route: string, withAuth: boolean = false): boolean {
 }
 
 export const normalizeResponse = async <T>(response: Response) => {
-  const json = await response.json() as TApiRes<T>;
+  const json = await response.json() as TApiResult<T>;
 
   if (!json.success) {
     console.warn(`>>> normalizeResponse: ${json.error}`);
@@ -51,7 +51,7 @@ export const normalizeError = <T>(error: any) => {
 export const fetchByTemplate = async <T = any>(
   api: TApiDefinition<T>,
   fetchCore: (endpoint: RequestInfo, options?: RequestInit, withAuth?: boolean) => Promise<Response>
-): Promise<TApiRes<T>> => {
+): Promise<TApiResult<T>> => {
 
   const domain = env.BACKEND_URL;
   const { route, method, withAuth, query, body } = api;

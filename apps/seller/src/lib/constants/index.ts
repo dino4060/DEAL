@@ -1,8 +1,8 @@
-import type { TApiRes } from "../../types/base.types";
+import type { TApiResult } from "../../types/base.types";
 export * from "./string";
 export * from "./resources";
 
-export const initialApiRes: TApiRes<any> = {
+export const initialApiRes: TApiResult<any> = {
   success: true,
   status: 1,
   code: 1,
@@ -10,7 +10,7 @@ export const initialApiRes: TApiRes<any> = {
   data: {} as any,
 }
 
-export const createAppError = <T,>(error: string): TApiRes<T> => {
+export const createAppError = <T,>(error: string): TApiResult<T> => {
   return {
     success: false,
     status: 500,

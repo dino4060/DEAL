@@ -16,7 +16,7 @@ export const VerifyPage = () => {
   const auth = useAuthContext();
 
   const onFinish = async (values: TVerifyShopBody) => {
-    const verifyResult = await fetchSafely(api.shop.verifyShop(values));
+    const verifyResult = await fetchSafely(api.shops.verifyShop(values));
 
     if (!verifyResult.success) {
       console.warn('verifyShop failed:', verifyResult.error);

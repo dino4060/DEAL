@@ -1,6 +1,6 @@
 // src/http/refresh.ts
 import { fetchSafely } from ".";
-import type { TApiDefinition, TApiRes } from "../../types/base.types";
+import type { TApiDefinition, TApiResult } from "../../types/base.types";
 import { api } from "../api";
 import { createAppError } from "../constants";
 
@@ -14,7 +14,7 @@ export const authContextCallback: TAuthContextCallback = {
   clean: null,
 };
 
-export const handleRefresh = async <T,>(currentApi: TApiDefinition<T>, currentResult: TApiRes<T>) => {
+export const handleRefresh = async <T,>(currentApi: TApiDefinition<T>, currentResult: TApiResult<T>) => {
   if (currentResult.success || currentResult.status !== 401) {
     console.log(`>>> refreshToken: bypass`);
     return currentResult;

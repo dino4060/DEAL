@@ -13,7 +13,6 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductTierVariation {
     String name;
-
     List<Option> options;
 
     @Getter
@@ -24,7 +23,6 @@ public class ProductTierVariation {
     @FieldDefaults(level = AccessLevel.PRIVATE)
     public static class Option {
         String value;
-
         String photo;
     }
 }

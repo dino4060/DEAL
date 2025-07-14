@@ -51,7 +51,7 @@ public class SellerProductController {
 
         // getProduct //
         @GetMapping("/{id}")
-        public ResponseEntity<ProductRes> getProduct(
+        public ResponseEntity<ProductOfShopRes> getProduct(
                 @PathVariable String id,
                 @AuthUser CurrentUser currentUser
         ) {

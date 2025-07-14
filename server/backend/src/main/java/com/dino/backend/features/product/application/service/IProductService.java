@@ -19,5 +19,5 @@ public interface IProductService {
 
     ProductRes getProduct(Id productId);
 
-    ProductRes getProductOfShop(@NonNull Long productId, @NonNull CurrentUser currentUser);
+    ProductOfShopRes getProductOfShop(@NonNull Long productId, @NonNull CurrentUser currentUser);
 }

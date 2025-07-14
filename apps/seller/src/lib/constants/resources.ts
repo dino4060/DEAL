@@ -1,4 +1,5 @@
-const RESOURCE_NAMES = ['auth', 'shops'] as const;
+// src/lib/constants/resources.ts
+const RESOURCE_NAMES = ['auth', 'shops', 'products'] as const;
 
 type TResourceUnion = typeof RESOURCE_NAMES[number];
 type TResourceUppers = Uppercase<TResourceUnion>;
