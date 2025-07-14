@@ -39,13 +39,14 @@
 
 .button {
   padding: 8px 15px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid #f1f1f1;
   border-radius: 6px;
-  background-color: white;
+  background-color: #f1f1f1;
   cursor: pointer;
-  font-size: 14px;
   transition: all 0.2s;
-  font-family: var(--TikTokFont), sans-serif;
+  color:rgba(0, 0, 0, 0.95);
+  font-size: 14px;
+  font-family: var(--TikTokMedium), sans-serif;
 }
 
 .button:hover {
@@ -66,21 +67,29 @@
 }
 
 /* Actions Section */
+.actions {
+  background: white;
+  padding: 24px;
+  margin-bottom: 24px;
+  border-radius: 5px;
+}
+
 .statusFilters {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 24px;
   margin-bottom: 16px;
 }
 
 .statusButton {
   background: none;
   border: none;
-  color: rgba(0, 0, 0, 0.85);
+  color: rgba(0, 0, 0, 0.5);
   cursor: pointer;
   padding: 5px 0;
   font-size: 14px;
-  font-family: var(--TikTokFont), sans-serif;
+  font-family: var(--TikTokMedium), sans-serif;
+  /* font-weight: 700; */
 }
 
 .statusButtonActive {
@@ -99,7 +108,7 @@
   flex: 1;
   padding: 8px 12px;
   border: 1px solid #d9d9d9;
-  border-radius: 6px;
+  border-radius: 5px;
   font-size: 14px;
   font-family: var(--TikTokFont), sans-serif;
 }
@@ -126,7 +135,7 @@
 .select {
   padding: 8px 12px;
   border: 1px solid #d9d9d9;
-  border-radius: 6px;
+  border-radius: 5px;
   font-size: 14px;
   font-family: var(--TikTokFont), sans-serif;
   min-width: 120px;
@@ -142,7 +151,6 @@
 }
 
 .selectedActions {
-  margin-bottom: 16px;
   display: flex;
   align-items: center;
   gap: 10px;

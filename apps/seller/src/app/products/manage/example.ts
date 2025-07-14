@@ -34,12 +34,3 @@ export const examplePagination = {
   page: 1,
   size: 10,
 };
-
-export const bulkActionItems = [
-  { key: 'activate', label: 'Kích hoạt' },
-  { key: 'deactivate', label: 'Hủy kích hoạt' },
-  { key: 'delete', label: 'Xóa' },
-  { key: 'commission', label: 'Đặt hoa hồng liên kết' },
-  { key: 'discount', label: 'Đặt giảm giá' },
-  { key: 'alert', label: 'Đặt cảnh báo' },
-];

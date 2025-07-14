@@ -1,7 +1,7 @@
 // src/app/products/manage/page.tsx
 import React, { useState } from 'react';
 import styles from './styles.module.css';
-import { exampleProducts, examplePagination, bulkActionItems } from './example';
+import { exampleProducts, examplePagination } from './example';
 import { ProductPageHeader } from '../../../components/product/ProductPageHeader';
 import { ProductActions } from '../../../components/product/ProductActions';
 import { ProductTable } from '../../../components/product/ProductTable';
@@ -9,8 +9,7 @@ import { ProductTableFooter } from '../../../components/product/ProductTableFoot
 
 export const ManageProductsPage = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [bulkActionDropdownOpen, setBulkActionDropdownOpen] = useState(false);
+  const [loading] = useState(false);
   const [expandedRows, setExpandedRows] = useState<React.Key[]>([]);
 
   const onSelectChange = (key: React.Key, checked: boolean) => {
