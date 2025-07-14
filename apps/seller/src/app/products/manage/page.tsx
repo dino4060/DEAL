@@ -39,10 +39,7 @@ export const ManageProductsPage = () => {
 
   return (
     <div className={styles.pageContainer}>
-      <ProductPageHeader
-        onBulkActionToggle={() => setBulkActionDropdownOpen(!bulkActionDropdownOpen)}
-        isBulkActionDropdownOpen={bulkActionDropdownOpen}
-      />
+      <ProductPageHeader />
 
       <ProductActions
         selectedCount={selectedRowKeys.length}
