@@ -15,8 +15,8 @@ export const AppSider = () => {
       style={{ background: colorBgContainer }}
       breakpoint="lg"
       collapsedWidth="0"
-      onBreakpoint={(broken) => console.log('>>> AppSider: onBreakpoint', broken)}
-      onCollapse={(collapsed, type) => console.log('>>> AppSider: onCollapse', collapsed, type)}
+    // onBreakpoint={(broken) => console.log('>>> AppSider: onBreakpoint', broken)}
+    // onCollapse={(collapsed, type) => console.log('>>> AppSider: onCollapse', collapsed, type)}
     >
       <Menu
         mode="inline"

@@ -13,7 +13,7 @@ export const AppProtection = ({ children }: TChildrenComponent) => {
   if (!currentShop) return <Navigate to='/login' />;
 
   const isVerifying = currentShop.status === ShopStatus.VERIFYING;
-  console.log('AppProtection: isVerifying:', isVerifying);
+  console.log('AppProtection: nonVerifying:', !isVerifying);
 
   if (isVerifying) return <Navigate to='/verify' />;
 

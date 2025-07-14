@@ -30,13 +30,16 @@ const fetchCore = async (
   options: RequestInit = {},
   withAuth: boolean = true
 ) => {
-  // config header (include access token)
+  // config headers (include access token)
   const headers = await buildHeader(options, withAuth);
 
-  // fetch (include refresh token)
+  // config credentials (include refresh token)
+  const credentials = "include";
+
+  // fetch
   return await fetch(endpoint, {
     ...options,
-    credentials: "include",
+    credentials,
     headers,
   });
 }

@@ -1,6 +1,8 @@
 // src/lib/http/config.ts
-import type { TApiDefinition, TApiResponse, THttpMethod } from "../../types/base.types";
+import type { TApiDefinition, TApiRes, THttpMethod } from "../../types/base.types";
+import { createAppError } from "../constants";
 import { env } from "../env";
+import { handleRefresh } from "./refresh";
 
 export function buildEndpoint(domain: string, route: string, query?: any): RequestInfo {
   const endpoint = `${domain}/api/v1${route}`;
@@ -31,34 +33,28 @@ export function shouldAuth(route: string, withAuth: boolean = false): boolean {
 }
 
 export const normalizeResponse = async <T>(response: Response) => {
-  const json = await response.json() as TApiResponse<T>;
+  const json = await response.json() as TApiRes<T>;
 
   if (!json.success) {
-    console.warn(`>>> normalizeResponse: fetch error: ${json.error}`);
+    console.warn(`>>> normalizeResponse: ${json.error}`);
   }
 
   return json;
 }
 
 export const normalizeError = <T>(error: any) => {
-  console.error(`>>> normalizeError: fetch error: ${error.message || 'Lỗi không xác định'}`);
+  console.error(`>>> normalizeError: ${error.message || 'Lỗi không xác định'}`);
 
-  return {
-    success: false,
-    status: 500,
-    code: 0,
-    error: 'Lỗi không xác định',
-    data: {} as T
-  }
+  return createAppError<T>('Thật tiết! Đã có lỗi xảy ra');
 }
 
 export const fetchByTemplate = async <T = any>(
   api: TApiDefinition<T>,
   fetchCore: (endpoint: RequestInfo, options?: RequestInit, withAuth?: boolean) => Promise<Response>
-): Promise<TApiResponse<T>> => {
+): Promise<TApiRes<T>> => {
 
   const domain = env.BACKEND_URL;
-  const { route, method, withAuth, query, body } = api
+  const { route, method, withAuth, query, body } = api;
 
   try {
     const response = await fetchCore(
@@ -66,9 +62,11 @@ export const fetchByTemplate = async <T = any>(
       buildOptions(method, body),
       shouldAuth(route, withAuth),
     );
-    return normalizeResponse<T>(response)
+    const result = await normalizeResponse<T>(response);
+
+    return handleRefresh<T>(api, result);
 
   } catch (error: any) {
-    return normalizeError<T>(error)
+    return normalizeError<T>(error);
   }
 }

@@ -1,9 +1,10 @@
 // src/contexts/auth.context.tsx
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import type { TChildrenComponent } from '../types/base.types';
 import type { TCurrentShop } from '../types/shop.types';
 import { local } from '../lib/storage/local';
 import { ACCESS_TOKEN, CURRENT_SHOP } from '../lib/constants';
+import { authContextCallback } from '../lib/http/refresh';
 
 // Context //
 
@@ -12,6 +13,7 @@ type TAuthContext = {
   currentShop: TCurrentShop | null;
   updateAccessToken: (token: string) => void;
   updateCurrentShop: (shop: TCurrentShop) => void;
+  clean: () => void;
 };
 
 const AuthContext = createContext<TAuthContext | null>(null);
@@ -34,6 +36,19 @@ export const AuthContextProvider = ({ children }: TChildrenComponent) => {
     setCurrentShop(shop);
   };
 
+  const clean = () => {
+    console.log('AuthContext: clean');
+    local.remove(ACCESS_TOKEN);
+    local.remove(CURRENT_SHOP);
+    setAccessToken(null);
+    setCurrentShop(null);
+  };
+
+  useEffect(() => {
+    authContextCallback.updateAccessToken = updateAccessToken;
+    authContextCallback.clean = clean;
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
@@ -41,6 +56,7 @@ export const AuthContextProvider = ({ children }: TChildrenComponent) => {
         currentShop,
         updateAccessToken,
         updateCurrentShop,
+        clean
       }}
     >
       {children}

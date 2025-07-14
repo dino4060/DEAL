@@ -17,7 +17,7 @@ public enum ErrorCode {
 
     // INFRASTRUCTURE 1000+ //
     // COMMON //
-    SYSTEM__UNHANDLED_EXCEPTION(1000, "Lỗi chưa được xử lý", HttpStatus.INTERNAL_SERVER_ERROR),
+    SYSTEM__UNHANDLED_EXCEPTION(1000, "Thật tiết, đã có lỗi xảy ra", HttpStatus.INTERNAL_SERVER_ERROR),
     SYSTEM__DEVELOPING_FEATURE(1001, "The feature is still developing", HttpStatus.INTERNAL_SERVER_ERROR),
     SYSTEM__VALIDATION_UNSUPPORTED(1003, "Validation is unsupported", HttpStatus.INTERNAL_SERVER_ERROR),
     SYSTEM__METHOD_NOT_SUPPORTED(1004, "Method '%s' is not supported", HttpStatus.BAD_REQUEST),
@@ -25,9 +25,9 @@ public enum ErrorCode {
     SYSTEM__BODY_REQUIRED(1006, "Body is required", HttpStatus.BAD_REQUEST),
     SYSTEM__ID_INVALID(1006, "Id is invalid", HttpStatus.BAD_REQUEST),
     // SECURITY //
-    SECURITY__UNAUTHENTICATED(1010, "Resources are protected", HttpStatus.UNAUTHORIZED),
-    SECURITY__UNAUTHORIZED(1011, "Resources are forbidden", HttpStatus.FORBIDDEN),
-    SECURITY__GET_CURRENT_USER_FAILED(1012, "Lấy người dùng hiện tại thất bại", HttpStatus.INTERNAL_SERVER_ERROR),
+    SECURITY__UNAUTHENTICATED(1010, "Authenticate failed", HttpStatus.UNAUTHORIZED),
+    SECURITY__UNAUTHORIZED(1011, "Bạn không quyền truy cập tài nguyên", HttpStatus.FORBIDDEN),
+    SECURITY__GET_CURRENT_USER_FAILED(1012, "Lấy thông tin người dùng thất bại", HttpStatus.INTERNAL_SERVER_ERROR),
     SECURITY__GEN_TOKEN_FAILED(1013, "Tạo token thất bại", HttpStatus.INTERNAL_SERVER_ERROR),    // OAUTH2 //
     OAUTH2__GET_GOOGLE_TOKEN_FAILED(1020, "Lấy access token của Google thất bại", HttpStatus.INTERNAL_SERVER_ERROR),
     OAUTH2__GET_GOOGLE_USER_FAILED(1021, "Lấy thông tin người dùng của Google thất bại", HttpStatus.INTERNAL_SERVER_ERROR),

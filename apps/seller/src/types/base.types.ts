@@ -31,7 +31,7 @@ export type TApiDefinition<T> = {
   body?: object;
 };
 
-export type TApiResponse<T> = {
+export type TApiRes<T> = {
   success: boolean;
   status: number;
   code: number;
