@@ -50,35 +50,37 @@ export const ProductTable = ({
   );
 
   return (
-    <table className={styles.table}>
-      <thead>
-        <tr>
-          <th style={{ width: '10px' }} className={styles.tableCheckbox} >
-            <input
-              type="checkbox"
-              onChange={(e) => onSelectAllChange(e.target.checked)}
-              checked={selectedRowKeys.length === products.length && products.length > 0}
-            />
-          </th>
-          <th>Sản phẩm</th>
-          <th style={{ width: '10%' }}>Số lượng</th>
-          <th style={{ width: '15%' }}>Giá bán lẻ</th>
-          <th style={{ width: '10%' }}>Doanh số</th>
-          <th style={{ width: '1%' }}>Cập nhật</th>
-          <th style={{ width: '10%' }}>Trạng thái</th>
-          <th style={{ width: '10%' }}>Hành động</th>
-        </tr>
-      </thead>
+    <section className={styles.tables}>
+      <table className={styles.table}>
+        <thead>
+          <tr className={styles.space}>
+            <th style={{ width: '10px' }} className={styles.checkbox} >
+              <input
+                type="checkbox"
+                onChange={(e) => onSelectAllChange(e.target.checked)}
+                checked={selectedRowKeys.length === products.length && products.length > 0}
+              />
+            </th>
+            <th>Sản phẩm</th>
+            <th style={{ width: '10%' }}>Số lượng</th>
+            <th style={{ width: '15%' }}>Giá bán lẻ</th>
+            <th style={{ width: '10%' }}>Doanh số</th>
+            <th style={{ width: '15%' }}>Cập nhật</th>
+            <th style={{ width: '10%' }}>Trạng thái</th>
+            <th style={{ width: '10%' }}>Hành động</th>
+          </tr>
+        </thead>
+      </table>
 
-      <tbody>
-        {loading ? (
-          Array(5).fill(0).map((_, i) => renderSkeletonRow(i))
-        ) : (
-          products.map((product) => (
-            <Fragment key={product.key}>
+      {loading ? (
+        Array(5).fill(0).map((_, i) => renderSkeletonRow(i))
+      ) : (
+        products.map((product) => (
+          <table className={styles.table} key={product.key}>
+            <tbody>
               {/* Main row */}
               <tr>
-                <td className={styles.tableCheckbox}>
+                <td style={{ width: '10px' }} className={styles.checkbox} rowSpan={3}>
                   <input
                     type="checkbox"
                     checked={selectedRowKeys.includes(product.key)}
@@ -86,28 +88,24 @@ export const ProductTable = ({
                   />
                 </td>
                 <td>
-                  <div className={styles.tableRowProductInfo}>
+                  <div className={styles.tableProductCell}>
                     <img src={product.thumb} alt={product.name} className={styles.productThumb} />
-                    <div>
+                    <div className={styles.tableProductText}>
                       <div className={styles.productName}>{product.name}</div>
                       <div className={styles.productId}>ID:{product.id}</div>
                     </div>
                   </div>
                 </td>
-                <td>
-                  {product.skus.length}
-                </td>
-                <td>
-                  {product.retailPriceRange}
-                </td>
-                <td>{product.skus.reduce((sum, sku) => sum + sku.inventory.sales, 0)}</td> {/* Dữ liệu cột Doanh số */}
-                <td>{product.updatedAt}</td>
-                <td>
+                <td style={{ width: '10%' }}>{product.skus.length}</td>
+                <td style={{ width: '15%' }}>{product.retailPriceRange}</td>
+                <td style={{ width: '10%' }}>{product.skus.reduce((sum, sku) => sum + sku.inventory.sales, 0)}</td> {/* Dữ liệu cột Doanh số */}
+                <td style={{ width: '15%' }}>{product.updatedAt}</td>
+                <td style={{ width: '10%' }}>
                   <span className={`${styles.statusTag} ${product.status === 'LIVE' ? styles.statusTagLive : styles.statusTagDeactivated}`}>
                     {product.status === 'LIVE' ? 'Đang hoạt động' : 'Bị hủy kích hoạt'}
                   </span>
                 </td>
-                <td>
+                <td style={{ width: '10%' }}>
                   <a href="#" className={styles.actionLink}>
                     {product.status === 'DEACTIVATED' ? 'Kích hoạt' : 'Hủy kích hoạt'}
                   </a>
@@ -120,43 +118,50 @@ export const ProductTable = ({
                 </td>
               </tr>
 
-              {/* Side row */}
-              <tr>
-                <td colSpan={9} style={{ padding: 0 }}>
-                  {/* Meta row */}
-                  <div className={styles.expandedRowFooter}>
-                    <span>Có {product.skus.length} SKU</span>
+              {product.skus.length > 1 && <Fragment>
+                {/* Division */}
+                <tr>
+                  <td colSpan={7} style={{ padding: 0 }}>
+                    <div className={styles.tableDivision} />
+                  </td>
+                </tr>
 
-                    <button className={styles.expandButton}
-                      onClick={() => toggleExpand(product.key)}
-                      disabled={product.skus.length === 1}
-                      style={
-                        product.skus.length === 1
-                          ? { cursor: 'not-allowed', color: 'rgba(0, 0, 0, 0.3)' }
-                          : {}
-                      }
-                    >
-                      {expandedRows.includes(product.key) ? (
-                        <>
-                          Thu gọn
-                          <svg className={styles.icon} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z" />
-                          </svg>
-                        </>
-                      ) : (
-                        <>
-                          Mở rộng
-                          <svg className={styles.icon} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" />
-                          </svg>
-                        </>
-                      )}
-                    </button>
-                  </div>
+                {/* Side row */}
+                <tr>
+                  <td colSpan={7} style={{ padding: 0 }}>
+                    {/* Meta row */}
+                    <div className={styles.expandedRowFooter}>
+                      <span>Có {product.skus.length} SKU</span>
 
-                  {/* Expandable row */}
-                  {product.skus.length > 1 && expandedRows.includes(product.key) && (
-                    <table className={styles.expandedTable}>
+                      <button className={styles.expandButton}
+                        onClick={() => toggleExpand(product.key)}
+                        disabled={product.skus.length === 1}
+                        style={
+                          product.skus.length === 1
+                            ? { cursor: 'not-allowed', color: 'rgba(0, 0, 0, 0.3)' }
+                            : {}
+                        }
+                      >
+                        {expandedRows.includes(product.key) ? (
+                          <Fragment>
+                            Thu gọn
+                            <svg className={styles.icon} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                              <path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z" />
+                            </svg>
+                          </Fragment>
+                        ) : (
+                          <Fragment>
+                            Mở rộng
+                            <svg className={styles.icon} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                              <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" />
+                            </svg>
+                          </Fragment>
+                        )}
+                      </button>
+                    </div>
+
+                    {/* Expandable row */}
+                    {expandedRows.includes(product.key) && (<table className={styles.expandedTable}>
                       <thead>
                         <tr>
                           <th style={{ width: '25%' }}>SKU</th>
@@ -196,14 +201,14 @@ export const ProductTable = ({
                           </tr>
                         ))}
                       </tbody>
-                    </table>
-                  )}
-                </td>
-              </tr>
-            </Fragment>
-          ))
-        )}
-      </tbody>
-    </table>
+                    </table>)}
+                  </td>
+                </tr>
+              </Fragment>}
+            </tbody>
+          </table>
+        ))
+      )}
+    </section>
   );
 };

@@ -158,37 +158,40 @@
 }
 
 /* Table Section */
+.tables {
+  display: flex;
+  flex-direction: column;
+  gap: 24px
+}
+
 .table {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 12px;
-  background-color: transparent;
+  border-collapse: collapse;
+  /* border-collapse: separate;
+  border-spacing: 0 12px; */
   border-radius: 5px;
   overflow: hidden;
 }
 
 .table thead th,
-.table thead .tableCheckbox {
+.table thead .checkbox,
+.table tbody td,
+.table tbody .checkbox {
   padding: 12px 15px;
   font-size: 14px;
   background-color: white;
   color: rgba(0, 0, 0, 0.85);
   text-align: left;
+  vertical-align: middle;
+}
+
+.table thead th,
+.table thead .checkbox{
   font-weight: bold;
 }
 
-.table tbody td,
-.table tbody .tableCheckbox {
-  padding: 12px 15px;
-  font-size: 14px;
-  background-color: white;
-  color: rgba(0, 0, 0, 0.85);
-  text-align: left;
-  vertical-align: top;
-}
-
-.table thead .tableCheckbox,
-.table tbody .tableCheckbox {
+.table thead .checkbox,
+.table tbody .checkbox {
   padding: 12px 0 12px 15px;
 }
 
@@ -204,7 +207,17 @@
   border-bottom-right-radius: 5px;
 }
 
-.tableRowProductInfo {
+.tableDivision {
+  margin: 0 15px;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  /* Ignore height, color of text */
+  line-height: 1px;
+  font-size: 0;
+  color: transparent;
+}
+
+.tableProductCell {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -215,6 +228,13 @@
   height: 60px;
   object-fit: cover;
   border-radius: 4px;
+}
+
+.tableProductText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
 }
 
 .productName {
@@ -284,7 +304,7 @@
   padding: 8px 15px;
   border-bottom: 1px solid #f0f0f0;
   text-align: left;
-  font-size: 13px;
+  font-size: 14px;
   color: rgba(0, 0, 0, 0.85);
 }
 
@@ -431,9 +451,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 15px;
-  font-size: 13px;
-  color: rgba(0, 0, 0, 0.65);
+  padding: 12px 15px;
+  font-family: var(--TikTokMedium), sans-serif;
+  /* font-size: 14px; */
+  color: rgba(0, 0, 0, 0.45);
 }
 
 .expandedRowFooter .expandButton {
@@ -442,7 +463,7 @@
   color: #1890ff;
   cursor: pointer;
   font-family: var(--TikTokFont), sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   display: flex;
   align-items: center;
   gap: 5px;
