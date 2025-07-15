@@ -1,5 +1,5 @@
 // src/components/product/ProductPageHeader.tsx
-import styles from '../../app/products/manage/styles.module.css';
+import styles from '../../app/product/manage/styles.module.css';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 
 type ProductPageHeaderProps = {

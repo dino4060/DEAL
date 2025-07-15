@@ -1,8 +1,8 @@
 // src/components/product/ProductTableFooter.tsx
 import React from 'react';
-import styles from '../../app/products/manage/styles.module.css';
+import styles from '../../app/product/manage/styles.module.css';
 
-type PaginationData = typeof import('../../app/products/manage/example').examplePagination;
+type PaginationData = typeof import('../../app/product/manage/example').examplePagination;
 
 type ProductTableFooterProps = {
   pagination: PaginationData;

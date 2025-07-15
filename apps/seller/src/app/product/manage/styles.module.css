@@ -1,4 +1,4 @@
-/* src/app/products/manage/styles.module.css */
+/* src/app/product/manage/styles.module.css */
 
 .pageContainer {
   padding: 0 24px 24px;
@@ -44,7 +44,7 @@
   background-color: #f1f1f1;
   cursor: pointer;
   transition: all 0.2s;
-  color:rgba(0, 0, 0, 0.95);
+  color:rgba(0, 0, 0, 0.9);
   font-size: 14px;
   font-family: var(--TikTokMedium), sans-serif;
 }
@@ -67,11 +67,12 @@
 }
 
 /* Actions Section */
-.actions {
+.actionsCard {
   background: white;
   padding: 24px;
   margin-bottom: 24px;
   border-radius: 5px;
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); */
 }
 
 .statusFilters {
@@ -161,9 +162,9 @@
   width: 100%;
   border-collapse: collapse;
   background-color: white;
-  border-radius: 8px;
+  border-radius: 5px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); */
 }
 
 .table thead th {
@@ -174,6 +175,10 @@
   font-weight: bold;
   color: rgba(0, 0, 0, 0.85);
   font-size: 14px;
+}
+
+.table thead .tableCheckbox {
+  padding: 12px 0 12px 15px;
 }
 
 .table tbody tr {
@@ -189,6 +194,10 @@
   font-size: 14px;
   color: rgba(0, 0, 0, 0.85);
   vertical-align: top;
+}
+
+.table tbody .tableCheckbox {
+  padding: 12px 0 12px 15px;
 }
 
 .tableRowProductInfo {

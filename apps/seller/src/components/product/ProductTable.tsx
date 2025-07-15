@@ -1,9 +1,9 @@
 // src/components/product/ProductTable.tsx
-import React from 'react';
-import styles from '../../app/products/manage/styles.module.css';
+import React, { Fragment } from 'react';
+import styles from '../../app/product/manage/styles.module.css';
 
-type Product = typeof import('../../app/products/manage/example').exampleProducts[0];
-type Sku = typeof import('../../app/products/manage/example').exampleProducts[0]['skus'][0];
+type Product = typeof import('../../app/product/manage/example').exampleProducts[0];
+// type Sku = typeof import('../../app/products/manage/example').exampleProducts[0]['skus'][0];
 
 type ProductTableProps = {
   products: Product[];
@@ -53,26 +53,31 @@ export const ProductTable = ({
     <table className={styles.table}>
       <thead>
         <tr>
-          <th style={{ width: '30px' }}>
-            <input type="checkbox" onChange={(e) => onSelectAllChange(e.target.checked)} checked={selectedRowKeys.length === products.length && products.length > 0} />
+          <th style={{ width: '10px' }} className={styles.tableCheckbox} >
+            <input
+              type="checkbox"
+              onChange={(e) => onSelectAllChange(e.target.checked)}
+              checked={selectedRowKeys.length === products.length && products.length > 0}
+            />
           </th>
           <th>Sản phẩm</th>
           <th style={{ width: '10%' }}>Số lượng</th>
           <th style={{ width: '15%' }}>Giá bán lẻ</th>
-          <th style={{ width: '10%' }}>Doanh số</th> {/* Đã thêm lại cột Doanh số */}
-          <th style={{ width: '15%' }}>Cập nhật</th>
-          <th style={{ width: '10%' }}>Trạng thái</th>
+          <th style={{ width: '10%' }}>Doanh số</th>
+          <th style={{ width: '10%' }}>Cập nhật</th>
+          <th style={{ width: '15%' }}>Trạng thái</th>
           <th style={{ width: '10%' }}>Hành động</th>
         </tr>
       </thead>
+
       <tbody>
         {loading ? (
           Array(5).fill(0).map((_, i) => renderSkeletonRow(i))
         ) : (
           products.map((product) => (
-            <React.Fragment key={product.key}>
+            <Fragment key={product.key}>
               <tr>
-                <td>
+                <td className={styles.tableCheckbox}>
                   <input
                     type="checkbox"
                     checked={selectedRowKeys.includes(product.key)}
@@ -182,7 +187,7 @@ export const ProductTable = ({
                   </td>
                 </tr>
               )}
-            </React.Fragment>
+            </Fragment>
           ))
         )}
       </tbody>

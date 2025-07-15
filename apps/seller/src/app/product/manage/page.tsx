@@ -1,4 +1,4 @@
-// src/app/products/manage/page.tsx
+// src/app/product/manage/page.tsx
 import React, { useState } from 'react';
 import styles from './styles.module.css';
 import { exampleProducts, examplePagination } from './example';

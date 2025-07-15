@@ -10,7 +10,7 @@ import { VerifyPage } from './app/verify/page';
 import { AppLayout } from './app/layout';
 import { AppProvider } from './app/provider';
 import { AppProtection } from './app/protection';
-import { ManageProductsPage } from './app/products/manage/page';
+import { ManageProductsPage } from './app/product/manage/page';
 
 export const routes = [
   {
@@ -27,7 +27,7 @@ export const routes = [
           { path: 'dashboard', element: <DashboardPage /> },
           { path: 'settings', element: <SettingPage /> },
           {
-            path: 'products',
+            path: 'product',
             children: [
               { path: 'manage', element: <ManageProductsPage /> }
             ]

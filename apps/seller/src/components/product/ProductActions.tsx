@@ -1,6 +1,6 @@
 // src/components/product/ProductActions.tsx
 import { Fragment } from 'react/jsx-runtime';
-import styles from '../../app/products/manage/styles.module.css';
+import styles from '../../app/product/manage/styles.module.css';
 
 type ProductActionsProps = {
   selectedCount: number;
@@ -20,7 +20,7 @@ export const ProductActions = ({ selectedCount, hasSelected }: ProductActionsPro
         <button className={styles.statusButton}>Đã xóa</button>
       </div>
 
-      <div className={styles.actions}>
+      <div className={styles.actionsCard}>
         <div className={styles.filterRow}>
           <div className={styles.inputWithIcon}>
             <svg className={styles.inputPrefixIcon} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
