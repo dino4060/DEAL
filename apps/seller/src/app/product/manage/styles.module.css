@@ -161,58 +161,47 @@
 .table {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 8px;
+  border-spacing: 0 12px;
   background-color: transparent;
   border-radius: 5px;
   overflow: hidden;
 }
 
-.table thead th {
+.table thead th,
+.table thead .tableCheckbox {
   padding: 12px 15px;
-  background-color: #fafafa;
+  font-size: 14px;
+  background-color: white;
+  color: rgba(0, 0, 0, 0.85);
   text-align: left;
   font-weight: bold;
-  color: rgba(0, 0, 0, 0.85);
-  font-size: 14px;
 }
 
-.table thead th:first-child {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-}
-
-.table thead th:last-child {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
-.table thead .tableCheckbox {
-  padding: 12px 0 12px 15px;
-}
-
-.table tbody tr {
-  background-color: white;
-}
-
-.table tbody td {
+.table tbody td,
+.table tbody .tableCheckbox {
   padding: 12px 15px;
   font-size: 14px;
+  background-color: white;
   color: rgba(0, 0, 0, 0.85);
+  text-align: left;
   vertical-align: top;
 }
 
+.table thead .tableCheckbox,
+.table tbody .tableCheckbox {
+  padding: 12px 0 12px 15px;
+}
+
+.table thead th:first-child,
 .table tbody td:first-child {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
 
+.table thead th:last-child,
 .table tbody td:last-child {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-}
-
-.table tbody .tableCheckbox {
-  padding: 12px 0 12px 15px;
 }
 
 .tableRowProductInfo {
