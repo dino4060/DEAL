@@ -160,21 +160,30 @@
 /* Table Section */
 .table {
   width: 100%;
-  border-collapse: collapse;
-  background-color: white;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  background-color: transparent;
   border-radius: 5px;
   overflow: hidden;
-  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); */
 }
 
 .table thead th {
   padding: 12px 15px;
   background-color: #fafafa;
-  border-bottom: 1px solid #f0f0f0;
   text-align: left;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.85);
   font-size: 14px;
+}
+
+.table thead th:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.table thead th:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .table thead .tableCheckbox {
@@ -182,11 +191,7 @@
 }
 
 .table tbody tr {
-  border-bottom: 1px solid #f0f0f0;
-}
-
-.table tbody tr:last-child {
-  border-bottom: none;
+  background-color: white;
 }
 
 .table tbody td {
@@ -194,6 +199,16 @@
   font-size: 14px;
   color: rgba(0, 0, 0, 0.85);
   vertical-align: top;
+}
+
+.table tbody td:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.table tbody td:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .table tbody .tableCheckbox {
@@ -428,9 +443,6 @@
   justify-content: space-between;
   align-items: center;
   padding: 8px 15px;
-  background-color: #fbfbfb; /* Nền nhẹ nhàng cho footer mở rộng */
-  border-top: 1px solid #f0f0f0;
-  border-bottom: 1px solid #f0f0f0;
   font-size: 13px;
   color: rgba(0, 0, 0, 0.65);
 }

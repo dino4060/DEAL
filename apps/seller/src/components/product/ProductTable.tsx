@@ -76,6 +76,7 @@ export const ProductTable = ({
         ) : (
           products.map((product) => (
             <Fragment key={product.key}>
+              {/* Main row */}
               <tr>
                 <td className={styles.tableCheckbox}>
                   <input
@@ -118,11 +119,15 @@ export const ProductTable = ({
                   </a>
                 </td>
               </tr>
+
+              {/* Side row */}
               {product.skus.length > 1 && (
                 <tr>
                   <td colSpan={9} style={{ padding: 0 }}>
+                    {/* Meta row */}
                     <div className={styles.expandedRowFooter}>
-                      <span>Tổng {product.skus.length} SKU</span>
+                      <span>Có {product.skus.length} SKU</span>
+
                       <button className={styles.expandButton} onClick={() => toggleExpand(product.key)}>
                         {expandedRows.includes(product.key) ? (
                           <>
@@ -141,6 +146,8 @@ export const ProductTable = ({
                         )}
                       </button>
                     </div>
+
+                    {/* Expandable row */}
                     {expandedRows.includes(product.key) && (
                       <table className={styles.expandedTable}>
                         <thead>
