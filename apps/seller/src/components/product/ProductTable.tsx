@@ -64,8 +64,8 @@ export const ProductTable = ({
           <th style={{ width: '10%' }}>Số lượng</th>
           <th style={{ width: '15%' }}>Giá bán lẻ</th>
           <th style={{ width: '10%' }}>Doanh số</th>
-          <th style={{ width: '10%' }}>Cập nhật</th>
-          <th style={{ width: '15%' }}>Trạng thái</th>
+          <th style={{ width: '15%' }}>Cập nhật</th>
+          <th style={{ width: '10%' }}>Trạng thái</th>
           <th style={{ width: '10%' }}>Hành động</th>
         </tr>
       </thead>
