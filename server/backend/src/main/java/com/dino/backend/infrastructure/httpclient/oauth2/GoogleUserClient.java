@@ -1,4 +1,4 @@
-package com.dino.backend.infrastructure.htttpclient.oauth2;
+package com.dino.backend.infrastructure.httpclient.oauth2;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

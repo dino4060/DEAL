@@ -1,12 +1,12 @@
 package com.dino.backend.infrastructure.cache;
 
 import com.dino.backend.features.inventory.application.provider.IInventoryLockProvider;
-import com.dino.backend.infrastructure.cache.template.LockTemplate;
+import com.dino.backend.infrastructure.cache.pattern.LockFacade;
+import com.dino.backend.infrastructure.cache.pattern.LockTemplate;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,14 +16,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class LockProviderImpl implements IInventoryLockProvider {
 
-    RedisTemplate<String, String> redisTemplate;
+    LockFacade lockFacade;
 
     @Override
     @Transactional
     public void reserveStockWithLock(Long skuId, Runnable doReserveStock) {
         var key = "inventory:sku:" + skuId;
 
-        var locker = new LockTemplate(this.redisTemplate) {
+        var locker = new LockTemplate(this.lockFacade) {
             @Override
             protected void doTask() {
                 doReserveStock.run();

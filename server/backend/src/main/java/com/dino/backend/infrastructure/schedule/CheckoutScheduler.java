@@ -1,4 +1,4 @@
-package com.dino.backend.infrastructure.scheduler;
+package com.dino.backend.infrastructure.schedule;
 
 import com.dino.backend.features.ordering.application.service.ICheckoutService;
 import lombok.AccessLevel;

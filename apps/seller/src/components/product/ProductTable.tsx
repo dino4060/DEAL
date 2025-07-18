@@ -25,8 +25,11 @@ export const ProductTable = ({
   toggleExpand,
 }: ProductTableProps) => {
 
+  const [openActionDropdownKey, setOpenActionDropdownKey] = React.useState<React.Key | null>(null);
+ 
+
   const renderSkeletonRow = (key: number) => (
-    <tr key={key}>
+    <tr key={key} className={styles.skeletonTableRow}>
       <td>
         <div className={styles.skeletonRow}>
           <div className={styles.skeletonCell} style={{ width: '20px', height: '20px' }}></div>
@@ -39,9 +42,9 @@ export const ProductTable = ({
           </div>
           <div className={styles.skeletonText} style={{ width: '80%' }}></div>
           <div className={styles.skeletonText} style={{ width: '60%' }}></div>
-          <div className={styles.skeletonText} style={{ width: '40%' }}></div>
           <div className={styles.skeletonText} style={{ width: '70%' }}></div>
           <div className={styles.skeletonText} style={{ width: '50%' }}></div>
+          <div className={styles.skeletonText} style={{ width: '40%' }}></div>
           <div className={styles.skeletonText} style={{ width: '70%' }}></div>
           <div className={styles.skeletonText} style={{ width: '60%' }}></div>
         </div>

@@ -1,4 +1,4 @@
-package com.dino.backend.infrastructure.cache.template;
+package com.dino.backend.infrastructure.cache.pattern;
 
 import com.dino.backend.shared.domain.exception.AppException;
 import com.dino.backend.shared.domain.exception.ErrorCode;
@@ -7,19 +7,20 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.Collections;
 
+@Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
-public abstract class LockTemplate {
+public class LockFacade {
 
     RedisTemplate<String, String> redisTemplate;
 
-    private String getLock(String key) {
+    public String getLock(String key) {
         return this.redisTemplate.opsForValue().get(key);
     }
 
@@ -38,7 +39,7 @@ public abstract class LockTemplate {
         }
     }
 
-    protected boolean tryLock(String key) {
+    public boolean tryLock(String key) {
         var retryTimes = Collections.nCopies(10, 1);
         var sleepTime = Duration.ofMillis(50);
 
@@ -54,29 +55,8 @@ public abstract class LockTemplate {
         return false;
     }
 
-    protected void releaseLock(String key) {
+    public void releaseLock(String key) {
         this.redisTemplate.delete(key);
         log.info("Lock released: {} : {}", key, this.getLock(key));
-    }
-
-    protected abstract void doTask();
-
-    @Transactional
-    public void doTaskWithLock(String key) {
-        // 1. tryLock
-        boolean lockAcquired = tryLock(key);
-
-        if (!lockAcquired)
-            throw new AppException(ErrorCode.LOCK__OUT_OF_TRY);
-        // 2. doTask
-        try {
-            this.doTask();
-        } catch (Exception e) {
-            throw new AppException(ErrorCode.LOCK__REQUEST_FAILED);
-        }
-        // 3. releaseLock
-        finally {
-            this.releaseLock(key);
-        }
     }
 }

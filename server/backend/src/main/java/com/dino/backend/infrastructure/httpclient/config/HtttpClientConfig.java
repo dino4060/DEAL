@@ -1,4 +1,4 @@
-package com.dino.backend.infrastructure.htttpclient.config;
+package com.dino.backend.infrastructure.httpclient.config;
 
 import com.dino.backend.infrastructure.common.Const;
 import org.springframework.cloud.openfeign.EnableFeignClients;
