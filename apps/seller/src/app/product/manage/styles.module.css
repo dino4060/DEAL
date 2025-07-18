@@ -193,18 +193,6 @@
   padding: 12px 0 12px 15px;
 }
 
-.table thead th:first-child,
-.table tbody td:first-child {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-}
-
-.table thead th:last-child,
-.table tbody td:last-child {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
 .tableDivision {
   margin: 0 15px;
   height: 0;
@@ -262,19 +250,21 @@
   background-color: #f5222d; /* Red */
 }
 
+/* Action Button */
 .actionLink {
   color: #1890ff;
   cursor: pointer;
-  margin-right: 10px;
   text-decoration: none;
-}
+  font-family: var(--TikTokMedium), sans-serif;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+ }
 
 .actionLinkDanger {
   color: #f5222d;
-}
-
-.actionLinkSecondary {
-  color: rgba(0, 0, 0, 0.45);
 }
 
 .expandButton {
@@ -289,26 +279,18 @@
   gap: 5px;
 }
 
-/* Expanded Row */
+/* Sku Row */
 .expandedTable {
-  width: calc(100% - 75px); /* Adjust width to align with parent table content */
-  margin-left: 75px; /* Indent */
+  width: 100%;
   border-collapse: collapse;
-  background-color: #fbfbfb;
 }
 
 .expandedTable th,
 .expandedTable td {
   padding: 8px 15px;
-  border-bottom: 1px solid #f0f0f0;
   text-align: left;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.85);
-}
-
-.expandedTable th {
-  background-color: #f0f0f0;
-  font-weight: normal;
 }
 
 /* Skeleton */
@@ -375,28 +357,6 @@
   margin-top: 24px;
 }
 
-.paginationButton {
-  padding: 6px 12px;
-  border: 1px solid #d9d9d9;
-  border-radius: 6px;
-  background-color: white;
-  cursor: pointer;
-  font-size: 14px;
-  margin: 0 4px;
-  font-family: var(--TikTokFont), sans-serif;
-}
-
-.paginationButtonActive {
-  background-color: #1890ff;
-  color: white;
-  border-color: #1890ff;
-}
-
-.paginationText {
-  margin-right: 10px;
-  font-size: 14px;
-}
-
 /* Icons */
 .icon {
   width: 1em;
@@ -445,13 +405,13 @@
   }
 }
 
+/* Sku Number Row */
 .expandedRowFooter {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 12px 15px;
   font-family: var(--TikTokMedium), sans-serif;
-  /* font-size: 14px; */
   color: rgba(0, 0, 0, 0.45);
 }
 
@@ -465,5 +425,5 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  padding: 0; /* Loại bỏ padding mặc định của button */
+  padding: 0;
 }

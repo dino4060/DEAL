@@ -7,8 +7,17 @@ import type { TSku } from "./sku.types";
 
 // NESTED TYPES //
 
-export type TProductStatus =
-  'DRAFT' | 'REVIEWING' | 'LIVE' | 'DEACTIVATED' | 'SUSPENDED' | 'DELETED';
+export const ProductStatus = {
+  DRAFT: 'DRAFT',
+  REVIEWING: 'REVIEWING',
+  LIVE: 'LIVE',
+  DEACTIVATED: 'DEACTIVATED',
+  SUSPENDED: 'SUSPENDED',
+  DELETED: 'DELETED',
+} as const;
+
+export type TProductStatus = (typeof ProductStatus)[keyof typeof ProductStatus];
+
 
 export type TProductSpecification = {
   name: string;

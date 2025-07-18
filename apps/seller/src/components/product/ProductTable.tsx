@@ -25,9 +25,6 @@ export const ProductTable = ({
   toggleExpand,
 }: ProductTableProps) => {
 
-  const [openActionDropdownKey, setOpenActionDropdownKey] = React.useState<React.Key | null>(null);
- 
-
   const renderSkeletonRow = (key: number) => (
     <tr key={key} className={styles.skeletonTableRow}>
       <td>
@@ -64,13 +61,13 @@ export const ProductTable = ({
                 checked={selectedRowKeys.length === products.length && products.length > 0}
               />
             </th>
-            <th>Sản phẩm</th>
+            <th style={{ width: '30%' }}>Sản phẩm</th>
             <th style={{ width: '10%' }}>Số lượng</th>
             <th style={{ width: '15%' }}>Giá bán lẻ</th>
             <th style={{ width: '10%' }}>Doanh số</th>
-            <th style={{ width: '15%' }}>Cập nhật</th>
-            <th style={{ width: '10%' }}>Trạng thái</th>
-            <th style={{ width: '10%' }}>Hành động</th>
+            <th style={{ width: '11%' }}>Cập nhật</th>
+            <th style={{ width: '12%' }}>Trạng thái</th>
+            <th style={{ width: '12%' }}>Hành động</th>
           </tr>
         </thead>
       </table>
@@ -90,7 +87,7 @@ export const ProductTable = ({
                     onChange={(e) => onSelectChange(product.key, e.target.checked)}
                   />
                 </td>
-                <td>
+                <td style={{ width: '30%' }}>
                   <div className={styles.tableProductCell}>
                     <img src={product.thumb} alt={product.name} className={styles.productThumb} />
                     <div className={styles.tableProductText}>
@@ -102,112 +99,103 @@ export const ProductTable = ({
                 <td style={{ width: '10%' }}>{product.skus.length}</td>
                 <td style={{ width: '15%' }}>{product.retailPriceRange}</td>
                 <td style={{ width: '10%' }}>{product.skus.reduce((sum, sku) => sum + sku.inventory.sales, 0)}</td> {/* Dữ liệu cột Doanh số */}
-                <td style={{ width: '15%' }}>{product.updatedAt}</td>
-                <td style={{ width: '10%' }}>
+                <td style={{ width: '11%' }}>{product.updatedAt}</td>
+                <td style={{ width: '12%' }}>
                   <span className={`${styles.statusTag} ${product.status === 'LIVE' ? styles.statusTagLive : styles.statusTagDeactivated}`}>
-                    {product.status === 'LIVE' ? 'Đang hoạt động' : 'Bị hủy kích hoạt'}
+                    {product.status === 'LIVE' ? 'Hoạt động' : 'Hủy kích hoạt'}
                   </span>
                 </td>
-                <td style={{ width: '10%' }}>
+                <td style={{ width: '12%' }}>
                   <a href="#" className={styles.actionLink}>
                     {product.status === 'DEACTIVATED' ? 'Kích hoạt' : 'Hủy kích hoạt'}
                   </a>
-                  <a href="#" className={`${styles.actionLink} ${styles.actionLinkSecondary}`}>Chỉnh sửa</a>
-                  <a href="#" className={`${styles.actionLink} ${styles.actionLinkDanger}`}>
-                    <svg className={styles.icon} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-                    </svg>
-                  </a>
+                  <a href="#" className={styles.actionLink}>Chỉnh sửa</a>
+                  <a href="#" className={`${styles.actionLink} ${styles.actionLinkDanger}`}>Xóa</a>
                 </td>
               </tr>
 
-              {product.skus.length > 1 && <Fragment>
-                {/* Division */}
-                <tr>
-                  <td colSpan={7} style={{ padding: 0 }}>
-                    <div className={styles.tableDivision} />
-                  </td>
-                </tr>
+              {/* Division & Side row */}
+              {product.skus.length > 1 &&
+                <Fragment>
 
-                {/* Side row */}
-                <tr>
-                  <td colSpan={7} style={{ padding: 0 }}>
-                    {/* Meta row */}
-                    <div className={styles.expandedRowFooter}>
-                      <span>Có {product.skus.length} SKU</span>
+                  <tr>
+                    <td colSpan={7} style={{ padding: 0 }}>
+                      <div className={styles.tableDivision} />
+                    </td>
+                  </tr>
 
-                      <button className={styles.expandButton}
-                        onClick={() => toggleExpand(product.key)}
-                        disabled={product.skus.length === 1}
-                        style={
-                          product.skus.length === 1
-                            ? { cursor: 'not-allowed', color: 'rgba(0, 0, 0, 0.3)' }
-                            : {}
-                        }
-                      >
-                        {expandedRows.includes(product.key) ? (
-                          <Fragment>
-                            Thu gọn
-                            <svg className={styles.icon} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                              <path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z" />
-                            </svg>
-                          </Fragment>
-                        ) : (
-                          <Fragment>
-                            Mở rộng
-                            <svg className={styles.icon} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                              <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" />
-                            </svg>
-                          </Fragment>
-                        )}
-                      </button>
-                    </div>
+                  <tr>
+                    <td colSpan={7} style={{ padding: 0 }}>
+                      {/* Meta row */}
+                      <div className={styles.expandedRowFooter}>
+                        <span>Có {product.skus.length} SKU</span>
 
-                    {/* Expandable row */}
-                    {expandedRows.includes(product.key) && (<table className={styles.expandedTable}>
-                      <thead>
-                        <tr>
-                          <th style={{ width: '25%' }}>SKU</th>
-                          <th style={{ width: '10%' }}>Số lượng</th>
-                          <th style={{ width: '15%' }}>Giá bán lẻ</th>
-                          <th style={{ width: '10%' }}>Doanh số</th>
-                          <th style={{ width: '10%' }}>Trạng thái</th>
-                          <th style={{ width: '10%' }}>Hành động</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {product.skus.map((sku) => (
-                          <tr key={sku.id}>
-                            <td>
-                              <span>{sku.code}</span>
-                              <span style={{ marginLeft: '5px', color: 'rgba(0,0,0,0.45)' }}>{sku.tierOptionValue}</span>
-                            </td>
-                            <td>{sku.inventory.stocks}</td>
-                            <td>{sku.retailPrice}</td>
-                            <td>{sku.inventory.sales}</td>
-                            <td>
-                              <span className={`${styles.statusTag} ${sku.status === 'LIVE' ? styles.statusTagLive : styles.statusTagDeactivated}`}>
-                                {sku.status === 'LIVE' ? 'Đang hoạt động' : 'Bị hủy kích hoạt'}
-                              </span>
-                            </td>
-                            <td>
-                              <a href="#" className={styles.actionLink}>
-                                {sku.status === 'DEACTIVATED' ? 'Kích hoạt' : 'Hủy kích hoạt'}
-                              </a>
-                              <a href="#" className={`${styles.actionLink} ${styles.actionLinkSecondary}`}>Chỉnh sửa</a>
-                              <a href="#" className={`${styles.actionLink} ${styles.actionLinkDanger}`}>
-                                <svg className={styles.icon} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                  <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-                                </svg>
-                              </a>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>)}
-                  </td>
-                </tr>
-              </Fragment>}
+                        <button className={styles.expandButton}
+                          onClick={() => toggleExpand(product.key)}
+                          disabled={product.skus.length === 1}
+                          style={
+                            product.skus.length === 1
+                              ? { cursor: 'not-allowed', color: 'rgba(0, 0, 0, 0.3)' }
+                              : {}
+                          }
+                        >
+                          {expandedRows.includes(product.key) ? (
+                            <Fragment>
+                              Thu gọn
+                              <svg className={styles.icon} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z" />
+                              </svg>
+                            </Fragment>
+                          ) : (
+                            <Fragment>
+                              Mở rộng
+                              <svg className={styles.icon} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" />
+                              </svg>
+                            </Fragment>
+                          )}
+                        </button>
+                      </div>
+
+                      {expandedRows.includes(product.key) && (
+                          <table className={styles.expandedTable}>
+                            <thead>
+                              <tr>
+                                <th style={{ width: '30%' }}>SKU</th>
+                                <th style={{ width: '10%' }}>Số lượng</th>
+                                <th style={{ width: '15%' }}>Giá bán lẻ</th>
+                                <th style={{ width: '10%' }}>Doanh số</th>
+                                <th style={{ width: '11%' }}></th>
+                                <th style={{ width: '12%' }}>Trạng thái</th>
+                                <th style={{ width: '12%' }}></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {product.skus.map((sku) => (
+                                <tr key={sku.id}>
+                                  <td>
+                                    <span>{sku.code}</span>
+                                    <span style={{ marginLeft: '5px', color: 'rgba(0,0,0,0.45)' }}>{sku.tierOptionValue}</span>
+                                  </td>
+                                  <td>{sku.inventory.stocks}</td>
+                                  <td>{sku.retailPrice}</td>
+                                  <td>{sku.inventory.sales}</td>
+                                  <td></td>
+                                  <td>
+                                    <span className={`${styles.statusTag} ${sku.status === 'LIVE' ? styles.statusTagLive : styles.statusTagDeactivated}`}>
+                                      {sku.status === 'LIVE' ? 'Hoạt động' : 'Hủy kích hoạt'}
+                                    </span>
+                                  </td>
+                                  <td></td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                      )}
+                    </td>
+                  </tr>
+                </Fragment>
+              }
             </tbody>
           </table>
         ))

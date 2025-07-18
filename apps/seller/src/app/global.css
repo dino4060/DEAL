@@ -29,6 +29,9 @@ body {
   margin: 0;
 }
 
+.ant-pagination,
+.ant-pagination-item,
+.ant-select-selector,
 .ant-menu,
 .ant-breadcrumb,
 .ant-form,
